@@ -1,0 +1,229 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <div>
+      <img style="max-width: 100% !important;border: 0 !important;margin-top: 5px !important;margin-left: 10px"
+        src="assets/img/logo02.png" width="20%">
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="openFirst()" color="light">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-grid style="background: white !important;">
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>Ivan More</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Perú</ion-card-subtitle>
+      </ion-col>
+      <ion-col text-center>
+        <ion-card-subtitle>77390628</ion-card-subtitle>
+      </ion-col>
+      <ion-col text-center>
+        <ion-card-subtitle>(Activa)</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- Scrollable Segment -->
+  <ion-segment mode="md" scrollable color="favorite" [(ngModel)]="category" style="background: white !important;">
+    <ion-segment-button value="Información">
+      <ion-label>Información</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Conductores">
+      <ion-label>Conductores</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Certificados">
+      <ion-label>Certificados</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Clases">
+      <ion-label>Clases de servicio</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+<ion-content>
+
+
+
+  <div [ngSwitch]="category">
+    <div *ngSwitchCase="'Información'" style="background: white">
+      <ion-grid>
+        <ion-row>
+          <ion-col text-center>
+            <h5 no-padding style="color: gray;">
+              Direcciones favoritas
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              Av. Puente Piedra 236 Asoc. El Porvenir
+            </h5>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <h5 no-padding style="color: gray;">
+              Clases de servicio
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              Refrigerado, Mudanza
+            </h5>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <h5 no-padding style="color: gray;">
+              Tipo de cliente
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              Persona juridica
+            </h5>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <h5 no-padding style="color: gray;">
+              Medios de pagos
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              BCP
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              2019493165456465
+            </h5>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <h5 no-padding style="color: gray;">
+              Telefonos
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              990391969
+            </h5>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <h5 no-padding style="color: gray;">
+              Persona de contacto
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              Evert Diaz Buitrón
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              990391969
+            </h5>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <h5 no-padding style="color: gray;">
+              Emails
+            </h5>
+            <h5 no-padding style="margin: 0px;">
+              ivanyoe79@gmail.com
+            </h5>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <div [ngSwitch]="category">
+    <div *ngSwitchCase="'Conductores'">
+      <ion-card no-padding *ngFor="let chofer of choferes">
+        <ion-card-header no-padding>
+          <ion-grid no-padding>
+            <ion-row style="width: 100%">
+              <ion-col size="3" style="display: flex;justify-content: flex-start;align-items: flex-start;">
+                <img style="width: 60% !important;" [src]="chofer.picture" alt="">
+             </ion-col>
+              <ion-col size="9">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-card-title style="font-size: 15px">{{chofer.name}} {{chofer.lastName}}</ion-card-title>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col text-start>
+                      <ion-card-title style="color:gray;font-size: 15px">#viajes: 5</ion-card-title>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </div>
+
+  <div [ngSwitch]="category">
+    <div *ngSwitchCase="'Certificados'">
+      <div class="padre" padding>
+        <ion-button (click)="modal_certificado()" color="light" shape="round">
+          <ion-icon slot="start" name="add"></ion-icon>AGREGAR CERTIFICADO
+        </ion-button>
+      </div>
+      <ion-card no-padding>
+        <ion-card-header no-padding>
+          <ion-grid no-padding>
+            <ion-row style="width: 100%">
+              <ion-col size="3" style="display: flex;justify-content: flex-start;align-items: flex-start;">
+                <img src="assets/img/certificados.png" alt="">
+              </ion-col>
+              <ion-col size="9">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-card-title style="font-size: 15px">Certificado de transporte de carga pesada</ion-card-title>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col text-start>
+                      <ion-card-title style="color:gray;font-size: 15px">C. 11/07/25</ion-card-title>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </div>
+  <div [ngSwitch]="category">
+    <div *ngSwitchCase="'Clases'">
+      <div class="padre" padding>
+        <ion-button color="light" shape="round">
+          <ion-icon slot="start" name="add"></ion-icon>AGREGAR SERVICIO
+        </ion-button>
+      </div>
+      <ion-card no-padding>
+        <ion-card-header no-padding>
+          <ion-grid>
+            <ion-row style="width: 100%">
+              <ion-col size="2" style="display: flex;justify-content: flex-start;align-items: flex-start;">
+                <img style="color:#f79421 !important" src="assets/img/Group 739.png" style="width: 50% !important;">
+              </ion-col>
+              <ion-col size="10">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col text-start>
+                      <ion-card-title>Perecibles</ion-card-title>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </div>
+
+
+</ion-content>

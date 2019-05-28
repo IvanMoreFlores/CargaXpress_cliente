@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <div>
+      <img style="max-width: 100% !important;border: 0 !important;margin-top: 5px !important;margin-left: 10px"
+        src="assets/img/logo02.png" width="20%">
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="openFirst()" color="light">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="refresh" slot="fixed" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <img style="width:90px;height:90px;border-radius:150px;" src="assets/img/UC17.png" alt="">
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>{{ perfil.name }} {{ perfil.lastName }}</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Perú</ion-card-subtitle>
+      </ion-col>
+      <ion-col text-center>
+        <ion-card-subtitle>{{ perfil.documentCode }}</ion-card-subtitle>
+      </ion-col>
+      <ion-col text-center *ngIf="perfil.status === 1">
+        <ion-card-subtitle>(Activa)</ion-card-subtitle>
+      </ion-col>
+      <ion-col text-center *ngIf="perfil.status === 2">
+        <ion-card-subtitle>(Suspendido)</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Razón social</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>{{ perfil.businessName }}</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Direcciones favoritas</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding *ngFor="let direccion of perfil.addresses">
+      <ion-col text-center>
+        <ion-card-title style="font-size: 15px">{{ direccion.address }} <ion-icon *ngIf="direccion.favorite === 1"
+            name="star">
+          </ion-icon>
+        </ion-card-title>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Razón social</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>{{ perfil.businessName }}</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Tipo de cliente</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title *ngIf="perfil.userType === 1">Persona natural</ion-card-title>
+        <ion-card-title *ngIf="perfil.userType === 2">Persona juridica</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Estado de cliente</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>Activo</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Celular</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>{{ perfil.cellphone }}</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Telefono</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>{{ perfil.phone }}</ion-card-title>
+      </ion-col>
+    </ion-row>
+    <hr />
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-subtitle>Email</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>{{ perfil.email }}</ion-card-title>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

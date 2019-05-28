@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar no-border color="favorite">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">Mapa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="map"></div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar (click)="mostrarDiv()" color="favorite">
+    <ion-title text-center>
+      <ion-icon *ngIf="arrow_dropup" color="light" style="zoom: 2;" name="arrow-dropup"></ion-icon>
+      <ion-icon *ngIf="arrow_dropdown" color="light" style="zoom: 2;" name="arrow-dropdown"></ion-icon>
+    </ion-title>
+  </ion-toolbar>
+  <div *ngIf="div_footer" style="background-color: #30205d">
+    <ion-segment color="light">
+      <ion-segment-button value="Información">
+        <ion-label style="color: white">Información</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Chofer">
+        <ion-label style="color: white">Chofer</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Chat">
+        <ion-label style="color: white">Chat</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+</ion-footer>

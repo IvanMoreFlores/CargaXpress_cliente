@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="/" text="">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">{{ titulo }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <ion-grid (click)="presentActionSheet()">
+    <ion-row>
+      <ion-col>
+      </ion-col>
+      <ion-col *ngIf="!demo" padding text-center size="6" style="background: rgb(212, 212, 212)">
+        <ion-icon color="dark" style="zoom: 2;" name="add-circle-outline"></ion-icon>
+        <p color="dark">Agregar imagen</p>
+      </ion-col>
+      <ion-col *ngIf="demo" padding text-center size="6">
+        <img src="{{ demo }}">
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Nombres</ion-label>
+        <ion-input [(ngModel)]="NewDriver.name" placeholder="Ingrese su nombre" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Apellidos</ion-label>
+        <ion-input [(ngModel)]="NewDriver.lastName" placeholder="Ingrese su apellido" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label style="padding-bottom: 10px" position="stacked">Tipo de documento</ion-label>
+        <ion-select [(ngModel)]="NewDriver.documentType" padding style="background: white"
+          placeholder=".: Seleccione :.">
+          <ion-select-option value="1">DNI</ion-select-option>
+          <ion-select-option value="2">CE</ion-select-option>
+          <ion-select-option value="3">PASAPORTE</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Número de documento</ion-label>
+        <ion-input (ionInput)="brevete($event)" [(ngModel)]="NewDriver.documentCode"
+          placeholder="Ingrese su número de documento" type="number">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Número de celular</ion-label>
+        <ion-input [(ngModel)]="NewDriver.cellphone" placeholder="Ingrese su número de celular" type="number">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input [(ngModel)]="NewDriver.email" placeholder="Ingrese su email" type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Categoria de brevete</ion-label>
+        <ion-input [(ngModel)]="NewDriver.breveteCategory" placeholder="Ingrese su categoria de brevete" type="text">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Número de brevete</ion-label>
+        <ion-input readonly [(ngModel)]="NewDriver.breveteCode" placeholder="Ingrese número de brevete" type="text">
+        </ion-input>
+      </ion-item>
+      <div class="padre">
+        <ion-item padding>
+          <ion-buttons>
+            <ion-button *ngIf="!div_update" (click)="new_driver()" size="large" fill="solid" color="favorite">Crear
+            </ion-button>
+            <ion-button *ngIf="div_update" (click)="updateDriver()" size="large" fill="solid" color="favorite">
+              Actualizar
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </div>
+
+  </ion-list>
+</ion-content>

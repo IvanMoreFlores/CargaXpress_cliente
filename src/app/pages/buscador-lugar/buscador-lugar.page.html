@@ -1,0 +1,21 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon slot="icon-only" (click)="myDismiss()" name="arrow-back"></ion-icon>
+    </ion-buttons>
+    <ion-item>
+      <ion-label position="stacked">Ingresa el lugar</ion-label>
+      <ion-input #input [(ngModel)]="autocomplete.query" (keyup)="updateSearch()"
+        placeholder="Escribe la dirección">
+      </ion-input>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item lines *ngFor="let item of autocompleteItems" (click)="regresar(item.description)">
+      {{ item.description }}
+    </ion-item>
+  </ion-list>
+</ion-content>

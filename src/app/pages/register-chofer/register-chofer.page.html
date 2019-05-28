@@ -1,0 +1,101 @@
+<ion-content padding>
+  <form action="submit">
+    <ion-grid>
+
+      <ion-row>
+        <ion-col text-center>
+          <p style="font-size: 25px"><b>Regístrate</b></p>
+          <p style="font-size: 13px">Completa los siguientes campos</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Razón social</ion-label>
+            <ion-input placeholder="Ingresa su razón social" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Telefono</ion-label>
+            <ion-input placeholder="" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Persona de contacto</ion-label>
+            <ion-input placeholder="" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Tipo de documento de identificación</ion-label>
+            <ion-input placeholder="" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Número de documento de identidad</ion-label>
+            <ion-input placeholder="" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Pais</ion-label>
+            <ion-input placeholder="" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">E-mail</ion-label>
+            <ion-input placeholder="" type="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input placeholder="" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Confirmar contraseña</ion-label>
+            <ion-input placeholder="" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-center (click)="register_chofer()">
+          <ion-button color="favorite">Registrarse</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>

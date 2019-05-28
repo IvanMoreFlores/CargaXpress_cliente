@@ -1,0 +1,336 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-title color="light">Realizar pedido</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">
+        <ion-icon color="light" slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <div *ngIf="div_uno">
+    <div padding text-center style="background: #ECECEC;">
+      <p style="font-size: 15px;margin: 0px;">Selecciona el tipo de pedido</p>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center (click)="tipo_pedido(1)">
+          <img src="assets/img/Group131.png" width="15%">
+          <p><b style="color:#30205d">Por Subasta</b></p>
+          <hr>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinir justo</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center (click)="tipo_pedido(2)">
+          <img src="assets/img/Group130.png" width="15%">
+          <p><b style="color:#30205d">Precio sugerido</b></p>
+          <hr>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinir justo</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center (click)="tipo_pedido(3)">
+          <img src="assets/img/Group137.png" width="11%">
+          <p><b style="color:#30205d">Precio calculado</b></p>
+          <hr>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinir justo</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="efecto" *ngIf="div_dos">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Ingresa el lugar de envío</ion-label>
+            <ion-input (click)="click_buscador(1)" [(ngModel)]="datos_orden.initPlace"
+              placeholder="Escribe la dirección de partida"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Ingreso el lugar de recojo</ion-label>
+            <ion-input (click)="click_buscador(2)" [(ngModel)]="datos_orden.endPlace"
+              placeholder="Escribe la dirección de llegada"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="padding: 20px">
+          <div #map id="map"></div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <ion-button (click)="boton_atras(1)" fill="outline" color="favorite">Atras</ion-button>
+          <ion-button (click)="click_tres()" color="favorite">Continuar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="efecto" *ngIf="div_tres">
+    <div padding text-center style="background: #ECECEC;">
+      <p style="font-size: 15px;margin: 0px;">Seleccione la categoria deseada</p>
+    </div>
+    <ion-card ion-button *ngFor="let categoria of categorias" style="padding: 15px;"
+      (click)="click_cuatro(categoria._id)">
+      <ion-button style="--border-radius: 10px !important" shape="round" color="favorite" no-padding fill="clear"
+        expand="block">
+        <ion-grid>
+          <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
+            <ion-col text-start size="10">
+              <ion-card-title>{{ categoria.name }}</ion-card-title>
+            </ion-col>
+            <ion-col size="2">
+              <img src="assets/img/Group29.png" style="width: 19px;height: 20px;float:right">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-button>
+    </ion-card>
+  </div>
+
+  <div class="efecto" *ngIf="div_cuatro">
+    <div padding text-center style="background: #ECECEC;">
+      <p style="font-size: 15px;margin: 0px;">Seleccione la subcategoria deseada</p>
+    </div>
+    <ion-card *ngFor="let subcategoria of subcategorias" style="padding: 15px" (click)="click_cinco(subcategoria._id)">
+      <ion-button style="--border-radius: 10px !important" shape="round" color="favorite" no-padding fill="clear"
+        expand="block">
+        <ion-grid>
+          <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
+            <ion-col text-start size="10">
+              <ion-card-title>{{ subcategoria.name }}</ion-card-title>
+            </ion-col>
+            <ion-col size="2">
+              <img src="assets/img/Group29.png" style="width: 19px;height: 20px;float:right">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-button>
+    </ion-card>
+  </div>
+
+  <div class="efecto" *ngIf="div_cinco">
+    <div>
+      <p style="font-size: 15px;margin: 0px;text-align: center"><b>Características del punto de recojo de la carga*</b>
+      </p>
+      <div no-padding>
+        <ion-list>
+          <ion-item *ngFor="let question of datos_orden.receptionAnswers">
+            <p style="font-size: 15px;">{{ question.title }}</p>
+            <ion-label position="stacked">{{ question.description }}</ion-label>
+            <ion-select [(ngModel)]="question.answer" *ngIf="question.options.length > 0"
+              placeholder=".: SELECCIONE :.">
+              <ion-select-option *ngFor="let option of question.options" [value]="option">{{option}}
+              </ion-select-option>
+            </ion-select>
+            <ion-textarea [(ngModel)]="question.answer" *ngIf="question.options.length === 0" rows="4"
+              placeholder="Ingrese más información aquí...">
+            </ion-textarea>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <div>
+      <p style="font-size: 15px;text-align: center"><b>Características del punto de recepción de la carga*</b></p>
+      <div no-padding>
+        <ion-list>
+          <ion-item *ngFor="let question of datos_orden.destinationAnswers">
+            <p style="font-size: 15px;">{{ question.title }}</p>
+            <ion-label position="stacked">{{ question.description }}</ion-label>
+            <ion-select [(ngModel)]="question.answer" *ngIf="question.options.length > 0"
+              placeholder=".: SELECCIONE :.">
+              <ion-select-option *ngFor="let option of question.options" [value]="option">{{option}}
+              </ion-select-option>
+            </ion-select>
+            <ion-textarea [(ngModel)]="question.answer" *ngIf="question.options.length === 0" rows="4"
+              placeholder="Ingrese más información aquí...">
+            </ion-textarea>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <ion-button (click)="boton_atras(2)" fill="outline" color="favorite">Atras</ion-button>
+          <ion-button (click)="click_seis()" color="favorite">Continuar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="efecto" *ngIf="div_seis">
+    <div>
+      <p style="font-size: 15px;text-align: center"><b>Características del elemento de la carga*</b></p>
+      <div no-padding>
+        <ion-list>
+          <ion-item *ngFor="let question of datos_orden.elements.answers">
+            <p style="font-size: 15px;">{{ question.title }}</p>
+            <ion-label position="stacked">{{ question.description }}</ion-label>
+            <ion-select [(ngModel)]="question.answer" *ngIf="question.options.length > 0"
+              placeholder=".: SELECCIONE :.">
+              <ion-select-option *ngFor="let option of question.options" [value]="option">{{option}}
+              </ion-select-option>
+            </ion-select>
+            <ion-textarea [(ngModel)]="question.answer" *ngIf="question.options.length === 0" rows="4"
+              placeholder="Ingrese más información aquí...">
+            </ion-textarea>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <ion-button (click)="boton_atras(3)" fill="outline" color="favorite">Atras</ion-button>
+          <ion-button (click)="click_siete()" color="favorite">Continuar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="efecto" *ngIf="div_siete">
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label style="padding-bottom: 10px" position="stacked">Fecha de fin de pedido</ion-label>
+            <ion-datetime placeholder="Seleccione fecha" [min]="2019" [max]="2025" [(ngModel)]="datos_orden.endDate" doneText="OK" cancelText="CANCELAR" padding
+              style="background: white" display-format="DD-MM-YYYY"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label style="padding-bottom: 10px" position="stacked">Fecha máxima de entrega</ion-label>
+            <ion-datetime placeholder="Seleccione fecha" [min]="2019" [max]="2025" [(ngModel)]="datos_orden.deliveryMaxDate" doneText="OK" cancelText="CANCELAR" padding
+              style="background: white" display-format="DD-MM-YYYY"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label style="padding-bottom: 10px" position="stacked">Hora máxima de entrega</ion-label>
+            <ion-datetime placeholder="Seleccione hora" [(ngModel)]="datos_orden.deliveryMaxHour" doneText="OK" cancelText="CANCELAR" padding
+              style="background: white" displayFormat="HH:mm">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row style="padding: 10px">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col>
+              <ion-label position="stacked">¿Es divisible?</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-radio-group [(ngModel)]="datos_orden.canDivide">
+            <ion-row radio-group>
+              <ion-col>
+                <ion-item class="check">
+                  <ion-label>Si</ion-label>
+                  <ion-radio color="favorite" item-left value="1"></ion-radio>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="check">
+                  <ion-label>No</ion-label>
+                  <ion-radio color="favorite" item-left value="0"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group>
+        </ion-grid>
+      </ion-row>
+      <ion-row style="padding: 10px">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col>
+              <ion-label position="stacked">¿Es subcontratable?</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-radio-group [(ngModel)]="datos_orden.canSubcontratable">
+            <ion-row radio-group>
+              <ion-col>
+                <ion-item class="check">
+                  <ion-label>Si</ion-label>
+                  <ion-radio color="favorite" item-left value="1"></ion-radio>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="check">
+                  <ion-label>No</ion-label>
+                  <ion-radio color="favorite" item-left value="0"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group>
+        </ion-grid>
+      </ion-row>
+      <ion-row style="padding: 10px">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col>
+              <ion-label position="stacked">¿Es negociable?</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-radio-group [(ngModel)]="datos_orden.canNegotiate">
+            <ion-row radio-group>
+              <ion-col>
+                <ion-item class="check">
+                  <ion-label>Si</ion-label>
+                  <ion-radio color="favorite" item-left value="1"></ion-radio>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="check">
+                  <ion-label>No</ion-label>
+                  <ion-radio color="favorite" item-left value="0"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group>
+        </ion-grid>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Requerimientos adicionales (120 caracteres) </ion-label>
+            <ion-textarea [(ngModel)]="datos_orden.aditionalRequirements" placeholder=""
+              style="background: white;padding-left: 5px" rows="6">
+            </ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="this.datos_orden.type !== 1">
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Ingrese precio</ion-label>
+            <ion-input [disabled]="precio" [(ngModel)]="datos_orden.price" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <ion-button (click)="boton_atras(4)" fill="outline" color="favorite">Atras</ion-button>
+          <ion-button (click)="crear_pedido()" color="favorite">Finalizar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

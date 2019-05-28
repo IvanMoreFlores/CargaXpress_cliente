@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <div>
+      <img style="max-width: 100% !important;border: 0 !important;margin-top: 5px !important;margin-left: 10px"
+        src="assets/img/logo02.png" width="20%">
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="openFirst()" color="light">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div padding text-center style="background: #ECECEC;">
+    <p style="font-size: 25px;margin: 0px;"><b>Mis Pedidos</b></p>
+    <!-- <p style="font-size: 13px;margin: 0px;">Seleccione la categoria deseada</p> -->
+  </div>
+
+<ion-content no-padding>
+
+  <ion-card no-padding (click)="detail()">
+    <ion-card-header>
+      <ion-card-title>Cod Pe - 2342523623</ion-card-title>
+      <ion-card-subtitle>Tipo: <a style="color: #30205d">Tipo 1</a></ion-card-subtitle>
+      <ion-card-subtitle>Estado: <a style="color: #30205d">Pendiente</a></ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card no-padding>
+    <ion-card-header>
+      <ion-card-title>Cod Pe - 2342523623</ion-card-title>
+      <ion-card-subtitle>Tipo: <a style="color: #30205d">Tipo 1</a></ion-card-subtitle>
+      <ion-card-subtitle>Estado: <a style="color: #30205d">Publico</a></ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card no-padding>
+    <ion-card-header>
+      <ion-card-title>Cod Pe - 2342523623</ion-card-title>
+      <ion-card-subtitle>Tipo: <a style="color: #30205d">Tipo 1</a></ion-card-subtitle>
+      <ion-card-subtitle>Estado: <a style="color: #30205d">En proceso</a></ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card no-padding>
+    <ion-card-header>
+      <ion-card-title>Cod Pe - 2342523623</ion-card-title>
+      <ion-card-subtitle>Tipo: <a style="color: #30205d">Tipo 1</a></ion-card-subtitle>
+      <ion-card-subtitle>Estado: <a style="color: #30205d">Anulado</a></ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+</ion-content>

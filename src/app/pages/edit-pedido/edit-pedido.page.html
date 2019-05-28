@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-title color="light">Editar pedido</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">
+        <ion-icon color="light" slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col>
+        <ion-item no-lines>
+          <ion-label style="padding-bottom: 10px" position="stacked">Fecha de fin de pedido</ion-label>
+          <ion-datetime placeholder="Seleccione fecha" [min]="2019" [max]="2025" [(ngModel)]="datos_orden.endDate"
+            doneText="OK" cancelText="CANCELAR" padding style="background: white" display-format="DD-MM-YYYY">
+          </ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item no-lines>
+          <ion-label style="padding-bottom: 10px" position="stacked">Fecha máxima de entrega</ion-label>
+          <ion-datetime placeholder="Seleccione fecha" [min]="2019" [max]="2025"
+            [(ngModel)]="datos_orden.deliveryMaxDate" doneText="OK" cancelText="CANCELAR" padding
+            style="background: white" display-format="DD-MM-YYYY"></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Ingresa el lugar de envío</ion-label>
+          <ion-input (click)="click_buscador(1)" [(ngModel)]="datos_orden.initPlace"
+            placeholder="Escribe la dirección de partida"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Ingreso el lugar de recojo</ion-label>
+          <ion-input (click)="click_buscador(2)" [(ngModel)]="datos_orden.endPlace"
+            placeholder="Escribe la dirección de llegada"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="padding: 20px">
+        <div #map id="map"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <!-- <ion-button fill="outline" color="favorite">Atras</ion-button> -->
+        <ion-button color="favorite">Actualizar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

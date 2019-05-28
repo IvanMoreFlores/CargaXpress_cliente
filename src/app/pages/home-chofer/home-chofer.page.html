@@ -1,0 +1,125 @@
+<ion-header color="favorite">
+  <ion-toolbar color="favorite">
+    <div>
+      <img style="max-width: 100% !important;border: 0 !important;margin-top: 5px !important;margin-left: 10px"
+        src="assets/img/logo02.png" width="20%">
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="openFirst()" color="light">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar style="padding: 5px" color="favorite">
+    <ion-item style="--border: 0px solid white !important;--border-radius: 5px  !important;">
+      <ion-label no-pagging>Categoria</ion-label>
+      <ion-select cancelText="Cancelar" no-pagging placeholder=".: Selecione :." interface="action-sheet"
+        (ionChange)="changeEnvironment($event)">
+        <ion-select-option *ngFor="let categoria of categorias" [value]="categoria._id">
+          {{ categoria.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <p *ngIf="div_select" style="margin: 5px;"></p>
+    <ion-item style="--border: 0px solid white !important;--border-radius: 5px  !important;" *ngIf="div_select">
+      <ion-label no-pagging>Subcategoria</ion-label>
+      <ion-select no-pagging placeholder=".: Selecione :." interface="action-sheet">
+        <ion-select-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria._id">{{ subcategoria.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="refresh" slot="fixed" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <!-- <div padding text-center style="background: #ECECEC;">
+    <p style="font-size: 25px;margin: 0px;"><b>Pedidos publicados</b></p>
+  </div> -->
+
+  <div padding *ngIf="cero_datos">
+    <img src="assets/img/warning.png" style="width: 30% !important;display:block;margin:auto">
+    <h1 text-center>Sin datos</h1>
+  </div>
+
+  <div *ngIf="con_datos">
+    <ion-card *ngFor="let orden of ordenes" no-padding style="padding-left: 10px" (click)="modalSubcat(orden._id)">
+      <ion-grid no-padding style="height: 100%">
+        <ion-row style="line-height: 100%">
+          <ion-col no-padding size="6" style="display: flex;align-items: center;">
+            <p style="font-size: 20px"><b>{{ orden.code}}</b></p>
+          </ion-col>
+          <ion-col no-padding size="6" style="display: flex;align-items: center;">
+            <p>
+              <b style="font-size: 20px">s./ 1000</b><br>
+              Refrigerado - Marino
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding style="line-height: 100%">
+          <ion-col no-padding size="1" style="display: flex;justify-content: start;align-items: center;">
+            <div no-padding class="circulo_rojo"></div>
+          </ion-col>
+          <ion-col no-padding style="display: flex;justify-content: start;align-items: center;">
+            <p no-padding style="font-size: 15px">{{ orden.initPlace }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding style="line-height: 100%">
+          <ion-col no-padding size="1" style="display: flex;justify-content: start;align-items: center;">
+            <div no-padding class="circulo_verde"></div>
+          </ion-col>
+          <ion-col no-padding style="display: flex;justify-content: start;align-items: center;">
+            <p no-padding style="font-size: 15px">{{ orden.endPlace }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+  <div *ngIf="sin_datos">
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+</ion-content>

@@ -1,0 +1,141 @@
+<ion-header color="favorite">
+  <ion-toolbar color="favorite">
+    <div>
+      <img style="max-width: 100% !important;border: 0 !important;margin-top: 5px !important;margin-left: 10px"
+        src="assets/img/logo02.png" width="20%">
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="openFirst()" color="light">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar color="favorite">
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col>
+          <ion-searchbar mode="md" placeholder="Escriba aqui..." (ionInput)="getItems($event)"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="refresh" slot="fixed" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- <div padding text-center style="background: #ECECEC;">
+      <p style="font-size: 25px;margin: 0px;"><b>Conductores</b></p>
+    </div> -->
+
+  <div padding *ngIf="cero_datos">
+    <img src="assets/img/warning.png" style="width: 30% !important;display:block;margin:auto">
+    <h1 text-center>Sin datos</h1>
+  </div>
+
+  <div *ngIf="con_datos">
+    <ion-card *ngFor="let chofer of choferes" style="padding: 7px;">
+      <ion-grid no-padding (click)="div_opciones(chofer._id)">
+        <ion-row>
+          <ion-col size="2" style="display: flex;justify-content: center;align-items: center;">
+            <img style="display: flex;justify-content: center;align-items: center;" [src]="chofer.picture">
+          </ion-col>
+          <ion-col padding size="10" style="display: flex;justify-content: flex-start;align-items: center;">
+            <ion-grid no-padding>
+              <ion-row>
+                <ion-col size="12" style="margin: 0px;">
+                  <ion-card-title style='text-transform:uppercase'>{{ chofer.name }} {{ chofer.lastName }}
+                  </ion-card-title>
+                </ion-col>
+                <ion-col size="12" style="margin: 0px;">
+                  <ion-card-subtitle><a style="color:#30205d">Email: </a>{{ chofer.email }}</ion-card-subtitle>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col size="5" style="display: flex;justify-content: start;align-items: center;">
+            <ion-card-subtitle>DNI: <a style="color: #30205d">{{ chofer.documentCode }}</a></ion-card-subtitle>
+          </ion-col>
+          <ion-col size="7" style="display: flex;justify-content: flex-start;align-items: center;">
+            <ion-card-subtitle>Categoria de brevete: <a style="color: #30205d">{{ chofer.breveteCategory }}</a>
+            </ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col size="5" style="display: flex;justify-content: start;align-items: center;">
+            <ion-card-subtitle>Cel: <a style="color: #30205d">{{ chofer.cellphone }}</a></ion-card-subtitle>
+          </ion-col>
+          <ion-col size="7" style="display: flex;justify-content: flex-start;align-items: center;">
+            <ion-card-subtitle>N° de brevete: <a style="color: #30205d">{{ chofer.breveteCode }}</a></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid no-padding *ngIf="id === chofer._id">
+        <ion-row no-padding *ngIf="botones">
+          <ion-col text-center size="6">
+            <ion-button (click)="editarDriver(chofer._id)" expand="block" color="favorite">Editar</ion-button>
+          </ion-col>
+          <ion-col text-center size="6">
+            <ion-button (click)="eliminarDriver(chofer._id, chofer.name, chofer.lastName)" Fill="outline" expand="block"
+              color="favorite">Eliminar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+  <div *ngIf="sin_datos">
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="new_driver()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+</ion-content>

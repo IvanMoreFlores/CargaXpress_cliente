@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="/" text="">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">Subir certificado</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nombre de certificado</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label style="padding-bottom: 10px" position="stacked">Fecha de fin de pedido</ion-label>
+      <ion-datetime doneText="OK" cancelText="CANCELAR" padding style="background: white" display-format="MM/DD/YYYY">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Archivo</ion-label>
+      <ion-input [(ngModel)]="archivo_pdf" (click)="click_open()" readonly accept="file">
+        <ion-buttons style="position: absolute;right: -2rem;">
+          <ion-button (click)="click_open()" color="dark">
+            <ion-icon name="cloud-upload"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-input>
+    </ion-item>
+    <div class="padre">
+      <ion-item padding>
+        <ion-buttons>
+          <ion-button size="large" fill="solid" color="favorite">SUBIR</ion-button>
+        </ion-buttons>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,292 @@
+<ion-header>
+    <ion-toolbar color="favorite">
+      <ion-title color="light">Realizar pedido</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="cerrar()">
+          <ion-icon color="light" slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content no-padding>
+  
+    <div padding text-center>
+      <p style="font-size: 25px;margin: 0px;"><b>Realizar pedido</b></p>
+      <p *ngIf="div_cero" style="font-size: 15px;margin: 0px;">Seleccione la subcategoria deseada</p>
+      <p *ngIf="div_cuatro" style="font-size: 15px;margin: 0px;">Seleccione un tipo de pedido</p>
+    </div>
+  
+    <div *ngIf="sin_subcategoria" text-center>
+      <img src="assets/img/warning.png" style="width: 20%;">
+      <h2>Sin datos</h2>
+    </div>
+  
+    <div *ngIf="sin_datos">
+      <ion-card class="skeleton" style="padding: 15px">
+        <ion-grid style="height: 100%">
+          <ion-row>
+            <ion-col>
+              <ion-card-title></ion-card-title>
+            </ion-col>
+            <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+              <ion-card-subtitle></ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+  
+      <ion-card class="skeleton" style="padding: 15px">
+        <ion-grid style="height: 100%">
+          <ion-row>
+            <ion-col>
+              <ion-card-title></ion-card-title>
+            </ion-col>
+            <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+              <ion-card-subtitle></ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+  
+      <ion-card class="skeleton" style="padding: 15px">
+        <ion-grid style="height: 100%">
+          <ion-row>
+            <ion-col>
+              <ion-card-title></ion-card-title>
+            </ion-col>
+            <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+              <ion-card-subtitle></ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+  
+    <!-- Div Subcategoria -->
+    <div *ngIf="div_cero">
+      <ion-card *ngFor="let subcategoria of subcategorias" style="padding: 15px" (click)="click_address()">
+          <ion-button style="--border-radius: 10px !important" shape="round" color="favorite" no-padding fill="clear" expand="block">
+              <ion-grid>
+                <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
+                  <ion-col text-start size="10">
+                    <ion-card-title>{{ subcategoria.name }}</ion-card-title>
+                  </ion-col>
+                  <ion-col size="2">
+                    <img src="assets/img/Group29.png" style="width: 19px;height: 20px;float:right">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-button>
+      </ion-card>
+    </div>
+  
+    <!-- Div relleno 01 -->
+    <div class="efecto" *ngIf="div_uno">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked">Caracteristicas del punto de partida de la carga</ion-label>
+              <br>
+              <ion-textarea placeholder="Ingrese los detalles del punto de recojo de la carga."
+                style="background: white;padding-left: 5px" rows="6">
+              </ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked">Caracteristicas del punto final del envio</ion-label>
+              <br>
+              <ion-textarea placeholder="Ingrese los detalles del punto final del envio."
+                style="background: white;padding-left: 5px" rows="6">
+              </ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row padding>
+          <ion-col text-center>
+            <ion-button (click)="click_modalAdditional()" color="favorite">Continuar</ion-button>
+            <ion-button (click)="click_div01()" fill="outline" color="favorite">Atras</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+    <!-- Div relleno 02 -->
+    <div class="efecto" *ngIf="div_dos">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked">Caracteristicas de la carga por elemento</ion-label>
+              <br>
+              <ion-textarea placeholder="Ingrese los detalles del punto de recojo de la carga."
+                style="background: white;padding-left: 5px" rows="6">
+              </ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row padding>
+          <ion-col>
+            <ion-label no-padding style="margin: 0px;" position="stacked">Servicios adicionales</ion-label>
+            <br><br>
+            <ion-item class="check">
+              <ion-label>Estima</ion-label>
+              <ion-checkbox color="favorite" checked="true"></ion-checkbox>
+            </ion-item>
+            <ion-item style="margin: 0px;" class="check">
+              <ion-label class="check">Desestiba</ion-label>
+              <ion-checkbox color="favorite"></ion-checkbox>
+            </ion-item>
+            <ion-item class="check">
+              <ion-label>Resguardo</ion-label>
+              <ion-checkbox color="favorite" checked="true"></ion-checkbox>
+            </ion-item>
+            <ion-item class="check">
+              <ion-label>Seguro de carga</ion-label>
+              <ion-checkbox color="favorite"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row padding>
+          <ion-col text-center>
+            <ion-button (click)="click_modalDetail()" color="favorite">Continuar</ion-button>
+            <ion-button (click)="click_div02()" fill="outline" color="favorite">Atras</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+    <!-- Div relleno 03 -->
+    <div class="efecto" *ngIf="div_tres">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item no-lines>
+              <ion-label position="stacked">Lugar de inicio</ion-label>
+              <ion-input placeholder="Ingresa lugar de inicio" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item no-lines>
+              <ion-label position="stacked">Lugar de destino</ion-label>
+              <ion-input placeholder="Ingresar lugar de destino" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item no-lines>
+              <ion-label position="stacked">Peso de la carga</ion-label>
+              <ion-input placeholder="Ingresar peso de la carga" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item no-lines>
+              <ion-label style="padding-bottom: 10px" position="stacked">Tipo de carga</ion-label>
+              <ion-select padding style="background: white" placeholder=".: SELECCIONE :.">
+                <ion-select-option value="f">Female</ion-select-option>
+                <ion-select-option value="m">Male</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item no-lines>
+              <ion-label style="padding-bottom: 10px" position="stacked">Fecha de fin de pedido</ion-label>
+              <ion-datetime doneText="OK" cancelText="CANCELAR" padding style="background: white"
+                display-format="MM/DD/YYYY"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item no-lines>
+              <ion-label style="padding-bottom: 10px" position="stacked">Fecha máxima de entrega</ion-label>
+              <ion-datetime doneText="OK" cancelText="CANCELAR" padding style="background: white"
+                display-format="MM/DD/YYYY"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item no-lines>
+              <ion-label style="padding-bottom: 10px" position="stacked">Hora máxima de entrega</ion-label>
+              <ion-datetime doneText="OK" cancelText="CANCELAR" padding style="background: white" displayFormat="HH:mm">
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked">Requerimientos adicionales (120 caracteres) </ion-label>
+              <br>
+              <ion-textarea placeholder="" style="background: white;padding-left: 5px" rows="6">
+              </ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row padding>
+          <ion-col>
+            <ion-item class="check">
+              <ion-label>Dividible</ion-label>
+              <ion-checkbox color="favorite" checked="true"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item class="check">
+              <ion-label class="check">No dividible</ion-label>
+              <ion-checkbox color="favorite"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row padding>
+          <ion-col text-center>
+            <ion-button (click)="click_modalFinalizar()" color="favorite">Publicar</ion-button>
+            <ion-button (click)="click_div03()" fill="outline" color="favorite">Atras</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+    <!-- Div relleno 04 -->
+    <div class="efecto" *ngIf="div_cuatro">
+      <ion-grid>
+        <ion-row>
+          <ion-col text-center>
+            <img src="assets/img/Group131.png" width="15%">
+            <p><b style="color:#30205d">Por Subasta</b></p>
+            <hr>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinir justo</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <img src="assets/img/Group130.png" width="15%">
+            <p><b style="color:#30205d">Precio sugerido</b></p>
+            <hr>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinir justo</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <img src="assets/img/Group137.png" width="11%">
+            <p><b style="color:#30205d">Precio calculado</b></p>
+            <hr>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinir justo</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+  
+  </ion-content>

@@ -1,0 +1,20 @@
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <p style="font-size: 25px;margin: 0px"><b>Regístrate</b></p>
+        <p style="font-size: 15px;margin: 0px">¿Con que tipo de usuario deseas registarte?</p>
+      </ion-col>
+    </ion-row>
+    <ion-row padding>
+      <ion-col text-center (click)="register(1)">
+        <img src="assets/img/Group11.png" alt="">
+        <p text-center style="font-size: 13px">Soy transportista</p>
+      </ion-col>
+      <ion-col text-center (click)="register(2)">
+        <img src="assets/img/Group12.png" alt="">
+        <p text-center style="font-size: 13px">Soy cliente</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

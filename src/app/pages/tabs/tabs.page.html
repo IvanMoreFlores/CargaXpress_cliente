@@ -1,0 +1,38 @@
+<ion-tabs *ngIf="tab_client" color="danger">
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="Pedidos">
+      <ion-icon name="clipboard"></ion-icon>
+      <ion-label>Pedidos</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="Notificaciones">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>Notificaciones</ion-label>
+      <ion-badge color="danger" *ngIf="contador > 0">{{ contador }}</ion-badge>
+    </ion-tab-button>
+    <ion-tab-button tab="Perfil">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
+<ion-tabs *ngIf="tab_transp" color="danger">
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="InicioChofer">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="Servicios">
+      <ion-icon name="clipboard"></ion-icon>
+      <ion-label>Servicios</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="Conductores">
+      <ion-icon name="contacts"></ion-icon>
+      <ion-label>Conductores</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="PerfilTransp">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

@@ -1,0 +1,7 @@
+{
+  "name": "CargaXpress",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

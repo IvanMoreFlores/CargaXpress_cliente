@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <div>
+      <img style="max-width: 100% !important;border: 0 !important;margin-top: 5px !important;margin-left: 10px"
+        src="assets/img/logo02.png" width="20%">
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="openFirst()" color="light">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- <div padding text-center style="background: #ECECEC;">
+  <p style="font-size: 25px;margin: 0px;"><b>Mis Pedidos</b></p>
+</div> -->
+
+<ion-content no-padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="refresh" slot="fixed" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div padding *ngIf="cero_datos">
+    <img src="assets/img/warning.png" style="width: 30% !important;display:block;margin:auto">
+    <h1 text-center>Sin datos</h1>
+  </div>
+
+  <div *ngIf="con_datos">
+    <ion-card no-padding *ngFor="let pedido of pedidos" (click)="detail(pedido._id)">
+      <ion-card-header>
+        <ion-card-title>{{ pedido.code }}</ion-card-title>
+        <ion-card-subtitle *ngIf="pedido.type == 1">Tipo: <a style="color: #30205d">Subasta</a>
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="pedido.type == 2">Tipo: <a style="color: #30205d">Precio ofertado</a>
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="pedido.type == 3">Tipo: <a style="color: #30205d">Precio sugerido</a>
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="pedido.status == 0">Estado: <a style="color: #30205d">Pendiente de aprobación</a>
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="pedido.status == 1">Estado: <a style="color: #30205d">Publicado</a>
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="pedido.status == 2">Estado: <a style="color: #30205d">En proceso</a>
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="pedido.status == 3">Estado: <a style="color: #30205d">Cancelado </a>
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="pedido.status == 4">Estado: <a style="color: #30205d">Finalizado </a>
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+  <div *ngIf="sin_datos">
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="new_order()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

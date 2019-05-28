@@ -1,0 +1,22 @@
+<ion-content padding>
+  <ion-grid>
+
+    <ion-row>
+      <ion-col text-center>
+        <p style="font-size: 25px"><b>¡Bienvenido <a style="color: #30205d">{{ nombre }}</a>!</b></p>
+        <p style="font-size: 15px">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur, felis
+          ornare pulvinar ultrices, tellus urna sagittis urna, eget efficitur risus massa a ex.</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row padding>
+      <ion-col text-center>
+        <ion-button *ngIf="btn_cliente" (click)="home_client()" color="favorite">Continuar</ion-button><br><br>
+        <ion-button *ngIf="btn_transp" (click)="home_transp()" color="favorite">Continuar</ion-button><br><br>
+        <p style="font-size: 14px">Consejo, "Agregar fotos a tus pedidos para que recibas precios más claros"</p>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

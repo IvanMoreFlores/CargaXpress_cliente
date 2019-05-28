@@ -1,0 +1,101 @@
+<ion-header>
+    <ion-toolbar color="favorite">
+      <div>
+        <img style="max-width: 100% !important;border: 0 !important;margin-top: 5px !important;margin-left: 10px"
+          src="assets/img/logo02.png" width="20%">
+      </div>
+      <ion-buttons slot="end">
+        <ion-button (click)="openFirst()" color="light">
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content no-padding>
+  
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="refresh" slot="fixed" refreshingSpinner="circles"
+        refreshingText="Actualizando...">
+      </ion-refresher-content>
+    </ion-refresher>
+  
+    <div padding text-center style="background: #ECECEC;">
+      <p style="font-size: 25px;margin: 0px;"><b>Realizar pedido</b></p>
+      <p style="font-size: 15px;margin: 0px;">Seleccione la categoria deseada</p>
+    </div>
+  
+    <div *ngIf="con_datos">
+      <ion-card ion-button *ngFor="let categoria of categorias" style="padding: 15px;" (click)="modalSubcat(categoria._id)">
+          <ion-button style="--border-radius: 10px !important" shape="round" color="favorite" no-padding fill="clear" expand="block">
+              <ion-grid>
+                <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
+                  <ion-col text-start size="10">
+                    <ion-card-title>{{ categoria.name }}</ion-card-title>
+                  </ion-col>
+                  <ion-col size="2">
+                    <img src="assets/img/Group29.png" style="width: 19px;height: 20px;float:right">
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-button>
+      </ion-card>
+    </div>
+  
+    <div *ngIf="sin_datos">
+      <ion-card class="skeleton" style="padding: 15px" (click)="modalSubcat()">
+        <ion-grid style="height: 100%">
+          <ion-row>
+            <ion-col>
+              <ion-card-title></ion-card-title>
+            </ion-col>
+            <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+              <ion-card-subtitle></ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+  
+      <ion-card class="skeleton" style="padding: 15px" (click)="modalSubcat()">
+        <ion-grid style="height: 100%">
+          <ion-row>
+            <ion-col>
+              <ion-card-title></ion-card-title>
+            </ion-col>
+            <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+              <ion-card-subtitle></ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+  
+      <ion-card class="skeleton" style="padding: 15px" (click)="modalSubcat()">
+        <ion-grid style="height: 100%">
+          <ion-row>
+            <ion-col>
+              <ion-card-title></ion-card-title>
+            </ion-col>
+            <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+              <ion-card-subtitle></ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+  
+      <ion-card class="skeleton" style="padding: 15px" (click)="modalSubcat()">
+        <ion-grid style="height: 100%">
+          <ion-row>
+            <ion-col>
+              <ion-card-title></ion-card-title>
+            </ion-col>
+            <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+              <ion-card-subtitle></ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+  
+  
+  
+  </ion-content>

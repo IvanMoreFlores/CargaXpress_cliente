@@ -1,0 +1,352 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" color="light">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-segment no-border-top [(ngModel)]="category" color="light">
+      <ion-segment-button value="detalle">
+        <ion-label style="color: white" (click)="listar_detalle()">Detalle</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="ofertas" (click)="listar_ofertas()">
+        <ion-label style="color: white">Ofertas</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding>
+  <div [ngSwitch]="category">
+    <div *ngSwitchCase="'detalle'">
+      <ion-card no-padding *ngIf="div_detalle">
+        <ion-card-header>
+          <ion-grid>
+            <ion-row no-padding>
+              <ion-col text-center>
+                <ion-card-title>{{ detalle.code }}</ion-card-title>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-start>
+                <ion-card-subtitle>Categoria</ion-card-subtitle>
+              </ion-col>
+              <ion-col text-start>
+                <ion-card-subtitle><a style="color: black">{{ detalle.category.name }}</a></ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-start>
+                <ion-card-subtitle>Subcategoría del pedido</ion-card-subtitle>
+              </ion-col>
+              <ion-col text-start>
+                <ion-card-subtitle><a style="color: black">{{ detalle.subcategory.name }}</a></ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-start>
+                <ion-card-subtitle>Tipo de pedido</ion-card-subtitle>
+              </ion-col>
+              <ion-col text-start>
+                <ion-card-subtitle *ngIf="detalle.type == 1"><a style="color: black">Subasta</a></ion-card-subtitle>
+                <ion-card-subtitle *ngIf="detalle.type == 2"><a style="color: black">Precio ofertado</a>
+                </ion-card-subtitle>
+                <ion-card-subtitle *ngIf="detalle.type == 3"><a style="color: black">Precio sugerido</a>
+                </ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-start>
+                <ion-card-subtitle>Fecha de fin</ion-card-subtitle>
+              </ion-col>
+              <ion-col text-start>
+                <ion-card-subtitle><a style="color: black">{{ devolver_fech(detalle.endDate) }}</a></ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-start>
+                <ion-card-subtitle>Fecha máxima de entrega</ion-card-subtitle>
+              </ion-col>
+              <ion-col text-start>
+                <ion-card-subtitle><a style="color: black">{{ devolver_fech(detalle.deliveryMaxDate) }}</a>
+                </ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-start>
+                <ion-card-subtitle>Hora máx de entrega</ion-card-subtitle>
+              </ion-col>
+              <ion-col text-start>
+                <ion-card-subtitle><a style="color: black">{{ detalle.deliveryMaxHour }}</a></ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding *ngIf="detalle.price">
+              <ion-col text-start>
+                <ion-card-subtitle>Precio de pedido</ion-card-subtitle>
+              </ion-col>
+              <ion-col text-start>
+                <ion-card-subtitle><a style="color: black">{{ detalle.price }}</a></ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <hr />
+            <ion-row no-padding>
+              <ion-col text-center>
+                <ion-card-subtitle>Lugar de inicio</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-center>
+                <ion-card-subtitle><a style="color: black">{{ detalle.initPlace }}</a>
+                </ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <hr />
+            <ion-row no-padding>
+              <ion-col text-center>
+                <ion-card-subtitle>Lugar de destino</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-center>
+                <ion-card-subtitle><a style="color: black">{{ detalle.endPlace }}</a>
+                </ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <hr />
+            <ion-row no-padding>
+              <ion-grid fixed>
+                <ion-row>
+                  <ion-col text-center>
+                    <p style="color: black;font-size: 15px">Características del punto de recojo de la carga</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngFor="let item of detalle.receptionAnswers">
+                  <ion-grid fixed>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle style="color: black">{{item.title}}</ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle><a style="color: black">{{ item.answer }}</a>
+                        </ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-row>
+              </ion-grid>
+            </ion-row>
+            <hr />
+            <ion-row no-padding>
+              <ion-grid fixed>
+                <ion-row>
+                  <ion-col text-center>
+                    <p style="color: black;font-size: 15px">Características del punto final de llegada</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngFor="let item of detalle.destinationAnswers">
+                  <ion-grid fixed>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle style="color: black">{{item.title}}</ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle><a style="color: black">{{ item.answer }}</a>
+                        </ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-row>
+              </ion-grid>
+            </ion-row>
+            <hr>
+            <ion-row no-padding>
+              <ion-grid fixed>
+                <ion-row>
+                  <ion-col text-center>
+                    <p style="color: black;font-size: 15px">Características de los elementos</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngFor="let item of detalle.elements">
+                  <ion-grid *ngFor="let item of item.answers" fixed>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle style="color: black">{{item.title}}</ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col text-center>
+                        <ion-card-subtitle><a style="color: black">{{ item.answer }}</a>
+                        </ion-card-subtitle>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-row>
+              </ion-grid>
+            </ion-row>
+            <hr>
+            <!-- <ion-row no-padding>
+              <ion-col text-center>
+                <ion-card-subtitle>Servicios adicionales</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-center>
+                <ion-card-subtitle><a style="color: black">Estiba, Resguardo</a></ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <hr />
+            <ion-row no-padding>
+              <ion-col text-center>
+                <ion-button color="favorite" (click)="click_modalMapa()" shape="round" fill="outline">Ver mapa
+                </ion-button>
+              </ion-col>
+            </ion-row> -->
+          </ion-grid>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+
+
+    <div *ngSwitchCase="'ofertas'">
+      <ion-card *ngFor="let item of ofertas" style="border-left: 5px solid #30205d !important;">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="6">
+              <ion-grid fixed no-padding>
+                <ion-row>
+                  <ion-col>
+                    <ion-card-title style="color: black">Oferta #{{ item.offerNumber }}
+                    </ion-card-title>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-card-subtitle style="color: black;font-size: 17px">S/.{{ item.lastAmount }}
+                    </ion-card-subtitle>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-card-subtitle *ngIf="item.status === 0">Estado Negociando
+                    </ion-card-subtitle>
+                    <ion-card-subtitle *ngIf="item.status === 1">Estado Aceptado
+                    </ion-card-subtitle>
+                    <ion-card-subtitle *ngIf="item.status === 3">Estado Pagado
+                    </ion-card-subtitle>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-card-subtitle>Fecha de envio {{ devolver_fech(item.deliveryDate) }}
+                    </ion-card-subtitle>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-card-subtitle>Nivel de seguridad: {{ item.securityPercentage }}%
+                    </ion-card-subtitle>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+            <ion-col size="6">
+              <ion-grid fixed no-padding>
+                <ion-row>
+                  <ion-col>
+                    <ion-button *ngIf="item.status !== 3 && detalle.type !== 3"
+                      (click)="click_Contraofertar(item.lastAmount,item.bidder,item._id)" expand="full" color="primary"
+                      color="favorite">Negociar</ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button *ngIf="item.status !== 3" expand="full" color="primary" color="success">Aceptar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button *ngIf="item.status !== 3" expand="full" color="primary" color="danger">Cancelar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="var_mas(item._id)" expand="full" color="primary" color="favorite">Ver más
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <!-- <ion-grid style="height: 100%" no-padding>
+          <ion-row justify-content-center align-items-center style="padding: 7px">
+            <ion-col no-padding text-start>
+              <ion-card-subtitle style="color: black;font-size: 17px">Cod Pe - 2342523623</ion-card-subtitle>
+            </ion-col>
+            <ion-col no-padding text-center size="5">
+              <ion-card-title>s/ 1000</ion-card-title>
+            </ion-col>
+          </ion-row>
+          <ion-row justify-content-center align-items-center no-padding>
+            <ion-col no-padding text-start>
+              <ion-card-subtitle>condiciones cumplidad 4/4</ion-card-subtitle>
+            </ion-col>
+            <ion-col no-padding text-start size="5">
+              <ion-button (click)="click_modalNego()" color="favorite" expand="block">Negociacion</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row justify-content-center align-items-center no-padding>
+            <ion-col no-padding text-start>
+              <ion-card-subtitle no-padding>- Estiba</ion-card-subtitle>
+              <ion-card-subtitle no-padding>- Destiba</ion-card-subtitle>
+              <ion-card-subtitle no-padding>- Seguridad</ion-card-subtitle>
+              <ion-card-subtitle no-padding>- Seguridad</ion-card-subtitle>
+            </ion-col>
+            <ion-col no-padding text-start size="5">
+              <ion-button (click)="pago_culqi()" color="success" expand="block">Aceptar</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row justify-content-center align-items-center no-padding>
+            <ion-col no-padding text-start>
+              <ion-card-subtitle>Nivel de seguridad: 49%</ion-card-subtitle>
+            </ion-col>
+            <ion-col no-padding text-start size="5">
+              <ion-button color="danger" expand="block">Rechazar</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid> -->
+      </ion-card>
+    </div>
+
+
+
+  </div>
+
+
+  <!-- <ion-fab *ngIf="detalle.status === 1" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="editar_orden(detalle._id)">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+</ion-content>

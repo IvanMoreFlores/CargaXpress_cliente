@@ -1,0 +1,282 @@
+<ion-content>
+  <div *ngIf="div_client">
+    <ion-grid>
+      <ion-row padding>
+        <ion-col text-center>
+          <p style="font-size: 25px;margin: 0px;"><b>Regístrate</b></p>
+          <p style="font-size: 15px;margin: 0px;">Completa los siguientes campos</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Nombres</ion-label>
+            <ion-input [(ngModel)]="data_client.name" placeholder="Ingresa tu nombre" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Apellidos</ion-label>
+            <ion-input [(ngModel)]="data_client.lastName" placeholder="Ingresa tus apellidos" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label style="padding-bottom: 10px" position="stacked">Tipo de documento de identificación</ion-label>
+            <ion-select padding style="background: white" [(ngModel)]="data_client.documentType"
+              placeholder=".: Seleccione :.">
+              <ion-select-option value="1">DNI</ion-select-option>
+              <ion-select-option value="2">CE</ion-select-option>
+              <ion-select-option value="3">PASAPORTE</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Número de documento de identidad</ion-label>
+            <ion-input [(ngModel)]="data_client.documentCode" placeholder="Ingresa tu número de documento" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label style="padding-bottom: 10px" position="stacked">Tipo de cliente</ion-label>
+            <ion-select padding style="background: white" [(ngModel)]="data_client.userType"
+              placeholder=".: Seleccione :.">
+              <ion-select-option value="1">Independiente</ion-select-option>
+              <ion-select-option value="2">Persona juridica</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">RUC</ion-label>
+            <ion-input [(ngModel)]="data_client.ruc" placeholder="Ingresa tu número de RUC" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Razón social</ion-label>
+            <ion-input [(ngModel)]="data_client.businessName" placeholder="Ingresa tu razón social" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Celular</ion-label>
+            <ion-input [(ngModel)]="data_client.cellphone" placeholder="Ingresa tu número de celular" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Teléfono</ion-label>
+            <ion-input [(ngModel)]="data_client.phone" placeholder="Ingresa tu telefono fijo" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">E-mail</ion-label>
+            <ion-input [(ngModel)]="data_client.email" placeholder="Ingresa tu correo" type="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input [(ngModel)]="data_client.password" placeholder="**************" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Confirmar contraseña</ion-label>
+            <ion-input [(ngModel)]="data_client.confirmPassword" placeholder="**************" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center (click)="btn_registrar_cliente()">
+          <ion-button color="favorite">Registrarse</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Div Registro de conductores o Broker -->
+
+  <div *ngIf="div_trans">
+    <ion-grid>
+
+      <ion-row padding>
+        <ion-col text-center>
+          <p style="font-size: 25px;margin: 0px;"><b>Regístrate</b></p>
+          <p style="font-size: 15px;margin: 0px;">Completa los siguientes campos</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label style="padding-bottom: 10px" position="stacked">Tipo de registro</ion-label>
+            <ion-select padding style="background: white" [(ngModel)]="data_trans.profile"
+              placeholder=".: Seleccione :.">
+              <ion-select-option value="2">TRANSPORTISTA</ion-select-option>
+              <ion-select-option value="3">BROKER</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Razón social</ion-label>
+            <ion-input [(ngModel)]="data_trans.businessName" placeholder="Ingresa tu razón social" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">RUC</ion-label>
+            <ion-input [(ngModel)]="data_trans.ruc" placeholder="Ingresa tu número de RUC" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Celular</ion-label>
+            <ion-input [(ngModel)]="data_trans.cellphone" placeholder="Ingresa tu número de celular" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Telefono</ion-label>
+            <ion-input [(ngModel)]="data_trans.phone" placeholder="Ingresa tu telefono fijo" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">E-mail</ion-label>
+            <ion-input [(ngModel)]="data_trans.email" placeholder="Ingresa tu correo" type="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Persona de contacto</ion-label>
+            <ion-input [(ngModel)]="data_trans.contactPerson.name" placeholder="Ingresa el nombre" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Apellidos de la persona de contacto</ion-label>
+            <ion-input [(ngModel)]="data_trans.contactPerson.lastName" placeholder="Ingresa los apellidos" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Celular de persona de contacto</ion-label>
+            <ion-input [(ngModel)]="data_trans.contactPerson.cellphone" placeholder="Ingresa tu número de celular" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label style="padding-bottom: 10px" position="stacked">Tipo de documento del contacto</ion-label>
+            <ion-select padding style="background: white" [(ngModel)]="data_trans.documentType"
+              placeholder=".: Seleccione :.">
+              <ion-select-option value="1">DNI</ion-select-option>
+              <ion-select-option value="2">CE</ion-select-option>
+              <ion-select-option value="3">PASAPORTE</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label position="stacked">Número de documento del contacto</ion-label>
+            <ion-input [(ngModel)]="data_trans.documentCode" placeholder="Ingresa tu número de contacto" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item no-lines>
+            <ion-label style="padding-bottom: 10px" position="stacked">Tipo de cliente</ion-label>
+            <ion-select padding style="background: white" [(ngModel)]="data_trans.userType"
+              placeholder=".: Seleccione :.">
+              <ion-select-option value="1">Independiente</ion-select-option>
+              <ion-select-option value="2">Persona juridica</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input [(ngModel)]="data_trans.password" placeholder="**************" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Confirmar contraseña</ion-label>
+            <ion-input [(ngModel)]="data_trans.confirmPassword" placeholder="**************" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-center (click)="btn_registrar_transp()">
+          <ion-button color="favorite">Registrarse</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </div>
+</ion-content>
