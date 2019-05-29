@@ -125,7 +125,7 @@ export class DetailPage implements OnInit {
       console.log(err);
       this.loadingCtrl.dismiss();
       const msg = JSON.parse(err._body);
-      // this.errorAlert(msg.msg);
+      this.errorAlert(msg.msg, 'Error al listar las ofertas');
     });
   }
 
@@ -154,20 +154,72 @@ export class DetailPage implements OnInit {
           }
         }, {
           text: 'Confirmar',
-          handler: (datas) => {
+          handler: (dato) => {
             const datos = {
-              bidder: bidder,
+              // bidder: bidder,
               owner: localStorage.getItem('id'),
-              amount: datas.monto,
-              type: 1
+              amount: dato.monto,
+              type: 2,
+              offerHistory: id
             };
-            console.log(datos);
-            this._orden.nueva_contra(datos, id).subscribe((data => {
-              console.log(data);
+            this.confirmar(datos, id);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async confirmar(datos: any, id: any) {
+    console.log(datos, id);
+    const loading = await this.loadingCtrl.create({
+      message: 'Espere...',
+    });
+    await loading.present();
+    this._orden.nueva_contra(datos, id).subscribe((data) => {
+      // success
+      this.loadingCtrl.dismiss();
+      console.log(data);
+      this.successAlert('Orden registrada', 'Registrada');
+    }, (err) => {
+      // error
+      this.loadingCtrl.dismiss();
+      const msg = JSON.parse(err._body);
+      this.errorAlert(msg.msg, 'error al registrar la contraoferta');
+    });
+  }
+
+  async successAlert(body: any, inf: any) {
+    console.log('Mensaje : ' + body);
+    this.loadingCtrl.dismiss();
+    const alert = await this.alertCtrl.create({
+      header: inf,
+      backdropDismiss: false,
+      subHeader: body,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this._orden.detalle_order(this.activatedRoute.snapshot.paramMap.get('id')).subscribe((data => {
+              this.detalle = data;
+              this.fab_editar = true;
+              this.div_detalle = true;
             }));
           }
         }
       ]
+    });
+    await alert.present();
+  }
+
+  async errorAlert(err: any, msg: any) {
+    this.loadingCtrl.dismiss();
+    const alert = await this.alertCtrl.create({
+      backdropDismiss: false,
+      header: 'Error',
+      subHeader: msg,
+      message: err,
+      buttons: ['OK']
     });
     await alert.present();
   }

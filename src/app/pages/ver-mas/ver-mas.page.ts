@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, AlertController, ModalController, NavParams } from '@ionic/angular';
 import { NotificacionService } from '../../services/notificacion/notificacion.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ver-mas',
@@ -28,9 +29,7 @@ export class VerMasPage implements OnInit {
   }
 
   devolver_fecha(fecha: any) {
-    const hora = fecha.slice(11, 16);
-    const fecha_ = fecha.slice(0, 10);
-    return (fecha_ + ' ' + hora);
+    return (moment(fecha).format('DD-MM-YYYY, h:mm:ss a'));
   }
 
 }

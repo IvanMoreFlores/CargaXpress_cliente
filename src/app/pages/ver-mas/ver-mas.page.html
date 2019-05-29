@@ -19,17 +19,19 @@
       <ion-title>Tu contraoferta</ion-title>
     </ion-row>
     <ion-row *ngFor="let item of offers">
-      <ion-grid fixed>
-        <ion-row *ngIf="item.status === 0">
+      <ion-grid fixed padding>
+        <ion-row *ngIf="item.type === 1">
           <ion-col size="6" style="background: #edf2fa;">
             <ion-label style="font-size: 20px"><b>S/. {{ item.amount }}</b></ion-label><br>
             <ion-label style="font-size: 13px">{{devolver_fecha(item.createdAt)}}</ion-label>
           </ion-col>
-          <ion-col size="6"></ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col size="3"></ion-col>
         </ion-row>
-        <ion-row *ngIf="item.status === 1">
-          <ion-col size="6"></ion-col>
-          <ion-col style="background: #30205d">
+        <ion-row *ngIf="item.type === 2">
+          <ion-col size="3"></ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col  size="6" style="background: #30205d">
             <ion-label style="color: white;font-size: 20px">S/. {{ item.amount }}</ion-label><br>
             <ion-label style="color: white;font-size: 13px">{{devolver_fecha(item.createdAt)}}</ion-label>
           </ion-col>
