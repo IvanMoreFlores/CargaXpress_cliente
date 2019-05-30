@@ -1,4 +1,4 @@
-<ion-content padding>
+<ion-content padding class="center">
   <form [formGroup]="formularioUsuario" novalidate>
     <ion-grid style="width: 100%">
       <ion-row>
@@ -58,7 +58,7 @@
       </ion-row>
       <ion-row padding>
         <ion-col text-center>
-          <ion-button (click)="login()" [disabled]="!formularioUsuario.valid" color="favorite">Ingresar</ion-button>
+          <ion-button expand="full" (click)="login()" [disabled]="!formularioUsuario.valid" color="favorite">Ingresar</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

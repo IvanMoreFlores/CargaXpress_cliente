@@ -3,7 +3,7 @@ ion-content{
             ion-item {
             --highlight-color-valid: transparent;
             --highlight-color-invalid: transparent;
-             --highlight-color-focused: transparent;
+            --highlight-color-focused: transparent;
             --border-color : transparent;
                      }
             ion-input{
@@ -11,12 +11,11 @@ ion-content{
             padding: 5px !important;
             margin-top: 10px !important;
                      }
-                     ion-item .has-focus {
+            ion-button{
+            --border-radius: none !important;
+            height: 40px;
+                      }
+            ion-item .has-focus {
                         border: 2px solid #30205d !important;
                         }
-            ion-button{
-            // --border-radius: none !important;
-            height: 40px;
-            white-space: normal;
-                      }
             }

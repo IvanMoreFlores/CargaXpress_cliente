@@ -21,7 +21,7 @@
   <ion-grid>
     <ion-row no-padding>
       <ion-col text-center>
-        <img style="width:90px;height:90px;border-radius:150px;" src="assets/img/UC17.png" alt="">
+        <img width="25%" src="assets/img/user.png" alt="">
       </ion-col>
     </ion-row>
     <ion-row no-padding>
@@ -37,7 +37,7 @@
         <ion-card-subtitle>{{ perfil.documentCode }}</ion-card-subtitle>
       </ion-col>
       <ion-col text-center *ngIf="perfil.status === 1">
-        <ion-card-subtitle>(Activa)</ion-card-subtitle>
+        <ion-card-subtitle>(Activo)</ion-card-subtitle>
       </ion-col>
       <ion-col text-center *ngIf="perfil.status === 2">
         <ion-card-subtitle>(Suspendido)</ion-card-subtitle>
@@ -137,7 +137,7 @@
     </ion-row>
   </ion-grid>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button (click)="edit_perfil(perfil._id)">
       <ion-icon name="create"></ion-icon>
     </ion-fab-button>
   </ion-fab>

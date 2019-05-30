@@ -6,6 +6,7 @@ import { LoadingController, AlertController, ModalController, NavController } fr
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../services/order/order.service';
 import { VerMasPage } from '../ver-mas/ver-mas.page';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-detail',
@@ -102,8 +103,8 @@ export class DetailPage implements OnInit {
     // });
   }
 
-  devolver_fech(fecha: String) {
-    return fecha.slice(0, 10);
+  devolver_fech(fecha: any) {
+    return (moment(fecha).format('DD-MM-YYYY'));
   }
 
   listar_detalle() {
@@ -129,9 +130,9 @@ export class DetailPage implements OnInit {
     });
   }
 
-  async click_Contraofertar(monto: number, bidder: any, id: any) {
+  async click_Contraofertar(monto: number, _id: any, id: any) {
     console.log(this.activatedRoute.snapshot.paramMap.get('id'));
-    console.log(bidder);
+    console.log(id);
     const alert = await this.alertCtrl.create({
       header: 'Ofertar',
       message: 'Contraoferta del ofertante S/.' + monto + ' <br/> Monto de oferta (S/.)',
@@ -160,7 +161,7 @@ export class DetailPage implements OnInit {
               owner: localStorage.getItem('id'),
               amount: dato.monto,
               type: 2,
-              offerHistory: id
+              offerHistory: _id
             };
             this.confirmar(datos, id);
           }
@@ -180,13 +181,76 @@ export class DetailPage implements OnInit {
       // success
       this.loadingCtrl.dismiss();
       console.log(data);
-      this.successAlert('Orden registrada', 'Registrada');
+      this.successAlert('Oferta registrada', 'Registrada');
     }, (err) => {
       // error
       this.loadingCtrl.dismiss();
       const msg = JSON.parse(err._body);
       this.errorAlert(msg.msg, 'error al registrar la contraoferta');
     });
+  }
+
+  async aceptarAlter(lastAmount: number, id: number, oid: number) {
+    const alert = await this.alertCtrl.create({
+      backdropDismiss: false,
+      header: 'Aceptar',
+      subHeader: 'Aceptar oferta',
+      message: '<b>¿ Esta seguro de aceptar la ultima oferta (' + lastAmount + ') ?</b>',
+      buttons: [{
+        text: 'NO',
+        role: 'cancel',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'SI',
+        handler: () => {
+          console.log('Confirm Okay');
+          this.presentLoading(id, oid);
+        }
+      }]
+    });
+    await alert.present();
+  }
+
+  async presentLoading(id, oid) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Aceptando oferta',
+    });
+    await loading.present();
+    this._orden.aceptar_contra(id, oid).subscribe((data) => {
+      // success
+      this.loadingCtrl.dismiss();
+      console.log(data);
+      this.successAlert('Oferta aceptada', 'Aceptado');
+    }, (err) => {
+      // error
+      this.loadingCtrl.dismiss();
+      const msg = JSON.parse(err._body);
+      this.errorAlert(msg.msg, 'error al aceptar la oferta');
+    });
+  }
+
+  async cancelartAlert(lastAmount: number) {
+    const alert = await this.alertCtrl.create({
+      backdropDismiss: false,
+      header: 'Cancelar',
+      subHeader: 'Cancelar oferta',
+      message: '<b>¿ Esta seguro de cancelar la oferta (' + lastAmount + ') ?</b>',
+      buttons: [{
+        text: 'NO',
+        role: 'cancel',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'SI',
+        handler: () => {
+          console.log('Confirm Okay');
+        }
+      }]
+    });
+    await alert.present();
   }
 
   async successAlert(body: any, inf: any) {
@@ -200,6 +264,7 @@ export class DetailPage implements OnInit {
         {
           text: 'OK',
           handler: () => {
+            this.listar_ofertas();
             this._orden.detalle_order(this.activatedRoute.snapshot.paramMap.get('id')).subscribe((data => {
               this.detalle = data;
               this.fab_editar = true;

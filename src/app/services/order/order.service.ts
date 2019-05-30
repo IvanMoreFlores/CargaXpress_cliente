@@ -18,8 +18,23 @@ export class OrderService {
   api_detalle_order: string = this.ip + 'orders/';
   api_listar_ofertas: string = this.ip + 'orders/';
   api_nueva_contra: string = this.ip + 'orders/';
+  api_aceptar_contra: string = this.ip + 'orders/';
 
   constructor(public http: Http) { }
+
+  aceptar_contra(id: any, oid: any) {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.post(this.api_aceptar_contra + id + '/offers/' + oid + '/accept', {}, {
+      headers: headers,
+      method: 'POST'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
 
   nueva_contra(data: any, id: any) {
     console.log(data);
@@ -133,6 +148,19 @@ export class OrderService {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
     return this.http.get(this.api_listar_orden_id + localStorage.getItem('id') + '/orders', {
+      headers: headers,
+      method: 'GET'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
+
+  listar_orden_id_pag(page: number) {
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    headers.append('Accept', 'application/json');
+    return this.http.get(this.api_listar_orden_id + localStorage.getItem('id') + '/orders?page=' + page, {
       headers: headers,
       method: 'GET'
     }).pipe(map(

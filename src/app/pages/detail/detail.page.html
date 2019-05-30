@@ -28,6 +28,21 @@
             </ion-row>
             <ion-row no-padding>
               <ion-col text-start>
+                <ion-card-subtitle>Estado</ion-card-subtitle>
+              </ion-col>
+              <ion-col text-start>
+                <ion-card-subtitle style="color: black" *ngIf="detalle.status == 1">Publicado
+                </ion-card-subtitle>
+                <ion-card-subtitle style="color: black" *ngIf="detalle.status == 2">En proceso
+                </ion-card-subtitle>
+                <ion-card-subtitle style="color: black" *ngIf="detalle.status == 3">Cancelado
+                </ion-card-subtitle>
+                <ion-card-subtitle style="color: black" *ngIf="detalle.status == 4">Finalizado
+                </ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-col text-start>
                 <ion-card-subtitle>Categoria</ion-card-subtitle>
               </ion-col>
               <ion-col text-start>
@@ -250,7 +265,9 @@
                     </ion-card-subtitle>
                     <ion-card-subtitle *ngIf="item.status === 1">Estado Aceptado
                     </ion-card-subtitle>
-                    <ion-card-subtitle *ngIf="item.status === 3">Estado Pagado
+                    <ion-card-subtitle *ngIf="item.status === 2">Estado Pagado
+                    </ion-card-subtitle>
+                    <ion-card-subtitle *ngIf="item.status === 3">Estado cancelado
                     </ion-card-subtitle>
                   </ion-col>
                 </ion-row>
@@ -272,20 +289,22 @@
               <ion-grid fixed no-padding>
                 <ion-row>
                   <ion-col>
-                    <ion-button *ngIf="item.status !== 3 && detalle.type !== 3"
-                      (click)="click_Contraofertar(item.lastAmount,item.bidder,item._id)" expand="full" color="primary"
+                    <ion-button *ngIf="item.status === 0 && detalle.canNegotiate === 1"
+                      (click)="click_Contraofertar(item.lastAmount,item._id,item.order)" expand="full" color="primary"
                       color="favorite">Negociar</ion-button>
                   </ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col>
-                    <ion-button *ngIf="item.status !== 3" expand="full" color="primary" color="success">Aceptar
+                    <ion-button (click)="aceptarAlter(item.lastAmount,item.order,item._id)" *ngIf="item.status === 0"
+                      expand="full" color="primary" color="success">Aceptar
                     </ion-button>
                   </ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col>
-                    <ion-button *ngIf="item.status !== 3" expand="full" color="primary" color="danger">Cancelar
+                    <ion-button (click)="cancelartAlert(item.lastAmount)" *ngIf="item.status === 0" expand="full"
+                      color="primary" color="danger">Cancelar
                     </ion-button>
                   </ion-col>
                 </ion-row>
@@ -294,7 +313,13 @@
                     <ion-button (click)="var_mas(item._id)" expand="full" color="primary" color="favorite">Ver más
                     </ion-button>
                   </ion-col>
-                </ion-row>
+                </ion-row>                
+                <ion-row>
+                    <ion-col>
+                      <ion-button *ngIf="item.status === 1" expand="full" color="primary" color="success">Pagar
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
               </ion-grid>
             </ion-col>
           </ion-row>

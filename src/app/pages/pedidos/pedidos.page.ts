@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, NavController, AlertController } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { Platform, IonRouterOutlet } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { OrderService } from '../../services/order/order.service';
@@ -12,18 +14,21 @@ import { ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./pedidos.page.scss'],
 })
 export class PedidosPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
   customBackActionSubscription: Subscription;
   sin_datos: Boolean;
   con_datos: Boolean;
   cero_datos: Boolean;
-  pedidos: any[] = [];
+  page: number;
+  pedidos: any = [];
   constructor(private router: Router,
     private menu: MenuController,
     public platform: Platform,
     public NvCtrl: NavController,
     public _order: OrderService,
-    public alertController: AlertController) {
+    public alertController: AlertController,
+    public toastController: ToastController) {
     this.menu.swipeEnable(true, 'custom');
   }
 
@@ -34,6 +39,8 @@ export class PedidosPage implements OnInit {
     this.sin_datos = true;
     this._order.listar_orden_id().subscribe((data => {
       if (data.orders.length > 0) {
+        console.log(data);
+        this.page = data.page;
         this.pedidos = data.orders;
         this.cero_datos = false;
         this.con_datos = true;
@@ -96,6 +103,7 @@ export class PedidosPage implements OnInit {
     this.sin_datos = true;
     this._order.listar_orden_id().subscribe((data => {
       if (data.orders.length > 0) {
+        this.page = data.page;
         this.pedidos = data.orders;
         this.cero_datos = false;
         this.con_datos = true;
@@ -149,6 +157,30 @@ export class PedidosPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  siguiente(event) {
+    this._order.listar_orden_id_pag(this.page + 1).subscribe((data => {
+      if (data.orders.length > 0) {
+        this.page = data.page;
+        this.pedidos = this.pedidos.concat(data.orders);
+        console.log(data.orders);
+        event.target.complete();
+      } else {
+        event.target.complete();
+        this.presentToast();
+      }
+    }), error => {
+      this.respuestaFail(error.json());
+    });
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Sin datos que mostrar',
+      duration: 2000
+    });
+    toast.present();
   }
 
 

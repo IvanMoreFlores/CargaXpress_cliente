@@ -1,0 +1,140 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-title color="light">Editar perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">
+        <ion-icon color="light" slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="editForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Nombres</ion-label>
+        <ion-input formControlName="Nombres" [(ngModel)]="perfil.name" placeholder="Ingresa tus nombres" type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('Nombres').errors && editForm.get('Nombres').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('Nombres').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Apellidos</ion-label>
+        <ion-input formControlName="Apellidos" [(ngModel)]="perfil.lastName" placeholder="Ingresa tus apellidos"
+          type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('Apellidos').errors && editForm.get('Apellidos').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('Apellidos').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Tipo de documento</ion-label>
+        <ion-select formControlName="t_documento" [value]="pasarString(perfil.documentType._id)" padding
+          style="background: white" placeholder=".: Seleccione :.">
+          <ion-select-option value="1">DNI</ion-select-option>
+          <ion-select-option value="2">CE</ion-select-option>
+          <ion-select-option value="3">PASAPORTE</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Numero de documento de identidad</ion-label>
+        <ion-input formControlName="n_documento" [(ngModel)]="perfil.documentCode"
+          placeholder="Ingresa tu número de documento" type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('n_documento').errors && editForm.get('n_documento').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('n_documento').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Tipo de cliente</ion-label>
+        <ion-select formControlName="t_cliente" [value]="pasarString(perfil.userType)" padding style="background: white"
+          placeholder=".: Seleccione :.">
+          <ion-select-option value="1">Independiente</ion-select-option>
+          <ion-select-option value="2">Persona juridica</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Razón social</ion-label>
+        <ion-input formControlName="r_social" [(ngModel)]="perfil.businessName" placeholder="Ingresa tu razón social"
+          type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('r_social').errors && editForm.get('r_social').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('r_social').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">RUC</ion-label>
+        <ion-input formControlName="ruc" [(ngModel)]="perfil.ruc" placeholder="Ingrese RUC" type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('ruc').errors && editForm.get('ruc').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('ruc').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Razón comercial</ion-label>
+        <ion-input formControlName="r_comercial" [(ngModel)]="perfil.businessReason"
+          placeholder="Ingresa tu razón comercial" type="text">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Telefóno fijo</ion-label>
+        <ion-input formControlName="phone" [(ngModel)]="perfil.phone" placeholder="Ingresa tu número fijo" type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('phone').errors && editForm.get('phone').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('phone').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Celular</ion-label>
+        <ion-input formControlName="celphone" [(ngModel)]="perfil.cellphone" placeholder="Ingresa tu numero celular"
+          type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('celphone').errors && editForm.get('celphone').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('celphone').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngFor="let item of perfil.addresses">
+        <ion-label position="stacked">Dirección</ion-label>
+        <ion-input formControlName="address" [(ngModel)]="item.address" placeholder="Ingresa tu dirección" type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('address').errors && editForm.get('address').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('address').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Pais</ion-label>
+        <ion-input formControlName="country" [(ngModel)]="perfil.country" placeholder="Ingresa el nombre de tu País"
+          type="text">
+        </ion-input>
+        <ion-label position="stacked" style="margin: 0px;"
+          *ngIf="editForm.get('country').errors && editForm.get('country').dirty">
+          <ion-label position="stacked" style="margin: 0px;" color="danger" ion-text
+            *ngIf="editForm.get('country').hasError('required')">*Se requiere campo</ion-label>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-row padding *ngIf="editForm">
+      <ion-col text-center>
+        <ion-button (click)="edit_perfil()" [disabled]="!editForm?.valid" color="favorite">Actualizar</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

@@ -21,7 +21,9 @@ const routes: Routes = [
   { path: 'new-driver/:id', loadChildren: './pages/new-driver/new-driver.module#NewDriverPageModule' },
   { path: 'buscador-lugar', loadChildren: './pages/buscador-lugar/buscador-lugar.module#BuscadorLugarPageModule' },
   { path: 'ver-mas', loadChildren: './pages/ver-mas/ver-mas.module#VerMasPageModule' },
+  { path: 'edit-perfil/:id', loadChildren: './pages/edit-perfil/edit-perfil.module#EditPerfilPageModule' },
   { path: '**', loadChildren: './pages/splash/splash.module#SplashPageModule' }]
+
   ;
 
 

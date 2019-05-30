@@ -106,7 +106,10 @@
     </ion-card>
   </div>
 
-
+  <ion-infinite-scroll threshold="160px" (ionInfinite)="siguiente($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando pedidos..">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="new_order()">
