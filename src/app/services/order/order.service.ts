@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 export class OrderService {
 
   datos: any;
+  orden: any = {};
   ip = 'https://carga-api.us-east.mybluemix.net/api/v1/';
   api_listar_subcategorias: string = this.ip + 'categories/';
   api_listar_orden: string = this.ip + 'orders/';
@@ -19,8 +20,38 @@ export class OrderService {
   api_listar_ofertas: string = this.ip + 'orders/';
   api_nueva_contra: string = this.ip + 'orders/';
   api_aceptar_contra: string = this.ip + 'orders/';
+  api_traer_empresas: string = this.ip + 'aditionalservices/';
+  api_traer_servicio: string = this.ip + 'aditionalservices/';
 
   constructor(public http: Http) { }
+
+  listar_servicio() {
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_traer_servicio, {
+      headers: headers,
+      method: 'GET'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
+
+  traer_empresas(id: any) {
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_traer_empresas + id + '/services', {
+      headers: headers,
+      method: 'GET'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
 
   aceptar_contra(id: any, oid: any) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -68,6 +99,7 @@ export class OrderService {
   detalle_order(id: any) {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_detalle_order + id, {
       headers: headers,
       method: 'GET'
@@ -78,11 +110,13 @@ export class OrderService {
     ));
   }
 
-  nueva_order(data: any) {
-    console.log(data);
+  nueva_order(data) {
+    this.orden = data;
+    console.log(this.orden);
     const headers = new Headers({ 'Content-Type': 'application/json' });
     headers.append('Accept', 'application/json');
-    return this.http.post(this.api_nueva_order, data, {
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.post(this.api_nueva_order, this.orden, {
       headers: headers,
       method: 'POST'
     }).pipe(map(
@@ -95,6 +129,7 @@ export class OrderService {
   traer_precio(id: any, metros: any) {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_traer_precio + id + '/calculatedprice?mts=' + metros, {
       headers: headers,
       method: 'GET'
@@ -108,6 +143,7 @@ export class OrderService {
   listar_questions(id) {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_questions + id + '/questions', {
       headers: headers,
       method: 'GET'
@@ -121,6 +157,7 @@ export class OrderService {
   listar_subcategorias(id) {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_subcategorias + id + '/subcategories?hasquestions=1', {
       headers: headers,
       method: 'GET'
@@ -134,6 +171,7 @@ export class OrderService {
   listar_orden() {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_orden, {
       headers: headers,
       method: 'GET'
@@ -147,7 +185,8 @@ export class OrderService {
   listar_orden_id() {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
-    return this.http.get(this.api_listar_orden_id + localStorage.getItem('id') + '/orders', {
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_listar_orden_id + localStorage.getItem('id') + '/orders?sort=created&sortDir=dsc', {
       headers: headers,
       method: 'GET'
     }).pipe(map(
@@ -160,7 +199,8 @@ export class OrderService {
   listar_orden_id_pag(page: number) {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
-    return this.http.get(this.api_listar_orden_id + localStorage.getItem('id') + '/orders?page=' + page, {
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_listar_orden_id + localStorage.getItem('id') + '/orders?sort=created&sortDir=dsc&page=' + page, {
       headers: headers,
       method: 'GET'
     }).pipe(map(

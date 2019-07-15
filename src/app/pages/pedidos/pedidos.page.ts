@@ -22,14 +22,15 @@ export class PedidosPage implements OnInit {
   cero_datos: Boolean;
   page: number;
   pedidos: any = [];
-  constructor(private router: Router,
-    private menu: MenuController,
+  constructor(private menu: MenuController,
+    private router: Router,
     public platform: Platform,
     public NvCtrl: NavController,
     public _order: OrderService,
     public alertController: AlertController,
     public toastController: ToastController) {
     this.menu.swipeEnable(true, 'custom');
+    this.menu.enable(false, 'custom');
   }
 
 
@@ -75,11 +76,14 @@ export class PedidosPage implements OnInit {
   }
 
   doRefresh(event: any) {
+    // event.cancelable = true;
+    console.log(event.cancelable);
     this.cero_datos = false;
     this.sin_datos = !this.sin_datos;
     this.con_datos = !this.con_datos;
     setTimeout(() => {
       this.ngOnInit();
+      // event.cancelable = false;
       event.target.complete();
     }, 2000);
   }

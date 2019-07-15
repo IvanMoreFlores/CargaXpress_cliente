@@ -21,12 +21,35 @@ export class NotificacionPage implements OnInit {
     public router: Router,
     public _noti: NotificacionService,
     public alertController: AlertController,
-    public modalController: ModalController) { }
+    public modalController: ModalController) {
+    this.menu.swipeEnable(true, 'custom');
+    this.menu.enable(false, 'custom');
+  }
 
   ngOnInit() {
     this._noti.listar_notificaciones().subscribe((data => {
       if (data.notifications.length > 0) {
         this.notificaciones = data.notifications;
+        this.cero_datos = false;
+        this.con_datos = true;
+        this.sin_datos = false;
+      } else {
+        this.cero_datos = true;
+        this.sin_datos = false;
+      }
+    }), error => {
+      this.respuestaFail(error.json());
+    });
+  }
+
+  refrescar() {
+    this.cero_datos = false;
+    this.con_datos = false;
+    this.sin_datos = true;
+    this._noti.listar_notificaciones().subscribe((data => {
+      if (data.notifications.length > 0) {
+        this.notificaciones = data.notifications;
+        // this.pedidos = data.orders;
         this.cero_datos = false;
         this.con_datos = true;
         this.sin_datos = false;
@@ -82,7 +105,12 @@ export class NotificacionPage implements OnInit {
     } else {
       this.router.navigate(['/detail', notificacion.types[0]['id']]);
     }
-
   }
+
+  ionViewDidEnter() {
+    this.refrescar();
+  }
+
+
 
 }

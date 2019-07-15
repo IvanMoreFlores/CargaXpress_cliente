@@ -1,73 +1,107 @@
 <ion-header>
   <ion-toolbar color="favorite">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" color="light">
-      </ion-back-button>
+    <ion-title color="light">Datos del pedido</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">
+        <ion-icon color="light" slot="icon-only" name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title color="light">Negociación</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content no-padding class="sample-modal-page">
 
-  <ion-card>
-    <ion-card-header no-padding>
-      <ion-grid >
-        <ion-row style="width: 100%">
-          <ion-col size="4" style="display: flex;justify-content: flex-start;align-items: flex-start;">
-            <img src="assets/img/UC17.png" alt="">
+
+<ion-content no-padding>
+  <ion-card ion-activatable no-padding *ngIf="estado">
+    <ion-ripple-effect></ion-ripple-effect>
+    <ion-card-header>
+      <ion-grid fixed no-padding>
+        <ion-row no-padding>
+          <ion-col text-start size="5">
+            <ion-card-subtitle>N° de pedido</ion-card-subtitle>
           </ion-col>
-          <ion-col size="8">
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-card-title>Carlos Villagomes</ion-card-title>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-card-subtitle>Formalidad</ion-card-subtitle>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="2" *ngFor="let star of [1,1,1,1,1]">
-                  <ion-icon color="favorite" style="zoom: 2;" name="star"></ion-icon>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+          <ion-col text-start>
+            <ion-card-subtitle><a style="color: black">{{ detalle.code }}</a>
+            </ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col text-start size="5">
+            <ion-card-subtitle>Tipo de pedido</ion-card-subtitle>
+          </ion-col>
+          <ion-col text-start>
+            <ion-card-subtitle *ngIf="detalle.type == 1"><a style="color: black">Subasta</a></ion-card-subtitle>
+            <ion-card-subtitle *ngIf="detalle.type == 2"><a style="color: black">Precio ofertado</a>
+            </ion-card-subtitle>
+            <ion-card-subtitle *ngIf="detalle.type == 3"><a style="color: black">Precio sugerido</a>
+            </ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col text-start size="5">
+            <ion-card-subtitle>Lugar de inicio</ion-card-subtitle>
+          </ion-col>
+          <ion-col text-start>
+            <ion-card-subtitle><a style="color: black">{{ detalle.initPlace }}</a>
+            </ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col text-start size="5">
+            <ion-card-subtitle>Lugar de destino</ion-card-subtitle>
+          </ion-col>
+          <ion-col text-start>
+            <ion-card-subtitle><a style="color: black">{{ detalle.endPlace }}</a>
+            </ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col text-start size="5">
+            <ion-card-subtitle>Monto</ion-card-subtitle>
+          </ion-col>
+          <ion-col text-start>
+            <ion-card-subtitle><a style="color: black">S/. {{ detalle.price }}</a>
+            </ion-card-subtitle>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-header>
-    <ion-card-content no-padding>
-      <ion-grid>
-        <ion-row>
-          <ion-col text-center>
-            <ion-card-title>Tu oferta</ion-card-title>
-          </ion-col>
-          <ion-col text-center>
-            <ion-card-title>Nueva oferta</ion-card-title>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col text-center>
-            <ion-card-title color="primary">s/ 16000</ion-card-title>
-          </ion-col>
-          <ion-col text-center>
-            <ion-card-title color="danger">s/ 36000</ion-card-title>
-          </ion-col>
-        </ion-row>
-        <ion-row no-padding>
-          <ion-col text-center size="6">
-            <ion-button expand="block" color="favorite">Aceptar</ion-button>
-          </ion-col>
-          <ion-col text-center size="6">
-            <ion-button (click)="click_Contraofertar()" fill="outline" expand="block" color="favorite">Contraofertar
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
   </ion-card>
+
+  <div>
+    <div *ngIf="servicios.length > 0" padding text-start>
+      <p style="font-size: 25px;margin: 0px;"><b>Servicios adicionales</b></p>
+    </div>
+    <ion-card ion-activatable no-padding *ngFor="let servicio of servicios"
+      (click)="add_services(servicio._id,servicio.name)">
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-card-header>
+        <ion-card-title>{{servicio.name}}
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+  <div>
+    <div *ngIf="costos.length > 0" padding text-start>
+      <p style="font-size: 25px;margin: 0px;"><b>Costos adicionales</b></p>
+    </div>
+    <ion-card style="padding:0px !important" *ngFor="let costo of costos">
+      <ion-card-content style="padding:5px !important">
+        <ion-item style="--background:white;">
+          <ion-card-title>{{ costo.servicio }} : <a style="color: #30205d">S/. {{ costo.monto }}</a></ion-card-title>
+          <ion-button (click)="eliminar_costo(costo._id)" slot="start" fill="clear">
+              <ion-icon color="danger" slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="favorite">
+    <ion-title text-center color="light">Pagar <b>S/. {{ total }}</b></ion-title>
+  </ion-toolbar>
+</ion-footer>

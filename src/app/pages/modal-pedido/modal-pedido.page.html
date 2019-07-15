@@ -50,7 +50,7 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Ingresa el lugar de envío</ion-label>
-            <ion-input (click)="click_buscador(1)" [(ngModel)]="datos_orden.initPlace"
+            <ion-input (ionFocus)="click_buscador(1)" readonly [(ngModel)]="datos_orden.initPlace"
               placeholder="Escribe la dirección de partida"></ion-input>
           </ion-item>
         </ion-col>
@@ -59,7 +59,7 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Ingreso el lugar de recojo</ion-label>
-            <ion-input (click)="click_buscador(2)" [(ngModel)]="datos_orden.endPlace"
+            <ion-input (ionFocus)="click_buscador(2)" readonly [(ngModel)]="datos_orden.endPlace"
               placeholder="Escribe la dirección de llegada"></ion-input>
           </ion-item>
         </ion-col>
@@ -69,12 +69,6 @@
           <div #map id="map"></div>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col text-center>
-          <ion-button (click)="boton_atras(1)" fill="outline" color="favorite">Atras</ion-button>
-          <ion-button (click)="click_tres()" color="favorite">Continuar</ion-button>
-        </ion-col>
-      </ion-row>
     </ion-grid>
   </div>
 
@@ -82,21 +76,19 @@
     <div padding text-center style="background: #ECECEC;">
       <p style="font-size: 15px;margin: 0px;">Seleccione la categoria deseada</p>
     </div>
-    <ion-card ion-button *ngFor="let categoria of categorias" style="padding: 15px;"
+    <ion-card ion-activatable ion-button *ngFor="let categoria of categorias" style="padding: 15px;"
       (click)="click_cuatro(categoria._id)">
-      <ion-button style="--border-radius: 10px !important" shape="round" color="favorite" no-padding fill="clear"
-        expand="block">
-        <ion-grid>
-          <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
-            <ion-col text-start size="10">
-              <ion-card-title>{{ categoria.name }}</ion-card-title>
-            </ion-col>
-            <ion-col size="2">
-              <img src="assets/img/Group29.png" style="width: 19px;height: 20px;float:right">
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-button>
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-grid>
+        <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
+          <ion-col text-start size="10">
+            <ion-card-title>{{ categoria.name }}</ion-card-title>
+          </ion-col>
+          <ion-col size="2">
+            <img src="assets/img/Group29.png" style="width: 19px;height: 20px;float:right">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card>
   </div>
 
@@ -104,20 +96,18 @@
     <div padding text-center style="background: #ECECEC;">
       <p style="font-size: 15px;margin: 0px;">Seleccione la subcategoria deseada</p>
     </div>
-    <ion-card *ngFor="let subcategoria of subcategorias" style="padding: 15px" (click)="click_cinco(subcategoria._id)">
-      <ion-button style="--border-radius: 10px !important" shape="round" color="favorite" no-padding fill="clear"
-        expand="block">
-        <ion-grid>
-          <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
-            <ion-col text-start size="10">
-              <ion-card-title>{{ subcategoria.name }}</ion-card-title>
-            </ion-col>
-            <ion-col size="2">
-              <img src="assets/img/Group29.png" style="width: 19px;height: 20px;float:right">
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-button>
+    <ion-card ion-activatable *ngFor="let subcategoria of subcategorias" style="padding: 15px" (click)="click_cinco(subcategoria._id)">
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-grid>
+        <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
+          <ion-col text-start size="10">
+            <ion-card-title>{{ subcategoria.name }}</ion-card-title>
+          </ion-col>
+          <ion-col size="2">
+            <img src="assets/img/Group29.png" style="width: 19px;height: 20px;float:right">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card>
   </div>
 
@@ -161,14 +151,6 @@
         </ion-list>
       </div>
     </div>
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          <ion-button (click)="boton_atras(2)" fill="outline" color="favorite">Atras</ion-button>
-          <ion-button (click)="click_seis()" color="favorite">Continuar</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
   </div>
 
   <div class="efecto" *ngIf="div_seis">
@@ -176,7 +158,7 @@
       <p style="font-size: 15px;text-align: center"><b>Características del elemento de la carga*</b></p>
       <div no-padding>
         <ion-list>
-          <ion-item *ngFor="let question of datos_orden.elements.answers">
+          <ion-item *ngFor="let question of datos_orden.elements[0].answers">
             <p style="font-size: 15px;">{{ question.title }}</p>
             <ion-label position="stacked">{{ question.description }}</ion-label>
             <ion-select [(ngModel)]="question.answer" *ngIf="question.options.length > 0"
@@ -191,14 +173,6 @@
         </ion-list>
       </div>
     </div>
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          <ion-button (click)="boton_atras(3)" fill="outline" color="favorite">Atras</ion-button>
-          <ion-button (click)="click_siete()" color="favorite">Continuar</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
   </div>
 
   <div class="efecto" *ngIf="div_siete">
@@ -207,8 +181,9 @@
         <ion-col>
           <ion-item no-lines>
             <ion-label style="padding-bottom: 10px" position="stacked">Fecha de fin de pedido</ion-label>
-            <ion-datetime placeholder="Seleccione fecha" [min]="2019" [max]="2025" [(ngModel)]="datos_orden.endDate" doneText="OK" cancelText="CANCELAR" padding
-              style="background: white" display-format="DD-MM-YYYY"></ion-datetime>
+            <ion-datetime placeholder="Seleccione fecha" [min]="2019" [max]="2025" [(ngModel)]="datos_orden.endDate"
+              doneText="OK" cancelText="CANCELAR" padding style="background: white" display-format="DD-MM-YYYY">
+            </ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -216,7 +191,8 @@
         <ion-col>
           <ion-item no-lines>
             <ion-label style="padding-bottom: 10px" position="stacked">Fecha máxima de entrega</ion-label>
-            <ion-datetime placeholder="Seleccione fecha" [min]="2019" [max]="2025" [(ngModel)]="datos_orden.deliveryMaxDate" doneText="OK" cancelText="CANCELAR" padding
+            <ion-datetime placeholder="Seleccione fecha" [min]="2019" [max]="2025"
+              [(ngModel)]="datos_orden.deliveryMaxDate" doneText="OK" cancelText="CANCELAR" padding
               style="background: white" display-format="DD-MM-YYYY"></ion-datetime>
           </ion-item>
         </ion-col>
@@ -225,8 +201,8 @@
         <ion-col>
           <ion-item no-lines>
             <ion-label style="padding-bottom: 10px" position="stacked">Hora máxima de entrega</ion-label>
-            <ion-datetime placeholder="Seleccione hora" [(ngModel)]="datos_orden.deliveryMaxHour" doneText="OK" cancelText="CANCELAR" padding
-              style="background: white" displayFormat="HH:mm">
+            <ion-datetime placeholder="Seleccione hora" [(ngModel)]="datos_orden.deliveryMaxHour" doneText="OK"
+              cancelText="CANCELAR" padding style="background: white" displayFormat="HH:mm">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -324,13 +300,21 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col text-center>
-          <ion-button (click)="boton_atras(4)" fill="outline" color="favorite">Atras</ion-button>
-          <ion-button (click)="crear_pedido()" color="favorite">Finalizar</ion-button>
-        </ion-col>
-      </ion-row>
     </ion-grid>
   </div>
 
 </ion-content>
+<ion-footer *ngIf="div_footer" [hidden]="isShown">
+  <ion-toolbar color="favorite">
+    <ion-buttons slot="start">
+      <ion-button (click)="boton_atras()">
+        <ion-icon color="light" slot="icon-only" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="boton_siguiente()">
+        <ion-icon color="light" slot="icon-only" name="arrow-round-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

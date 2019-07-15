@@ -19,10 +19,11 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 // Modal
 import { BuscadorLugarPage } from './pages/buscador-lugar/buscador-lugar.page';
 import { VerMasPage } from './pages/ver-mas/ver-mas.page';
+import { ModalDetailPage } from './pages/modal-detail/modal-detail.page';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, BuscadorLugarPage, VerMasPage],
-  entryComponents: [BuscadorLugarPage, VerMasPage],
+  declarations: [AppComponent, MenuComponent, BuscadorLugarPage, VerMasPage, ModalDetailPage],
+  entryComponents: [BuscadorLugarPage, VerMasPage, ModalDetailPage],
   imports: [
     HttpClientModule,
     FormsModule,

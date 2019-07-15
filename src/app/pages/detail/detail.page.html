@@ -216,7 +216,7 @@
                 </ion-row>
               </ion-grid>
             </ion-row>
-            <hr>
+            <!-- <hr> -->
             <!-- <ion-row no-padding>
               <ion-col text-center>
                 <ion-card-subtitle>Servicios adicionales</ion-card-subtitle>
@@ -265,9 +265,9 @@
                     </ion-card-subtitle>
                     <ion-card-subtitle *ngIf="item.status === 1">Estado Aceptado
                     </ion-card-subtitle>
-                    <ion-card-subtitle *ngIf="item.status === 2">Estado Pagado
+                    <ion-card-subtitle *ngIf="item.status === 2">Estado Rechazado
                     </ion-card-subtitle>
-                    <ion-card-subtitle *ngIf="item.status === 3">Estado cancelado
+                    <ion-card-subtitle *ngIf="item.status === 3">Estado Pagado
                     </ion-card-subtitle>
                   </ion-col>
                 </ion-row>
@@ -313,13 +313,14 @@
                     <ion-button (click)="var_mas(item._id)" expand="full" color="primary" color="favorite">Ver más
                     </ion-button>
                   </ion-col>
-                </ion-row>                
+                </ion-row>
                 <ion-row>
-                    <ion-col>
-                      <ion-button *ngIf="item.status === 1" expand="full" color="primary" color="success">Pagar
-                      </ion-button>
-                    </ion-col>
-                  </ion-row>
+                  <ion-col>
+                    <ion-button (click)="click_modalNego(detalle._id)" *ngIf="item.status === 1" expand="full"
+                      color="primary" color="success">Pagar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
               </ion-grid>
             </ion-col>
           </ion-row>

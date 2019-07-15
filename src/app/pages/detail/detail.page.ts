@@ -356,8 +356,8 @@ export class DetailPage implements OnInit {
   }
 
 
-  click_modalNego() {
-    this.router.navigateByUrl('/modal-nego');
+  click_modalNego(id: any) {
+    this.router.navigate(['/modal-nego', id]);
   }
 
   click_modalMapa() {

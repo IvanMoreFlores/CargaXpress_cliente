@@ -17,10 +17,8 @@
 </div> -->
 
 <ion-content no-padding>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="refresh" slot="fixed" refreshingSpinner="circles"
-      refreshingText="Actualizando...">
-    </ion-refresher-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <div padding *ngIf="cero_datos">
@@ -38,13 +36,13 @@
         </ion-card-subtitle>
         <ion-card-subtitle *ngIf="pedido.type == 3">Tipo: <a style="color: #30205d">Precio sugerido</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.status == 0">Estado: <a style="color: #30205d">Pendiente de aprobación</a>
+        <ion-card-subtitle *ngIf="pedido.status == 0">Estado: <a style="color: #30205d">Cancelado</a>
         </ion-card-subtitle>
         <ion-card-subtitle *ngIf="pedido.status == 1">Estado: <a style="color: #30205d">Publicado</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.status == 2">Estado: <a style="color: #30205d">En proceso</a>
+        <ion-card-subtitle *ngIf="pedido.status == 2">Estado: <a style="color: #30205d">Pendiente de pago</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.status == 3">Estado: <a style="color: #30205d">Cancelado </a>
+        <ion-card-subtitle *ngIf="pedido.status == 3">Estado: <a style="color: #30205d">En proceso</a>
         </ion-card-subtitle>
         <ion-card-subtitle *ngIf="pedido.status == 4">Estado: <a style="color: #30205d">Finalizado </a>
         </ion-card-subtitle>

@@ -21,7 +21,11 @@ export class ProfilePage implements OnInit {
     public platform: Platform,
     public loadingController: LoadingController,
     public alertController: AlertController,
-    private router: Router) { }
+    private router: Router) {
+    this.menu.swipeEnable(true, 'custom');
+    this.menu.enable(false, 'custom');
+    // this.menu.open('custom');
+  }
 
   ngOnInit() {
     this._profile.listar_user().subscribe((data => {
@@ -37,7 +41,7 @@ export class ProfilePage implements OnInit {
     this.menu.open('custom');
   }
 
-  doRefresh(event) {
+  doRefresh(event: any) {
     setTimeout(() => {
       this.ngOnInit();
       event.target.complete();
@@ -67,5 +71,11 @@ export class ProfilePage implements OnInit {
       await alert.present();
     }
   }
+
+  ionViewDidEnter() {
+    //your code;
+    this.ngOnInit();
+  }
+
 
 }

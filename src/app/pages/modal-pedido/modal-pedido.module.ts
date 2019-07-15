@@ -7,6 +7,7 @@ import { ModalPedidoPage } from './modal-pedido.page';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 const routes: Routes = [
   {
@@ -24,7 +25,8 @@ const routes: Routes = [
   ],
   providers: [
     Geolocation,
-    NativeGeocoder
+    NativeGeocoder,
+    Keyboard
   ],
   declarations: [ModalPedidoPage]
 })

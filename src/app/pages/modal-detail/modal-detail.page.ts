@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, NavController, Platform } from '@ionic/angular';
+import { LoadingController, ModalController, NavParams } from '@ionic/angular';
 import { OrderService } from '../../services/order/order.service';
 import { Subscription } from 'rxjs';
 
@@ -10,75 +11,89 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./modal-detail.page.scss'],
 })
 export class ModalDetailPage implements OnInit {
-  customBackActionSubscription: Subscription;
-  // subcategorias: Array<Object> = [];
-  subcategorias: any = [];
-  sin_subcategoria: Boolean = false;
-  sin_datos: Boolean = true;
-  div_cero: Boolean = true;
-  div_uno: Boolean = false;
-  div_dos: Boolean = false;
-  div_tres: Boolean = false;
-  div_cuatro: Boolean = false;
-
+  title: String = '';
+  servicios: any = [];
   constructor(private router: Router,
     public alertController: AlertController,
     public NvCrtl: NavController,
     public _activate: ActivatedRoute,
     public _order: OrderService,
-    public platform: Platform) { }
+    public platform: Platform,
+    public modalController: ModalController,
+    private navParams: NavParams) {
+    this.title = this.navParams.get('servicio');
+  }
 
   ngOnInit() {
-    this._order.listar_subcategorias(this._activate.snapshot.paramMap.get('id')).subscribe((data => {
-      this.sin_datos = !this.sin_datos;
-      if (data.subcategories.length > 0) {
-        this.subcategorias = data.subcategories;
-      } else {
-        this.sin_subcategoria = !this.sin_subcategoria;
-      }
+    this._order.traer_empresas(this.navParams.get('id')).subscribe((data => {
+      this.servicios = data.services;
+      console.log(data);
+      console.log(data.services);
+      console.log(this.servicios);
     }));
   }
 
-  click_div01() {
-    this.div_cero = !this.div_cero;
-    this.div_uno = !this.div_uno;
+  cerrar(monto: number) {
+    this.modalController.dismiss({
+      '_id': 0,
+      'price': 0,
+      'cuadra': monto,
+    });
   }
 
-  click_div02() {
-    this.div_uno = !this.div_uno;
-    this.div_dos = !this.div_dos;
+  click_empresa(id, name) {
+    if (this.navParams.get('id') === 1 || this.navParams.get('id') === 2) {
+      this.presentAlertPrompt(id, name);
+    } else {
+      this.presentAlertConfirm(id, name);
+    }
+    // console.log(this.navParams.get('id'));
   }
 
-  click_div03() {
-    this.div_dos = !this.div_dos;
-    this.div_tres = !this.div_tres;
-  }
-
-  click_address() {
-    this.div_cero = !this.div_cero;
-    this.div_uno = !this.div_uno;
-  }
-
-  click_modalAdditional() {
-    this.div_uno = !this.div_uno;
-    this.div_dos = !this.div_dos;
-  }
-
-  click_modalDetail() {
-    this.div_dos = !this.div_dos;
-    this.div_tres = !this.div_tres;
-  }
-
-  click_modalFinalizar() {
-    this.div_tres = !this.div_tres;
-    this.div_cuatro = !this.div_cuatro;
-  }
-
-  async cerrar() {
+  async presentAlertPrompt(id, name) {
     const alert = await this.alertController.create({
-      header: 'Cerrar pedido!',
+      header: 'Mensaje',
+      message: '<b>Digite la cantidad de cuadrillas</b>',
       backdropDismiss: false,
-      message: 'Se <strong>Borrarán</strong> los datos del pedido',
+      inputs: [
+        {
+          name: 'monto',
+          type: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Agregar',
+          handler: (data) => {
+            console.log(data);
+            console.log('Confirm Ok');
+            this.modalController.dismiss({
+              '_id': id,
+              'price': name,
+              'cuadra': parseInt(data.monto),
+              'monto': parseInt(data.monto) * name,
+              'tipo': 1
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertConfirm(id, name) {
+    const alert = await this.alertController.create({
+      header: 'Mensaje',
+      backdropDismiss: false,
+      message: '<b>Desea agregar este servicio a su pedido?</b>',
       buttons: [
         {
           text: 'Cancelar',
@@ -88,9 +103,14 @@ export class ModalDetailPage implements OnInit {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'ok',
+          text: 'Agregar',
           handler: () => {
-            this.NvCrtl.navigateRoot('/tabs');
+            console.log('Confirm Okay');
+            this.modalController.dismiss({
+              '_id': id,
+              'price': name,
+              'tipo': 2
+            });
           }
         }
       ]
@@ -98,5 +118,6 @@ export class ModalDetailPage implements OnInit {
 
     await alert.present();
   }
+
 
 }

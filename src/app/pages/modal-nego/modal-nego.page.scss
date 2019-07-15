@@ -13,8 +13,9 @@ ion-content{
             border: 2px solid #30205d !important;
                      }
             ion-button{
+              // margin: 0%;
             // --border-radius: none !important;
-            // height: 40px;
+            height: 40px;
                       }
             ion-card{
             --background:white;            
@@ -36,3 +37,4 @@ ion-content{
                         margin:auto;
                 }
             }
+            

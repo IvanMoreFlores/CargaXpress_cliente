@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { BuscadorLugarPage } from '../buscador-lugar/buscador-lugar.page';
 import { HomeService } from './../../services/home/home.service';
 import { OrderService } from '../../services/order/order.service';
-
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 declare var google: any;
 @Component({
   selector: 'app-modal-pedido',
@@ -20,7 +20,9 @@ export class ModalPedidoPage implements OnInit {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
   customBackActionSubscription: Subscription;
+  hora = new Date();
   map: any;
+  div_footer: Boolean = false;
   address: string;
   div_uno: Boolean = true;
   div_dos: Boolean = false;
@@ -49,11 +51,11 @@ export class ModalPedidoPage implements OnInit {
     'canDivide': null,
     'canSubcontratable': null,
     'canNegotiate': null,
-    'endDate': null,
-    'deliveryMaxDate': null,
-    'deliveryMaxHour': null,
+    'endDate': new Date().toISOString(),
+    'deliveryMaxDate': new Date().toISOString(),
+    'deliveryMaxHour': this.hora.getHours() + ':' + this.hora.getMinutes(),
     'aditionalRequirements': null,
-    'elements': [],
+    'elements': [{ 'answers': [] }],
     'receptionAnswers': [],
     'destinationAnswers': []
   };
@@ -61,8 +63,11 @@ export class ModalPedidoPage implements OnInit {
   subcategorias: any = [];
   questions: any = [];
   metros: number;
-  precio: boolean = false;
+  precio: Boolean = false;
   myDate: String = new Date().toISOString();
+  btn_siguiente: any = 1;
+  btn_atras: any = 1;
+  isShown = false;
 
   constructor(private router: Router,
     public platform: Platform,
@@ -74,16 +79,25 @@ export class ModalPedidoPage implements OnInit {
     public alertController: AlertController,
     public _home: HomeService,
     public _order: OrderService,
-    private menu: MenuController) {
+    private menu: MenuController,
+    private keyboard: Keyboard) {
     this.menu.get().then((menu: HTMLIonMenuElement) => {
       menu.swipeGesture = false;
     });
   }
 
   ngOnInit() {
+    this.keyboard.onKeyboardShow().subscribe(() => {
+      this.isShown = true;
+    });
+
+    this.keyboard.onKeyboardWillHide().subscribe(() => {
+      this.isShown = false;
+    });
   }
 
   tipo_pedido(opcion: number) {
+    this.div_footer = true;
     this.loadMap();
     this.datos_orden.type = opcion;
     console.log(opcion);
@@ -119,6 +133,7 @@ export class ModalPedidoPage implements OnInit {
   }
 
   async click_buscador(id: any) {
+    this.modalController.dismiss();
     const modal: HTMLIonModalElement =
       await this.modalController.create({
         component: BuscadorLugarPage,
@@ -191,19 +206,73 @@ export class ModalPedidoPage implements OnInit {
     await alert.present();
   }
 
-  boton_atras(number) {
-    if (number === 1) {
+  boton_siguiente() {
+    if (this.div_dos) {
+      if (this.datos_orden.initPlace && this.datos_orden.endPlace) {
+        this._home.listar_categoria().subscribe((data) => {
+          this.btn_siguiente++;
+          this.div_dos = !this.div_dos;
+          this.div_tres = !this.div_tres;
+          this.categorias = data.categories;
+        });
+      } else {
+        this.completarAlert('Campos incompletos', 'Relleno todos los campos.');
+      }
+    } else if (this.div_tres) {
+      if (this.subcategorias.length > 0) {
+        this.btn_siguiente++;
+        this.div_tres = !this.div_tres;
+        this.div_cuatro = !this.div_cuatro;
+      } else {
+        this.completarAlert('Sin seleccionar', 'Seleccione una categoria.');
+      }
+    } else if (this.div_cuatro) {
+      if (this.questions.length > 0) {
+        this.btn_siguiente++;
+        this.div_cuatro = !this.div_cuatro;
+        this.div_cinco = !this.div_cinco;
+      } else {
+        this.completarAlert('Sin seleccionar', 'Seleccione una subcategoria.');
+      }
+    } else if (this.div_cinco) {
+      this.btn_siguiente++;
+      this.div_cinco = !this.div_cinco;
+      this.div_seis = !this.div_seis;
+    } else if (this.div_seis) {
+      this.btn_siguiente++;
+      this.div_seis = !this.div_seis;
+      this.div_siete = !this.div_siete;
+    } else if (this.div_siete) {
+      this.crear_pedido();
+    } else if (this.div_siete) {
+      this.crear_pedido();
+    }
+  }
+
+  boton_atras() {
+    if (this.div_dos) {
+      this.div_footer = !this.div_footer;
       this.div_dos = !this.div_dos;
       this.div_uno = !this.div_uno;
-    } if (number === 2) {
+    } else if (this.div_tres) {
+      this.loadMap();
+      this.div_tres = !this.div_tres;
+      this.div_dos = !this.div_dos;
+    } else if (this.div_cuatro) {
+      this.div_cuatro = !this.div_cuatro;
+      this.div_tres = !this.div_tres;
+    } else if (this.div_cinco) {
       this.div_cinco = !this.div_cinco;
       this.div_cuatro = !this.div_cuatro;
-    } if (number === 3) {
+    } else if (this.div_seis) {
       this.div_seis = !this.div_seis;
       this.div_cinco = !this.div_cinco;
-    } if (number === 4) {
+    } else if (this.div_siete) {
       this.div_siete = !this.div_siete;
       this.div_seis = !this.div_seis;
+    } else if (this.div_ocho) {
+      this.div_ocho = !this.div_ocho;
+      this.div_siete = !this.div_siete;
     }
 
   }
@@ -224,33 +293,20 @@ export class ModalPedidoPage implements OnInit {
     }, 500);
   }
 
-  click_tres() {
-    if (this.datos_orden.initPlace && this.datos_orden.endPlace) {
-      this._home.listar_categoria().subscribe((data) => {
-        this.div_dos = !this.div_dos;
-        this.div_tres = !this.div_tres;
-        this.categorias = data.categories;
-      });
-    } else {
-      this.completarAlert();
-    }
-  }
-
   click_cuatro(id: any) {
     this.datos_orden.category = id;
     this._order.listar_subcategorias(id).subscribe((data => {
       this.div_tres = !this.div_tres;
+      this.btn_siguiente++;
       this.div_cuatro = !this.div_cuatro;
       this.subcategorias = data.subcategories;
     }));
   }
 
   click_cinco(id: any) {
-    const answers = [];
-    this.datos_orden.elements = answers;
-    this.datos_orden.elements.answers = [];
     this.datos_orden.subcategory = id;
     this._order.listar_questions(id).subscribe((data => {
+      this.btn_siguiente++;
       this.div_cuatro = !this.div_cuatro;
       this.div_cinco = !this.div_cinco;
       this.questions = data.questions;
@@ -259,27 +315,14 @@ export class ModalPedidoPage implements OnInit {
         delete element.__v;
         delete element._id;
         if (element.questionCategory === 0) {
-          console.log(element);
           this.datos_orden.receptionAnswers.push(element);
         } else if (element.questionCategory === 1) {
-          this.datos_orden.elements.answers.push(element);
+          this.datos_orden.elements[0].answers.push(element);
         } else if (element.questionCategory === 2) {
           this.datos_orden.destinationAnswers.push(element);
         }
       });
     }));
-  }
-
-  click_seis() {
-    this.div_cinco = !this.div_cinco;
-    this.div_seis = !this.div_seis;
-  }
-
-  click_siete() {
-    this.div_seis = !this.div_seis;
-    this.div_siete = !this.div_siete;
-    this.traer_precio();
-    // console.log(this.datos_orden);
   }
 
   async crear_pedido() {
@@ -334,12 +377,13 @@ export class ModalPedidoPage implements OnInit {
     await alert.present();
   }
 
-  async completarAlert() {
+
+  async completarAlert(cabe: any, msg: any) {
     const alert = await this.alertController.create({
       header: 'Alerta',
       backdropDismiss: false,
-      subHeader: 'Campos incompletos',
-      message: 'Relleno todos los campos.',
+      subHeader: cabe,
+      message: msg,
       buttons: ['OK']
     });
     await alert.present();

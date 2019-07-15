@@ -11,6 +11,7 @@ import * as moment from 'moment';
 export class VerMasPage implements OnInit {
 
   offers: any = [];
+  ultimo: any = {};
   constructor(public modalController: ModalController,
     private navParams: NavParams,
     public _noti: NotificacionService) { }
@@ -20,7 +21,10 @@ export class VerMasPage implements OnInit {
     console.log(this.navParams.get('id'));
     this._noti.listar_historial(this.navParams.get('id_oferta'), this.navParams.get('id')).subscribe((data) => {
       this.offers = data.offers;
-      console.log(data);
+      this.ultimo = this.offers[this.offers.length - 1];
+      console.log(this.offers);
+      // console.log(this.offers[this.offers.length - 1]);
+      // var ultimo = this.offers[this.offers.length - 1];
     });
   }
 
@@ -30,6 +34,15 @@ export class VerMasPage implements OnInit {
 
   devolver_fecha(fecha: any) {
     return (moment(fecha).format('DD-MM-YYYY, h:mm:ss a'));
+  }
+
+  doRefresh(event) {
+    console.log('Begin async operation');
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.ngOnInit();
+      event.target.complete();
+    }, 2000);
   }
 
 }
