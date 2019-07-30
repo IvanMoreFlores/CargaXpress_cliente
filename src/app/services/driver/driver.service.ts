@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 export class DriverService {
 
   datos: any;
-  ip = 'https://carga-api.us-east.mybluemix.net/api/v1/';
+  ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_get_driver: string = this.ip + 'users/';
   api_update_driver: string = this.ip + 'users/';
   constructor(public http: Http) { }

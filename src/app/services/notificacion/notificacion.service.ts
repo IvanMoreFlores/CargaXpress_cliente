@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 export class NotificacionService {
 
   datos: any;
-  ip = 'https://carga-api.us-east.mybluemix.net/api/v1/';
+  ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_listar_notificaciones: string = this.ip + 'users/';
   api_listar_historial: string = this.ip + 'orders/';
   constructor(public http: Http) { }

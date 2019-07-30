@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 export class HomeService {
 
   datos: any;
-  ip = 'https://carga-api.us-east.mybluemix.net/api/v1/';
+  ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_listar_categoria: string = this.ip + 'categories?hasquestions=1';
   api_listar_subcategorias: string = this.ip + 'categories/';
 

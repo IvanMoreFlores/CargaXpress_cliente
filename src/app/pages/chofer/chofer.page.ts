@@ -28,7 +28,7 @@ export class ChoferPage implements OnInit {
 
   ngOnInit() {
     this._register.listar_driver(localStorage.getItem('id')).subscribe((data => {
-      console.log(data.drivers.length);
+      console.log('Choferes : ' + data.drivers.length);
       if (data.drivers.length > 0) {
         this.choferes = data.drivers;
         this.con_datos = !this.con_datos;
@@ -57,7 +57,7 @@ export class ChoferPage implements OnInit {
   doRefresh(event) {
     this.sin_datos = !this.sin_datos;
     this.con_datos = !this.con_datos;
-    this.cero_datos = !this.cero_datos;
+    this.cero_datos = false;
     setTimeout(() => {
       this.ngOnInit();
       event.target.complete();

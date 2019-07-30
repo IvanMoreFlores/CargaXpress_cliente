@@ -9,9 +9,9 @@ export class OrderService {
 
   datos: any;
   orden: any = {};
-  ip = 'https://carga-api.us-east.mybluemix.net/api/v1/';
+  ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_listar_subcategorias: string = this.ip + 'categories/';
-  api_listar_orden: string = this.ip + 'orders/';
+  api_listar_orden: string = this.ip + 'orders?sort=created&sortDir=dsc';
   api_listar_orden_id: string = this.ip + 'users/';
   api_listar_questions: string = this.ip + 'subcategories/';
   api_traer_precio: string = this.ip + 'subcategories/';

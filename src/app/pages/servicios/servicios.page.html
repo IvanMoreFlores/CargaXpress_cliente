@@ -13,7 +13,7 @@
   <ion-toolbar style="padding: 5px" color="favorite">
     <ion-item style="--border: 0px solid white !important;--border-radius: 5px  !important;">
       <ion-label no-pagging>Filtro</ion-label>
-      <ion-select no-pagging placeholder=".: Selecione :.">
+      <ion-select no-pagging placeholder=".: Selecione :." interface="action-sheet">
         <ion-select-option value="1">Asignado</ion-select-option>
         <ion-select-option value="2">No asignado</ion-select-option>
       </ion-select>
@@ -27,73 +27,80 @@
 </div> -->
 
 <ion-content>
-  <ion-card no-padding>
-    <ion-card-header>
-      <ion-card-title>Cod Pe - 2342523623</ion-card-title>
-      <ion-card-subtitle>Tipo: <a style="color: #30205d">Subasta</a></ion-card-subtitle>
-      <ion-grid no-padding>
-        <ion-row no-padding>
-          <ion-col no-padding style="display: flex;justify-content: start;align-items: center;">
-            <ion-card-subtitle>Estado: <a style="color: #30205d">En proceso</a></ion-card-subtitle>
-          </ion-col>
-          <ion-col>
-            <ion-card-subtitle>Fecha: <a style="color: #30205d">28/07/2019</a></ion-card-subtitle>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-header>
-  </ion-card>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="refresh" slot="fixed" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
 
-  <ion-card no-padding>
-    <ion-card-header>
-      <ion-card-title>Cod Pe - 2342523623</ion-card-title>
-      <ion-card-subtitle>Tipo: <a style="color: #30205d">Subasta</a></ion-card-subtitle>
-      <ion-grid no-padding>
-        <ion-row no-padding>
-          <ion-col no-padding style="display: flex;justify-content: start;align-items: center;">
-            <ion-card-subtitle>Estado: <a style="color: #30205d">En proceso</a></ion-card-subtitle>
+  <div *ngIf="con_datos">
+    <ion-card *ngFor="let servicio of servicios" no-padding style="padding-left: 10px">
+      <ion-grid style="height: 100%">
+        <ion-row style="height: 100%; flex-direction: row">
+          <ion-col style="height: 100%;" size="6" align-self-center>
+            <div style="font-size: 20px;color: #30205d"><b>{{ servicio.code}}</b></div>
           </ion-col>
+          <ion-col style="height: 100%;" size="6" align-self-center justify-content-end>
+            <div style="font-size: 20px;color: #30205d"><b>s./ {{ servicio.order.finalPrice }}</b></div>
+          </ion-col>
+        </ion-row>
+        <ion-row style="height: 100%; flex-direction: row">
           <ion-col>
-            <ion-card-subtitle>Fecha: <a style="color: #30205d">28/07/2019</a></ion-card-subtitle>
+            <div><b>{{ servicio.order.category.name }} - {{ servicio.order.subcategory.name }}</b></div>
+          </ion-col>
+        </ion-row>
+        <ion-row style="height: 100%; flex-direction: row">
+          <ion-col size="12">
+            <div>{{ servicio.order.initPlace }}</div>
+          </ion-col>
+          <ion-col size="12">
+            <div>{{ servicio.order.endPlace }}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-card-header>
-  </ion-card>
+    </ion-card>
+  </div>
 
-  <ion-card no-padding>
-    <ion-card-header>
-      <ion-card-title>Cod Pe - 2342523623</ion-card-title>
-      <ion-card-subtitle>Tipo: <a style="color: #30205d">Subasta</a></ion-card-subtitle>
-      <ion-grid no-padding>
-        <ion-row no-padding>
-          <ion-col no-padding style="display: flex;justify-content: start;align-items: center;">
-            <ion-card-subtitle>Estado: <a style="color: #30205d">En proceso</a></ion-card-subtitle>
-          </ion-col>
+  <div *ngIf="sin_datos">
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
           <ion-col>
-            <ion-card-subtitle>Fecha: <a style="color: #30205d">28/07/2019</a></ion-card-subtitle>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-card-header>
-  </ion-card>
+    </ion-card>
 
-  <ion-card no-padding>
-    <ion-card-header>
-      <ion-card-title>Cod Pe - 2342523623</ion-card-title>
-      <ion-card-subtitle>Tipo: <a style="color: #30205d">Subasta</a></ion-card-subtitle>
-      <ion-grid no-padding>
-        <ion-row no-padding>
-          <ion-col no-padding style="display: flex;justify-content: start;align-items: center;">
-            <ion-card-subtitle>Estado: <a style="color: #30205d">En proceso</a></ion-card-subtitle>
-          </ion-col>
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
           <ion-col>
-            <ion-card-subtitle>Fecha: <a style="color: #30205d">28/07/2019</a></ion-card-subtitle>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-card-header>
-  </ion-card>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
 
 
 

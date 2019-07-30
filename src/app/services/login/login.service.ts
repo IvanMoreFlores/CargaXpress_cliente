@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 export class LoginService {
 
   datos: any;
-  ip = 'https://carga-api.us-east.mybluemix.net/api/v1/';
+  ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_listar_users: string = this.ip + 'users';
   api_listar_login: string = this.ip + 'users/login';
   api_recover_pass: string = this.ip + 'users/resetPassword';

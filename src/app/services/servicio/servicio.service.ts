@@ -5,18 +5,18 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService {
-
+export class ServicioService {
   datos: any;
+  servicio: any = {};
   ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
-  api_listar_user: string = this.ip + 'users/' + localStorage.getItem('id');
+  api_listar_servicios: string = this.ip + 'users/';
   constructor(public http: Http) { }
 
-
-  listar_user() {
+  listar_servicio() {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
-    return this.http.get(this.api_listar_user, {
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_listar_servicios + localStorage.getItem('id') + '/services?sort=created&sortDir=dsc', {
       headers: headers,
       method: 'GET'
     }).pipe(map(

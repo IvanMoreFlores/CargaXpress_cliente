@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 export class RegisterService {
 
   datos: any;
-  ip = 'https://carga-api.us-east.mybluemix.net/api/v1/';
+  ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_new_client: string = this.ip + 'users';
   api_get_driver: string = this.ip + 'users/';
   api_new_driver: string = this.ip + 'users';
