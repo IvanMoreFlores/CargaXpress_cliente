@@ -22,11 +22,8 @@ const routes: Routes = [
   { path: 'buscador-lugar', loadChildren: './pages/buscador-lugar/buscador-lugar.module#BuscadorLugarPageModule' },
   { path: 'ver-mas', loadChildren: './pages/ver-mas/ver-mas.module#VerMasPageModule' },
   { path: 'edit-perfil/:id', loadChildren: './pages/edit-perfil/edit-perfil.module#EditPerfilPageModule' },
-  { path: '**', loadChildren: './pages/splash/splash.module#SplashPageModule' }]
-
-  ;
-
-
+  { path: 'servicio-detalle/:id', loadChildren: './pages/servicio-detalle/servicio-detalle.module#ServicioDetallePageModule' },
+  { path: '**', loadChildren: './pages/splash/splash.module#SplashPageModule' }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

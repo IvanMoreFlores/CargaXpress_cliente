@@ -10,6 +10,7 @@ export class ServicioService {
   servicio: any = {};
   ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_listar_servicios: string = this.ip + 'users/';
+  api_servicios_id: string = this.ip + 'services/';
   constructor(public http: Http) { }
 
   listar_servicio() {
@@ -17,6 +18,20 @@ export class ServicioService {
     headers.append('Accept', 'application/json');
     headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_servicios + localStorage.getItem('id') + '/services?sort=created&sortDir=dsc', {
+      headers: headers,
+      method: 'GET'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
+
+  servicios_id(data) {
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_servicios_id + data, {
       headers: headers,
       method: 'GET'
     }).pipe(map(

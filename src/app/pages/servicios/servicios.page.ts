@@ -31,6 +31,13 @@ export class ServiciosPage implements OnInit {
     });
   }
 
+  click_detalle(id: any) {
+    // this.router.navigate(['/new-driver', 0]);
+    this.router.navigate(['/servicio-detalle', id]);
+    // alert(id);
+    // this.router.navigateByUrl('/servicio-detalle', id);
+  }
+
   listarServices() {
     this.servicio.listar_servicio().subscribe((data => {
       console.log(data.services.length);
@@ -62,6 +69,7 @@ export class ServiciosPage implements OnInit {
   }
 
 
+
   async respuestaFail(error: any) {
     console.log(error);
     if (error.msg) {
@@ -80,6 +88,8 @@ export class ServiciosPage implements OnInit {
       await alert.present();
     }
   }
+
+
 
   async presentAlertRadio() {
     const alert = await this.alertController.create({
@@ -118,5 +128,6 @@ export class ServiciosPage implements OnInit {
 
     await alert.present();
   }
+
 
 }

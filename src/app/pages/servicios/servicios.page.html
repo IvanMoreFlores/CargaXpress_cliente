@@ -34,7 +34,7 @@
   </ion-refresher>
 
   <div *ngIf="con_datos">
-    <ion-card *ngFor="let servicio of servicios" no-padding style="padding-left: 10px">
+    <ion-card *ngFor="let servicio of servicios" no-padding style="padding-left: 10px" (click)="click_detalle(servicio._id)">
       <ion-grid style="height: 100%">
         <ion-row style="height: 100%; flex-direction: row">
           <ion-col style="height: 100%;" size="6" align-self-center>
