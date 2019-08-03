@@ -1,0 +1,24 @@
+ion-content{
+    --ion-background-color:#ECECEC;
+            ion-item {
+            --highlight-color-valid: transparent;
+            --highlight-color-invalid: transparent;
+             --highlight-color-focused: transparent;
+            --border-color : transparent;
+                     }
+            ion-input{
+            --background:white;
+            padding: 5px !important;
+            margin-top: 5px !important;
+            position: relative
+                     }
+                     ion-item .has-focus {
+                        border: 2px solid #30205d !important;
+                        }
+            ion-button{
+            // --border-radius: none !important;
+            height: 40px;
+            white-space: normal;
+                      }
+                      .suffix-icon { position: absolute; bottom: 0; right: 0; }
+            }

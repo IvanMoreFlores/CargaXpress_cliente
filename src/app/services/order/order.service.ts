@@ -11,7 +11,7 @@ export class OrderService {
   orden: any = {};
   ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_listar_subcategorias: string = this.ip + 'categories/';
-  api_listar_orden: string = this.ip + 'orders?sort=created&sortDir=dsc';
+  api_listar_orden: string = this.ip + 'orders?sort=created&sortDir=dsc&isSearch=1';
   api_listar_orden_id: string = this.ip + 'users/';
   api_listar_questions: string = this.ip + 'subcategories/';
   api_traer_precio: string = this.ip + 'subcategories/';
@@ -200,7 +200,7 @@ export class OrderService {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
     headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    return this.http.get(this.api_listar_orden_id + localStorage.getItem('id') + '/orders?sort=created&sortDir=dsc&page=' + page, {
+    return this.http.get(this.api_listar_orden + '&page=' + page, {
       headers: headers,
       method: 'GET'
     }).pipe(map(

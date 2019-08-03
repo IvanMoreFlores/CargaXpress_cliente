@@ -68,6 +68,7 @@ export class ModalPedidoPage implements OnInit {
   btn_siguiente: any = 1;
   btn_atras: any = 1;
   isShown = false;
+  type: any;
 
   constructor(private router: Router,
     public platform: Platform,
@@ -425,6 +426,12 @@ export class ModalPedidoPage implements OnInit {
         // this.generic.showAlert("Exit", "Do you want to exit the app?", this.onYesHandler, this.onNoHandler, "backPress");
       }
     });
+  }
+
+  agregar_elemento() {
+    this.datos_orden.elements[0].answers.push(this.datos_orden.elements[0].answers[0]);
+    console.log(this.datos_orden.elements[0].answers);
+    console.log(this.datos_orden.elements[0].answers[0]);
   }
 }
 

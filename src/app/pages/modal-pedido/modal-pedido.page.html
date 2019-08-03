@@ -18,7 +18,8 @@
     </div>
     <ion-grid>
       <ion-row>
-        <ion-col text-center (click)="tipo_pedido(1)">
+        <ion-col text-center (click)="tipo_pedido(1)" class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
           <img src="assets/img/Group131.png" width="15%">
           <p><b style="color:#30205d">Por Subasta</b></p>
           <hr>
@@ -26,7 +27,8 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col text-center (click)="tipo_pedido(2)">
+        <ion-col text-center (click)="tipo_pedido(2)" class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
           <img src="assets/img/Group130.png" width="15%">
           <p><b style="color:#30205d">Precio sugerido</b></p>
           <hr>
@@ -34,7 +36,8 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col text-center (click)="tipo_pedido(3)">
+        <ion-col text-center (click)="tipo_pedido(3)" class="ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
           <img src="assets/img/Group137.png" width="11%">
           <p><b style="color:#30205d">Precio calculado</b></p>
           <hr>
@@ -96,7 +99,8 @@
     <div padding text-center style="background: #ECECEC;">
       <p style="font-size: 15px;margin: 0px;">Seleccione la subcategoria deseada</p>
     </div>
-    <ion-card ion-activatable *ngFor="let subcategoria of subcategorias" style="padding: 15px" (click)="click_cinco(subcategoria._id)">
+    <ion-card ion-activatable *ngFor="let subcategoria of subcategorias" style="padding: 15px"
+      (click)="click_cinco(subcategoria._id)">
       <ion-ripple-effect></ion-ripple-effect>
       <ion-grid>
         <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
@@ -158,7 +162,7 @@
       <p style="font-size: 15px;text-align: center"><b>Características del elemento de la carga*</b></p>
       <div no-padding>
         <ion-list>
-          <ion-item *ngFor="let question of datos_orden.elements[0].answers">
+          <ion-item *ngFor="let question of datos_orden?.elements[0]?.answers">
             <p style="font-size: 15px;">{{ question.title }}</p>
             <ion-label position="stacked">{{ question.description }}</ion-label>
             <ion-select [(ngModel)]="question.answer" *ngIf="question.options.length > 0"
@@ -171,6 +175,9 @@
             </ion-textarea>
           </ion-item>
         </ion-list>
+        <div class="ion-padding" (click)="agregar_elemento()">
+          <ion-button expand="full" color="favorite">+ Añadir elemento</ion-button>
+        </div>
       </div>
     </div>
   </div>

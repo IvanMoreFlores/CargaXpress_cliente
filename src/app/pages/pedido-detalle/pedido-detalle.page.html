@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="/" text="">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">Detalle de Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Categoría del pedido</ion-label>
+    <ion-input type="text" readonly>{{ pedido?.category?.name }}</ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Subcategoría del pedido</ion-label>
+    <ion-input type="text" readonly>{{ pedido?.subcategory?.name }}</ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Precio de pedido</ion-label>
+    <ion-input type="text" readonly>{{ pedido?.price }}</ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Lugar de inicio</ion-label>
+    <ion-input type="text" readonly>{{ pedido?.initPlace }}</ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Lugar de destino</ion-label>
+    <ion-input type="text" readonly>{{ pedido?.endPlace }}</ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Fecha máxima de entrega</ion-label>
+    <ion-input type="text" readonly>{{ devolver_fecha(pedido?.deliveryMaxDate) }}</ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Hora máxima de entrega</ion-label>
+    <ion-input type="text" readonly>{{ pedido?.deliveryMaxHour }}</ion-input>
+  </ion-item>
+
+  <ion-item>
+    <hr class="middle-line">
+  </ion-item>
+  <ion-item>
+    <div text-center><b>Características del punto de recojo de la carga</b></div>
+  </ion-item>
+  <div *ngFor="let pregunta of pedido?.receptionAnswers">
+    <ion-item>
+      <ion-label position="stacked">{{ pregunta.title }}</ion-label>
+      <ion-input type="text" readonly>{{ pregunta.answer }}</ion-input>
+    </ion-item>
+  </div>
+
+  <ion-item>
+    <hr class="middle-line">
+  </ion-item>
+  <ion-item>
+    <div text-center><b>Características de los elementos</b></div>
+  </ion-item>
+  <div *ngFor="let pregunta of pedido?.elements">
+    <ion-item>
+      <ion-label position="stacked">{{ pregunta?.answers[0]?.title }}</ion-label>
+      <ion-input type="text" readonly>{{ pregunta?.answers[0]?.answer }}</ion-input>
+    </ion-item>
+  </div>
+
+  <ion-item>
+    <hr class="middle-line">
+  </ion-item>
+  <ion-item>
+    <div text-center><b>Características del punto final de llegada</b></div>
+  </ion-item>
+  <div *ngFor="let pregunta of pedido?.destinationAnswers">
+    <ion-item>
+      <ion-label position="stacked">{{ pregunta.title }}</ion-label>
+      <ion-input type="text" readonly>{{ pregunta.answer }}</ion-input>
+    </ion-item>
+  </div>
+
+  <div padding *ngIf="button_servicio">
+    <ion-button expand="full" fill="solid" color="favorite" (click)="click_pedido()">Ir al servicio</ion-button>
+    <ion-button expand="full" fill="solid" color="favorite" (click)="var_mas(pedido?._id)">Historial</ion-button>
+  </div>
+
+  <div padding *ngIf="button_pedido">
+    <ion-button *ngIf="button_ofertar" expand="full" fill="solid" color="favorite"
+      (click)="presentAlertPrompt(pedido?.deliveryMaxDate,pedido?._id)">Ofertar</ion-button>
+    <ion-button *ngIf="button_historial" expand="full" fill="solid" color="favorite" (click)="pedido_historial(pedido?._id)">
+      Historial</ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-title color="light">Pago</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">
+        <ion-icon color="light" slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="formGroup" novalidate style="margin-top: 5%;">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-input type="tel" formControlName="cardNumber" autocomplete="cc-number" id="cc-number" ccNum
+              placeholder="Número de Tarjeta">
+              <ion-icon name="card" color="dark" style="position: relative;padding: 10px"></ion-icon>
+            </ion-input>
+            <ion-label position="stacked" style="margin: 5px;"
+              *ngIf="formGroup.get('cardNumber').errors && formGroup.get('cardNumber').dirty">
+              <ion-label position="stacked" no-padding style="margin: 0px;" color="danger" ion-text
+                [ngClass]="{'invalid':formGroup.controls.cardNumber.errors}">Tarjeta de credito erronea
+              </ion-label>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-input type="tel" formControlName="cardExpDate" type="tel" autocomplete="cc-exp" id="cc-exp" ccExp
+              placeholder="MM/AA">
+              <ion-icon name="calendar" color="dark" style="position: relative;padding: 10px"></ion-icon>
+            </ion-input>
+            <ion-label position="stacked" style="margin: 5px;"
+              *ngIf="formGroup.get('cardExpDate').errors && formGroup.get('cardExpDate').dirty">
+              <ion-label position="stacked" no-padding style="margin: 0px;" color="danger" ion-text
+                [ngClass]="{'invalid':formGroup.controls.cardExpDate.errors}">Fecha de vencimiento erronea
+              </ion-label>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-input type="tel" formControlName="cardCvv" type="tel" autocomplete="cc-cvc" id="cc-csc" ccCvc
+              placeholder="CVV">
+              <ion-icon name="card" color="dark" style="position: relative;padding: 10px"></ion-icon>
+            </ion-input>
+            <ion-label position="stacked" style="margin: 5px;"
+              *ngIf="formGroup.get('cardCvv').errors && formGroup.get('cardCvv').dirty">
+              <ion-label position="stacked" no-padding style="margin: 0px;" color="danger" ion-text
+                [ngClass]="{'invalid':formGroup.controls.cardCvv.errors}">CVV erronea
+              </ion-label>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-input type="text" formControlName="cardName" placeholder="Nombre">
+              <ion-icon name="person" color="dark" style="position: relative;padding: 10px"></ion-icon>
+            </ion-input>
+            <ion-label position="stacked" style="margin: 5px;"
+              *ngIf="formGroup.get('cardName').errors && formGroup.get('cardName').dirty">
+              <ion-label position="stacked" no-padding style="margin: 0px;" color="danger" ion-text
+                *ngIf="formGroup.get('cardName').hasError('required')">Se requiere Nombre</ion-label>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-input type="text" formControlName="cardLastName" placeholder="Apellido">
+              <ion-icon name="person" color="dark" style="position: relative;padding: 10px"></ion-icon>
+            </ion-input>
+            <ion-label position="stacked" style="margin: 5px;"
+              *ngIf="formGroup.get('cardLastName').errors && formGroup.get('cardLastName').dirty">
+              <ion-label position="stacked" no-padding style="margin: 0px;" color="danger" ion-text
+                *ngIf="formGroup.get('cardLastName').hasError('required')">Se requiere Apellido</ion-label>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-input type="text" formControlName="cardEmail" placeholder="Email">
+              <ion-icon name="at" color="dark" style="position: relative;padding: 10px"></ion-icon>
+            </ion-input>
+            <ion-label position="stacked" style="margin: 5px;"
+              *ngIf="formGroup.get('cardEmail').errors && formGroup.get('cardEmail').dirty">
+              <ion-label position="stacked" no-padding style="margin: 0px;" color="danger" ion-text
+                *ngIf="formGroup.get('cardEmail').hasError('required')">Se requiere email</ion-label>
+              <ion-label position="stacked" no-padding style="margin: 0px;" color="danger" ion-text
+                *ngIf="formGroup.get('cardEmail').hasError('email')">No es un email</ion-label>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row padding>
+
+        <ion-col size="12" text-center>
+          <ion-button expand="full" [disabled]="!formGroup.valid" color="favorite">Pagar&nbsp;&nbsp;<b> S/.
+              {{ total }}</b>
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+  </form>
+
+
+
+</ion-content>
+
+<!-- <ion-footer>
+  <ion-toolbar color="favorite">
+    <ion-title text-center color="light">Pagar <b>S/. {{ total }}</b></ion-title>
+  </ion-toolbar>
+</ion-footer> -->

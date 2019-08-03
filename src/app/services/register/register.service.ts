@@ -27,6 +27,20 @@ export class RegisterService {
     ));
   }
 
+  listar_driver_pag(page: number) {
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_get_driver + localStorage.getItem('id') + '/drivers?limit=10&page=' + page, {
+      headers: headers,
+      method: 'GET'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
+
   listar_driver(id: any) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     headers.append('Accept', 'application/json');

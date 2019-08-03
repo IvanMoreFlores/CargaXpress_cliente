@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, LoadingController, AlertController, } from '@ionic/angular';
 import { RegisterService } from './../../services/register/register.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-chofer',
@@ -19,17 +20,20 @@ export class ChoferPage implements OnInit {
   id: any;
   items: any;
   data: any = [];
+  page: number;
 
   constructor(private router: Router,
     private menu: MenuController,
     public _register: RegisterService,
     public loadingController: LoadingController,
-    public alertController: AlertController) { }
+    public alertController: AlertController,
+    public toastController: ToastController) { }
 
   ngOnInit() {
     this._register.listar_driver(localStorage.getItem('id')).subscribe((data => {
       console.log('Choferes : ' + data.drivers.length);
       if (data.drivers.length > 0) {
+        this.page = data.page;
         this.choferes = data.drivers;
         this.con_datos = !this.con_datos;
         this.sin_datos = !this.sin_datos;
@@ -62,6 +66,30 @@ export class ChoferPage implements OnInit {
       this.ngOnInit();
       event.target.complete();
     }, 2000);
+  }
+
+  siguiente(event) {
+    this._register.listar_driver_pag(this.page + 1).subscribe((data => {
+      if (data.drivers.length > 0) {
+        this.page = data.page;
+        this.choferes = this.choferes.concat(data.drivers);
+        console.log(data.drivers);
+        event.target.complete();
+      } else {
+        event.target.complete();
+        this.presentToast();
+      }
+    }), error => {
+      this.respuestaFail(error.json());
+    });
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Sin datos que mostrar',
+      duration: 2000
+    });
+    toast.present();
   }
 
   async respuestaFail(error: any) {

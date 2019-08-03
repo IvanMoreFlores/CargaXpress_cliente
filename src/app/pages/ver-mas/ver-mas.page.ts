@@ -12,6 +12,7 @@ export class VerMasPage implements OnInit {
 
   offers: any = [];
   ultimo: any = {};
+  id_owner = localStorage.getItem('id');
   constructor(public modalController: ModalController,
     private navParams: NavParams,
     public _noti: NotificacionService) { }

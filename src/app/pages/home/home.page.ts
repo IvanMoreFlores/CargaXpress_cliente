@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
   con_datos: Boolean = false;
   cero_datos: Boolean = false;
   salir: Boolean = false;
+  page: number;
 
   @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
   constructor(private router: Router,

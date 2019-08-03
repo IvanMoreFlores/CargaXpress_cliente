@@ -52,14 +52,26 @@ export class LoginPage {
     this.router.navigateByUrl('/recover');
   }
 
-  login() {
-    this.presentLoading();
-    this._login.login(this.data).subscribe((data => {
+  async login() {
+    const loading = await this.loadingController.create({
+      message: 'Espere por favor',
+    });
+    await loading.present();
+    this._login.login(this.data).subscribe((async data => {
+      loading.dismiss();
       this._storage.guardar_session(data);
       this.home(data);
     }), error => {
+      loading.dismiss();
       this.respuestaFail(error.json());
     });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Espere por favor',
+    });
+    await loading.present();
   }
 
   home(data: any) {
@@ -81,12 +93,7 @@ export class LoginPage {
     }
   }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Espere por favor',
-    });
-    await loading.present();
-  }
+
 
   async respuestaFail(error: any) {
     this.loadingController.dismiss();

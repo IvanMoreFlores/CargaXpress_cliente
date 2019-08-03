@@ -51,6 +51,8 @@ export class DetailPage implements OnInit {
     _id: null
   };
   ofertas: any[] = [];
+  ganador: any;
+  perdedor: any;
 
   constructor(private router: Router,
     public _culqi: CulqiService,
@@ -121,6 +123,7 @@ export class DetailPage implements OnInit {
       console.log(data);
       this.ofertas = data.offers;
       this.loadingCtrl.dismiss();
+      this.evaluar_pedido();
     }, (err) => {
       // error
       console.log(err);
@@ -128,6 +131,19 @@ export class DetailPage implements OnInit {
       const msg = JSON.parse(err._body);
       this.errorAlert(msg.msg, 'Error al listar las ofertas');
     });
+  }
+
+  evaluar_pedido() {
+    // tslint:disable-next-line: no-shadowed-variable
+    const results_1 = this.ofertas.filter(function (detalle: { status: any; }) { return detalle.status === 1 || detalle.status === 3; });
+    const results_2 = this.ofertas.filter(function (detalle: { status: any; }) { return detalle.status === 0; });
+    const firstObj_1 = (results_1.length > 0) ? results_1[0] : null;
+    const firstObj_2 = (results_2.length > 0) ? results_2[0] : null;
+    this.ganador = firstObj_1;
+    this.perdedor = firstObj_2;
+    console.log(firstObj_1);
+    console.log(firstObj_2);
+    // return firstObj;
   }
 
   async click_Contraofertar(monto: number, _id: any, id: any) {
@@ -367,5 +383,7 @@ export class DetailPage implements OnInit {
   editar_orden(id: any) {
     this.router.navigate(['/edit-pedido', id]);
   }
+
+
 
 }

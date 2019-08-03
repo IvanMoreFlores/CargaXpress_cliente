@@ -286,28 +286,7 @@
               </ion-grid>
             </ion-col>
             <ion-col size="6">
-              <ion-grid fixed no-padding>
-                <ion-row>
-                  <ion-col>
-                    <ion-button *ngIf="item.status === 0 && detalle.canNegotiate === 1"
-                      (click)="click_Contraofertar(item.lastAmount,item._id,item.order)" expand="full" color="primary"
-                      color="favorite">Negociar</ion-button>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-button (click)="aceptarAlter(item.lastAmount,item.order,item._id)" *ngIf="item.status === 0"
-                      expand="full" color="primary" color="success">Aceptar
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-button (click)="cancelartAlert(item.lastAmount)" *ngIf="item.status === 0" expand="full"
-                      color="primary" color="danger">Cancelar
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
+              <ion-grid fixed *ngIf="detalle.status === 2 || detalle.status === 3">
                 <ion-row>
                   <ion-col>
                     <ion-button (click)="var_mas(item._id)" expand="full" color="primary" color="favorite">Ver más
@@ -322,51 +301,41 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
+
+              <ion-grid fixed *ngIf="detalle.status === 1">
+                <ion-row>
+                  <ion-col>
+                    <ion-button *ngIf="detalle.canNegotiate === 1"
+                      (click)="click_Contraofertar(item.lastAmount,item._id,item.order)" expand="full" color="primary"
+                      color="favorite">Negociar</ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="aceptarAlter(item.lastAmount,item.order,item._id)" expand="full"
+                      color="primary" color="success">Aceptar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="cancelartAlert(item.lastAmount)" expand="full" color="primary" color="danger">
+                      Cancelar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="var_mas(item._id)" expand="full" color="primary" color="favorite">Ver más
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-col>
           </ion-row>
         </ion-grid>
-        <!-- <ion-grid style="height: 100%" no-padding>
-          <ion-row justify-content-center align-items-center style="padding: 7px">
-            <ion-col no-padding text-start>
-              <ion-card-subtitle style="color: black;font-size: 17px">Cod Pe - 2342523623</ion-card-subtitle>
-            </ion-col>
-            <ion-col no-padding text-center size="5">
-              <ion-card-title>s/ 1000</ion-card-title>
-            </ion-col>
-          </ion-row>
-          <ion-row justify-content-center align-items-center no-padding>
-            <ion-col no-padding text-start>
-              <ion-card-subtitle>condiciones cumplidad 4/4</ion-card-subtitle>
-            </ion-col>
-            <ion-col no-padding text-start size="5">
-              <ion-button (click)="click_modalNego()" color="favorite" expand="block">Negociacion</ion-button>
-            </ion-col>
-          </ion-row>
-          <ion-row justify-content-center align-items-center no-padding>
-            <ion-col no-padding text-start>
-              <ion-card-subtitle no-padding>- Estiba</ion-card-subtitle>
-              <ion-card-subtitle no-padding>- Destiba</ion-card-subtitle>
-              <ion-card-subtitle no-padding>- Seguridad</ion-card-subtitle>
-              <ion-card-subtitle no-padding>- Seguridad</ion-card-subtitle>
-            </ion-col>
-            <ion-col no-padding text-start size="5">
-              <ion-button (click)="pago_culqi()" color="success" expand="block">Aceptar</ion-button>
-            </ion-col>
-          </ion-row>
-          <ion-row justify-content-center align-items-center no-padding>
-            <ion-col no-padding text-start>
-              <ion-card-subtitle>Nivel de seguridad: 49%</ion-card-subtitle>
-            </ion-col>
-            <ion-col no-padding text-start size="5">
-              <ion-button color="danger" expand="block">Rechazar</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid> -->
       </ion-card>
     </div>
-
-
-
   </div>
 
 

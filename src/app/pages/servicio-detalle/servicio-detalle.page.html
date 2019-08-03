@@ -25,7 +25,7 @@
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Precio de pedido</ion-label>
-    <ion-input type="text" readonly>{{ servicio?.order?.finalPrice }}</ion-input>
+    <ion-input type="text" readonly>{{ servicio?.order?.price }}</ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Lugar de inicio</ion-label>
@@ -86,7 +86,7 @@
   <div padding>
     <ion-button expand="full" fill="solid" color="favorite">Asignar</ion-button>
     <ion-button expand="full" fill="solid" color="favorite">Seguimiento</ion-button>
-    <ion-button expand="full" fill="solid" color="favorite">Ir al pedido</ion-button>
+    <ion-button expand="full" fill="solid" color="favorite" (click)="click_pedido(servicio?.order?._id)">Ir al pedido</ion-button>
   </div>
 
 

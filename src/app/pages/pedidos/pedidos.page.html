@@ -28,23 +28,28 @@
 
   <div *ngIf="con_datos">
     <ion-card no-padding *ngFor="let pedido of pedidos" (click)="detail(pedido._id)">
-      <ion-card-header>
+      <ion-card-header class="ion-activatable">
+        <ion-ripple-effect></ion-ripple-effect>
         <ion-card-title>{{ pedido.code }}</ion-card-title>
-        <ion-card-subtitle *ngIf="pedido.type == 1">Tipo: <a style="color: #30205d">Subasta</a>
+        <ion-card-subtitle *ngIf="pedido.type == 1"><b>Tipo: </b><a style="color: #30205d">Subasta</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.type == 2">Tipo: <a style="color: #30205d">Precio ofertado</a>
+        <ion-card-subtitle *ngIf="pedido.type == 2"><b>Tipo: </b><a style="color: #30205d">Precio ofertado</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.type == 3">Tipo: <a style="color: #30205d">Precio sugerido</a>
+        <ion-card-subtitle *ngIf="pedido.type == 3"><b>Tipo: </b><a style="color: #30205d">Precio sugerido</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.status == 0">Estado: <a style="color: #30205d">Cancelado</a>
+        <ion-card-subtitle *ngIf="pedido.status == 0"><b>Estado: </b><a style="color: #30205d">Cancelado</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.status == 1">Estado: <a style="color: #30205d">Publicado</a>
+        <ion-card-subtitle *ngIf="pedido.status == 1"><b>Estado: </b><a style="color: #30205d">Publicado</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.status == 2">Estado: <a style="color: #30205d">Pendiente de pago</a>
+        <ion-card-subtitle *ngIf="pedido.status == 2"><b>Estado: </b><a style="color: #30205d">Pendiente de pago</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.status == 3">Estado: <a style="color: #30205d">En proceso</a>
+        <ion-card-subtitle *ngIf="pedido.status == 3"><b>Estado: </b><a style="color: #30205d">En proceso</a>
         </ion-card-subtitle>
-        <ion-card-subtitle *ngIf="pedido.status == 4">Estado: <a style="color: #30205d">Finalizado </a>
+        <ion-card-subtitle *ngIf="pedido.status == 4"><b>Estado: </b><a style="color: #30205d">Finalizado </a>
+        </ion-card-subtitle>
+        <ion-card-subtitle><b>Inicio: </b><a style="color: #30205d">{{ pedido.initPlace }} </a>
+        </ion-card-subtitle>
+        <ion-card-subtitle><b>Destino: </b><a style="color: #30205d">{{ pedido.endPlace }} </a>
         </ion-card-subtitle>
       </ion-card-header>
     </ion-card>

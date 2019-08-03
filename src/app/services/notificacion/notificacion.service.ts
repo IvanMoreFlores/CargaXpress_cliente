@@ -16,6 +16,7 @@ export class NotificacionService {
   listar_historial(id_orden: any, id_ofer: any) {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_historial + id_orden + '/offers/' + id_ofer + '/offs', {
       headers: headers,
       method: 'GET'
@@ -29,6 +30,7 @@ export class NotificacionService {
   listar_notificaciones() {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_notificaciones + localStorage.getItem('id') + '/notifications', {
       headers: headers,
       method: 'GET'

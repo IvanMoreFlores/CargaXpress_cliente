@@ -37,14 +37,16 @@
       refreshingText="Actualizando...">
     </ion-refresher-content>
   </ion-refresher>
-  
+
   <div padding *ngIf="cero_datos">
     <img src="assets/img/warning.png" style="width: 30% !important;display:block;margin:auto">
     <h1 text-center>Sin datos</h1>
   </div>
 
   <div *ngIf="con_datos">
-    <ion-card *ngFor="let orden of ordenes" no-padding style="padding-left: 10px" (click)="modalSubcat(orden._id)">
+    <ion-card class="ion-activatable" *ngFor="let orden of ordenes" no-padding style="padding-left: 10px"
+      (click)="click_pedido(orden._id)">
+      <ion-ripple-effect></ion-ripple-effect>
       <ion-grid style="height: 100%">
         <ion-row style="height: 100%; flex-direction: row">
           <ion-col style="height: 100%;" size="6" align-self-center>
@@ -56,7 +58,7 @@
         </ion-row>
         <ion-row style="height: 100%; flex-direction: row">
           <ion-col>
-            <div><b>{{ orden.category.name }} - {{ orden.subcategory.name }}</b></div>              
+            <div><b>{{ orden.category.name }} - {{ orden.subcategory.name }}</b></div>
           </ion-col>
         </ion-row>
         <ion-row style="height: 100%; flex-direction: row">
@@ -68,35 +70,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <!-- <ion-grid no-padding style="height: 100%">
-        <ion-row style="line-height: 100%">
-          <ion-col no-padding size="6" style="display: flex;align-items: center;">
-            <p style="font-size: 20px"><b>{{ orden.code}}</b></p>
-          </ion-col>
-          <ion-col no-padding size="6" style="display: flex;align-items: center;">
-            <p>
-              <b style="font-size: 20px">s./ {{ orden.price }}</b><br>
-              {{ orden.category.name }} - {{ orden.subcategory.name }}
-            </p>
-          </ion-col>
-        </ion-row>
-        <ion-row no-padding style="line-height: 100%">
-          <ion-col no-padding size="1" style="display: flex;justify-content: start;align-items: center;">
-            <div no-padding class="circulo_rojo"></div>
-          </ion-col>
-          <ion-col no-padding style="display: flex;justify-content: start;align-items: center;">
-            <p no-padding style="font-size: 15px">{{ orden.initPlace }}</p>
-          </ion-col>
-        </ion-row>
-        <ion-row no-padding style="line-height: 100%">
-          <ion-col no-padding size="1" style="display: flex;justify-content: start;align-items: center;">
-            <div no-padding class="circulo_verde"></div>
-          </ion-col>
-          <ion-col no-padding style="display: flex;justify-content: start;align-items: center;">
-            <p no-padding style="font-size: 15px">{{ orden.endPlace }}</p>
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
     </ion-card>
   </div>
 
@@ -140,5 +113,8 @@
       </ion-grid>
     </ion-card>
   </div>
-
+  <ion-infinite-scroll threshold="160px" (ionInfinite)="siguiente($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando pedidos..">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

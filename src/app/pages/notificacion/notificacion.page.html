@@ -18,9 +18,10 @@
   </ion-refresher>
   
   <div *ngIf="con_datos">
-    <ion-card no-padding *ngFor="let notificacion of notificaciones"
+    <ion-card class="ion-activatable" no-padding *ngFor="let notificacion of notificaciones"
       [ngClass]="{ 'custom-class-name': notificacion.status === 0 }"
       (click)="abrir_modal(notificacion)">
+      <ion-ripple-effect></ion-ripple-effect>
       <ion-grid fixed>
         <ion-row style="display: flex;justify-content: center;align-items: center;">
           <ion-col size="2">

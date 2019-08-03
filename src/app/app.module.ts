@@ -20,15 +20,37 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BuscadorLugarPage } from './pages/buscador-lugar/buscador-lugar.page';
 import { VerMasPage } from './pages/ver-mas/ver-mas.page';
 import { ModalDetailPage } from './pages/modal-detail/modal-detail.page';
+import { PedidoHistorialPage } from './pages/pedido-historial/pedido-historial.page';
+import { OrdenPagoPage } from './pages/orden-pago/orden-pago.page';
+
+// Socket
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = {
+  url: 'https://cargaxpress-socket-dev.mybluemix.net', options: {
+    path: '/carga-socket',
+    transports: ['websocket', 'polling']
+  }
+};
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, BuscadorLugarPage, VerMasPage, ModalDetailPage],
-  entryComponents: [BuscadorLugarPage, VerMasPage, ModalDetailPage],
+  declarations: [AppComponent,
+    MenuComponent,
+    BuscadorLugarPage,
+    VerMasPage,
+    ModalDetailPage,
+    PedidoHistorialPage,
+    OrdenPagoPage],
+  entryComponents: [BuscadorLugarPage,
+    VerMasPage,
+    ModalDetailPage,
+    PedidoHistorialPage,
+    OrdenPagoPage],
   imports: [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpModule,
-    IonicStorageModule.forRoot()],
+    IonicStorageModule.forRoot(),
+    SocketIoModule.forRoot(config)],
   providers: [
     StatusBar,
     SplashScreen,

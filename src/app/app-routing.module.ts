@@ -23,6 +23,11 @@ const routes: Routes = [
   { path: 'ver-mas', loadChildren: './pages/ver-mas/ver-mas.module#VerMasPageModule' },
   { path: 'edit-perfil/:id', loadChildren: './pages/edit-perfil/edit-perfil.module#EditPerfilPageModule' },
   { path: 'servicio-detalle/:id', loadChildren: './pages/servicio-detalle/servicio-detalle.module#ServicioDetallePageModule' },
+  { path: 'pedido-detalle/:id/:of', loadChildren: './pages/pedido-detalle/pedido-detalle.module#PedidoDetallePageModule' },
+  { path: 'pedido-seguimiento', loadChildren: './pages/pedido-seguimiento/pedido-seguimiento.module#PedidoSeguimientoPageModule' },
+  { path: 'pedido-asignar', loadChildren: './pages/pedido-asignar/pedido-asignar.module#PedidoAsignarPageModule' },
+  { path: 'pedido-historial', loadChildren: './pages/pedido-historial/pedido-historial.module#PedidoHistorialPageModule' },
+  { path: 'orden-pago', loadChildren: './pages/orden-pago/orden-pago.module#OrdenPagoPageModule' },
   { path: '**', loadChildren: './pages/splash/splash.module#SplashPageModule' }];
 
 @NgModule({

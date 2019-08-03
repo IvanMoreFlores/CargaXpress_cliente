@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { ServicioService } from '../../services/servicio/servicio.service';
 
 @Component({
@@ -15,16 +16,19 @@ export class ServiciosPage implements OnInit {
   con_datos: Boolean = false;
   cero_datos: Boolean = false;
   servicios: any;
+  page: number;
   constructor(private router: Router,
     private menu: MenuController,
     public alertController: AlertController,
-    public servicio: ServicioService) {
+    public servicio: ServicioService,
+    public toastController: ToastController) {
     this.listarServices();
   }
 
   ngOnInit() {
     this.servicio.listar_servicio().subscribe((data => {
       this.servicios = data.services;
+      this.page = data.page;
       console.log(this.servicios);
     }), error => {
       this.respuestaFail(error.json());
@@ -32,16 +36,14 @@ export class ServiciosPage implements OnInit {
   }
 
   click_detalle(id: any) {
-    // this.router.navigate(['/new-driver', 0]);
     this.router.navigate(['/servicio-detalle', id]);
-    // alert(id);
-    // this.router.navigateByUrl('/servicio-detalle', id);
   }
 
   listarServices() {
     this.servicio.listar_servicio().subscribe((data => {
       console.log(data.services.length);
       if (data.services.length > 0) {
+        this.page = data.page;
         this.servicios = data.services;
         this.con_datos = !this.con_datos;
         this.sin_datos = !this.sin_datos;
@@ -68,8 +70,6 @@ export class ServiciosPage implements OnInit {
     this.menu.open('custom');
   }
 
-
-
   async respuestaFail(error: any) {
     console.log(error);
     if (error.msg) {
@@ -88,8 +88,6 @@ export class ServiciosPage implements OnInit {
       await alert.present();
     }
   }
-
-
 
   async presentAlertRadio() {
     const alert = await this.alertController.create({
@@ -127,6 +125,30 @@ export class ServiciosPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  siguiente(event) {
+    this.servicio.listar_servicios_pag(this.page + 1).subscribe((data => {
+      if (data.services.length > 0) {
+        this.page = data.page;
+        this.servicios = this.servicios.concat(data.services);
+        console.log(data.orders);
+        event.target.complete();
+      } else {
+        event.target.complete();
+        this.presentToast();
+      }
+    }), error => {
+      this.respuestaFail(error.json());
+    });
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Sin datos que mostrar',
+      duration: 2000
+    });
+    toast.present();
   }
 
 

@@ -4,6 +4,7 @@ import { AlertController, NavController, MenuController } from '@ionic/angular';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { OrderService } from '../../services/order/order.service';
 import { ModalDetailPage } from '../modal-detail/modal-detail.page';
+import { OrdenPagoPage } from '../orden-pago/orden-pago.page';
 
 @Component({
   selector: 'app-modal-nego',
@@ -39,12 +40,24 @@ export class ModalNegoPage implements OnInit {
       this.loadingCtrl.dismiss();
       this.total = data.price;
       this.listar_servicios();
-      console.log(this.total);
+      // console.log(this.total);
     }), error => {
       this.loadingCtrl.dismiss();
       this.respuestaFail(error.json());
     });
   }
+
+  async pagar() {
+    const modal = await this.modalController.create({
+      component: OrdenPagoPage,
+      componentProps: {
+        total: this.total
+      }
+    });
+    return await modal.present();
+  }
+
+
 
   async respuestaFail(error: any) {
     if (error.msg) {
@@ -69,7 +82,7 @@ export class ModalNegoPage implements OnInit {
   listar_servicios() {
     this._orden.listar_servicio().subscribe((data => {
       this.servicios = data.aditional_services;
-      console.log(data);
+      // console.log(data);
     }));
   }
 
@@ -83,11 +96,11 @@ export class ModalNegoPage implements OnInit {
       componentProps: { id: id, servicio: servicio }
     });
     modal.onDidDismiss().then((detail: any) => {
-      console.log(detail);
+      // console.log(detail);
       if (detail.data._id !== 0) {
         if (detail.data.tipo === 1) {
           if (detail.data.cuadra > 0) {
-            console.log('Entro aqui: ');
+            console.log('Cuadra mayor a ' + detail.data.cuadra);
             const costo = {
               '_id': detail.data._id,
               'price': detail.data.price,
@@ -95,12 +108,17 @@ export class ModalNegoPage implements OnInit {
               'cuadra': detail.data.cuadra,
               'monto': detail.data.monto.toFixed(2),
             };
-            this.costos.push(costo);
-            console.log(this.costos);
-            console.log(costo);
-            console.log(this.total);
-            console.log(parseFloat((this.total + parseFloat(detail.data.monto.toFixed(2))).toFixed(2)));
-            this.total = parseFloat((this.total + parseFloat(detail.data.monto.toFixed(2))).toFixed(2));
+
+            // tslint:disable-next-line: no-shadowed-variable
+            const results = this.costos.filter(function (costo: { _id: any; }) { return costo._id === detail.data._id; });
+            const firstObj = (results.length > 0) ? results[0] : null;
+
+            if (firstObj) {
+              this.costoAlert();
+            } else {
+              this.costos.push(costo);
+              this.total = parseFloat((parseFloat(this.total) + parseFloat(detail.data.monto.toFixed(2))).toFixed(2));
+            }
           }
         } else {
           const costo = {
@@ -109,12 +127,33 @@ export class ModalNegoPage implements OnInit {
             'servicio': servicio,
             'monto': detail.data.price
           };
-          this.costos.push(costo);
-          this.total = parseFloat((this.total + parseFloat(detail.data.price.toFixed(2))).toFixed(2));
+
+          // tslint:disable-next-line: no-shadowed-variable
+          const results = this.costos.filter(function (costo: { _id: any; }) { return costo._id === detail.data._id; });
+          const firstObj = (results.length > 0) ? results[0] : null;
+
+          if (firstObj) {
+            this.costoAlert();
+          } else {
+            this.costos.push(costo);
+            this.total = parseFloat((parseFloat(this.total) + parseFloat(detail.data.price.toFixed(2))).toFixed(2));
+          }
         }
       }
+      console.log(this.costos);
     });
     return await modal.present();
+  }
+
+  async costoAlert() {
+    const alert = await this.alertController.create({
+      header: 'Mensaje',
+      // subHeader: 'Subtitle',
+      message: 'El servicio ya esta seleccionado',
+      backdropDismiss: false,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   eliminar_costo(busqueda) {

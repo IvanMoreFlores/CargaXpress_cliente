@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { MenuController, AlertController } from '@ionic/angular';
 import { HomeService } from '../../services/home/home.service';
 import { OrderService } from './../../services/order/order.service';
-
+import { ToastController } from '@ionic/angular';
 // Modal
 
 @Component({
@@ -20,6 +20,7 @@ export class HomeChoferPage implements OnInit {
   categorias: any;
   subcategorias: any;
   ordenes: any;
+  page: number;
   div_select: Boolean = false;
   sin_datos: Boolean = true;
   con_datos: Boolean = false;
@@ -30,7 +31,8 @@ export class HomeChoferPage implements OnInit {
     private menu: MenuController,
     private _home: HomeService,
     private _orden: OrderService,
-    public alertController: AlertController) {
+    public alertController: AlertController,
+    public toastController: ToastController) {
     this.listarOrder();
   }
 
@@ -55,6 +57,11 @@ export class HomeChoferPage implements OnInit {
       this.div_select = !this.div_select;
       console.log(data);
     });
+  }
+
+  click_pedido(id: any) {
+    this.router.navigate(['/pedido-detalle', id, 0]);
+    // this.router.navigate(['/pedido-detalle', id]);
   }
 
   presentModal() {
@@ -97,6 +104,7 @@ export class HomeChoferPage implements OnInit {
     this._orden.listar_orden().subscribe((data => {
       console.log(data.orders.length);
       if (data.orders.length > 0) {
+        this.page = data.page;
         this.ordenes = data.orders;
         this.con_datos = !this.con_datos;
         this.sin_datos = !this.sin_datos;
@@ -116,6 +124,30 @@ export class HomeChoferPage implements OnInit {
       this.listarOrder();
       event.target.complete();
     }, 2000);
+  }
+
+  siguiente(event) {
+    this._orden.listar_orden_id_pag(this.page + 1).subscribe((data => {
+      if (data.orders.length > 0) {
+        this.page = data.page;
+        this.ordenes = this.ordenes.concat(data.orders);
+        console.log(data.orders);
+        event.target.complete();
+      } else {
+        event.target.complete();
+        this.presentToast();
+      }
+    }), error => {
+      this.respuestaFail(error.json());
+    });
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Sin datos que mostrar',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

@@ -26,7 +26,8 @@
     </div>
   
     <div *ngIf="con_datos">
-      <ion-card ion-button *ngFor="let categoria of categorias" style="padding: 15px;" (click)="modalSubcat(categoria._id)">
+      <ion-card class="ion-activatable" ion-button *ngFor="let categoria of categorias" style="padding: 15px;" (click)="modalSubcat(categoria._id)">
+          <ion-ripple-effect></ion-ripple-effect>
           <ion-button style="--border-radius: 10px !important" shape="round" color="favorite" no-padding fill="clear" expand="block">
               <ion-grid>
                 <ion-row style="display: flex;justify-content: flex-start;align-items: center;">
