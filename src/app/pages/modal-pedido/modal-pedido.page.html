@@ -79,7 +79,7 @@
     <div padding text-center style="background: #ECECEC;">
       <p style="font-size: 15px;margin: 0px;">Seleccione la categoria deseada</p>
     </div>
-    <ion-card ion-activatable ion-button *ngFor="let categoria of categorias" style="padding: 15px;"
+    <ion-card class="ion-activatable" ion-button *ngFor="let categoria of categorias" style="padding: 15px;"
       (click)="click_cuatro(categoria._id)">
       <ion-ripple-effect></ion-ripple-effect>
       <ion-grid>
@@ -99,7 +99,7 @@
     <div padding text-center style="background: #ECECEC;">
       <p style="font-size: 15px;margin: 0px;">Seleccione la subcategoria deseada</p>
     </div>
-    <ion-card ion-activatable *ngFor="let subcategoria of subcategorias" style="padding: 15px"
+    <ion-card class="ion-activatable" *ngFor="let subcategoria of subcategorias" style="padding: 15px"
       (click)="click_cinco(subcategoria._id)">
       <ion-ripple-effect></ion-ripple-effect>
       <ion-grid>
@@ -162,15 +162,15 @@
       <p style="font-size: 15px;text-align: center"><b>Características del elemento de la carga*</b></p>
       <div no-padding>
         <ion-list>
-          <ion-item *ngFor="let question of datos_orden?.elements[0]?.answers">
-            <p style="font-size: 15px;">{{ question.title }}</p>
-            <ion-label position="stacked">{{ question.description }}</ion-label>
-            <ion-select [(ngModel)]="question.answer" *ngIf="question.options.length > 0"
+          <ion-item *ngFor="let question of datos_orden?.elements;let i = index">
+            <p style="font-size: 15px;">{{ question.answers[0].title }}</p>
+            <ion-label position="stacked">{{ question.answers[0].description }}</ion-label>
+            <ion-select [(ngModel)]="question.answers[0].answer" *ngIf="question.answers[0].options.length > 0"
               placeholder=".: SELECCIONE :.">
-              <ion-select-option *ngFor="let option of question.options" [value]="option">{{option}}
+              <ion-select-option *ngFor="let option of question.answers[0].options" [value]="option">{{option}}
               </ion-select-option>
             </ion-select>
-            <ion-textarea [(ngModel)]="question.answer" *ngIf="question.options.length === 0" rows="4"
+            <ion-textarea [(ngModel)]="question.answers[0].answer" *ngIf="question.answers[0].options.length === 0" rows="4"
               placeholder="Ingrese más información aquí...">
             </ion-textarea>
           </ion-item>

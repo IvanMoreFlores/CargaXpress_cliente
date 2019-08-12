@@ -22,6 +22,7 @@ import { VerMasPage } from './pages/ver-mas/ver-mas.page';
 import { ModalDetailPage } from './pages/modal-detail/modal-detail.page';
 import { PedidoHistorialPage } from './pages/pedido-historial/pedido-historial.page';
 import { OrdenPagoPage } from './pages/orden-pago/orden-pago.page';
+import { ServicioChoferPage } from './pages/servicio-chofer/servicio-chofer.page';
 
 // Socket
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -39,12 +40,14 @@ const config: SocketIoConfig = {
     VerMasPage,
     ModalDetailPage,
     PedidoHistorialPage,
-    OrdenPagoPage],
+    OrdenPagoPage,
+    ServicioChoferPage],
   entryComponents: [BuscadorLugarPage,
     VerMasPage,
     ModalDetailPage,
     PedidoHistorialPage,
-    OrdenPagoPage],
+    OrdenPagoPage,
+    ServicioChoferPage],
   imports: [
     HttpClientModule,
     FormsModule,

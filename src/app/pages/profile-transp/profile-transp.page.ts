@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, LoadingController, AlertController, } from '@ionic/angular';
 import { RegisterService } from './../../services/register/register.service';
 import { DriverService } from '../../services/driver/driver.service';
+import { NotificacionService } from '../../services/notificacion/notificacion.service';
 
 @Component({
   selector: 'app-profile-transp',
@@ -18,12 +19,14 @@ export class ProfileTranspPage implements OnInit {
   con_datos: Boolean = false;
   cero_datos: Boolean = false;
   perfil: any;
+  contador: number;
   constructor(private menu: MenuController,
     private router: Router,
     public _driver: RegisterService,
     public _chofer: DriverService,
     public loadingController: LoadingController,
-    public alertController: AlertController) {
+    public alertController: AlertController,
+    public _noti: NotificacionService) {
     this.listar_info();
     this.menu.enable(false, 'custom');
   }
@@ -32,9 +35,19 @@ export class ProfileTranspPage implements OnInit {
     this.listarDriver();
   }
 
+  ionViewDidEnter() {
+    this._noti.listar_notificaciones().subscribe((data) => {
+      this.contador = data.nrCount;
+    });
+  }
+
   openFirst() {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
+  }
+
+  click_notificacion() {
+    this.router.navigateByUrl('/trans-noti');
   }
 
   modal_certificado() {

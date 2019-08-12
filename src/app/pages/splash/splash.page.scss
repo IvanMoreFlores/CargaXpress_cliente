@@ -1,10 +1,8 @@
-
-
 .container {
-margin: 0px;
+  margin: 0px;
   background: #30205d;
-  width: calc(100% );
-  height: calc(100vh );
+  width: calc(100%);
+  height: calc(100vh);
   font-size: 1rem;
   text-align: center;
   white-space: nowrap;
@@ -52,16 +50,25 @@ margin: 0px;
 }
 
 @-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0) }
-  40% { -webkit-transform: scale(1.0) }
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
+  0%,
+  80%,
+  100% {
     -webkit-transform: scale(0);
     transform: scale(0);
-  } 40% { 
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }

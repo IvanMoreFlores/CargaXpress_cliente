@@ -46,7 +46,7 @@
   </ion-grid>
 
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="canNegotiate === 1 && status !==3">
   <ion-toolbar color="favorite" (click)="presentAlertPrompt()">
     <ion-title text-center color="light">Negociar</ion-title>
   </ion-toolbar>

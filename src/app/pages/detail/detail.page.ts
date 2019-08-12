@@ -372,8 +372,10 @@ export class DetailPage implements OnInit {
   }
 
 
-  click_modalNego(id: any) {
-    this.router.navigate(['/modal-nego', id]);
+  click_modalNego(id_orden: any, id_oferta: any) {
+    console.log(id_orden);
+    console.log(id_oferta);
+    this.router.navigate(['/modal-nego', id_orden, id_oferta]);
   }
 
   click_modalMapa() {

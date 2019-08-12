@@ -102,7 +102,8 @@
       <ion-row padding>
 
         <ion-col size="12" text-center>
-          <ion-button expand="full" [disabled]="!formGroup.valid" color="favorite">Pagar&nbsp;&nbsp;<b> S/.
+          <ion-button expand="full" [disabled]="!formGroup.valid" color="favorite" (click)="click_pagar()">
+            Pagar&nbsp;&nbsp;<b> S/.
               {{ total }}</b>
           </ion-button>
         </ion-col>

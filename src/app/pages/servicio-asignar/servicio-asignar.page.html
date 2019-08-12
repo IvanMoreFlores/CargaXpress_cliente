@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="/" text="">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">Asignar servicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        <ion-label position="stacked">Elementos pendientes de asignar</ion-label>
+      </ion-col>
+    </ion-row>
+    <div text-center *ngIf="elements.length === 0">
+      <p><b>No hay elementos pendientes de asignar</b></p>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-item class="check" *ngFor="let item of elements;let i = index">
+          <ion-label>Elemento {{i + 1}}</ion-label>
+          <ion-checkbox color="favorite" item-left value="1" (ionChange)="addCheckbox($event,item._id)"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item>
+    <ion-label position="stacked">Asignar</ion-label>
+    <ion-input (ionFocus)="click_chofer()" readonly placeholder="Nombre del chofer" [(ngModel)]="nombre_chofer">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Link de seguimiento</ion-label>
+    <ion-input placeholder="Link de seguimiento" [(ngModel)]="link"></ion-input>
+  </ion-item>
+
+  <div padding *ngIf="elements.length > 0">
+    <ion-button expand="full" fill="solid" color="favorite" (click)="getCheckedBoxes()">Asignar</ion-button>
+  </div>
+
+</ion-content>

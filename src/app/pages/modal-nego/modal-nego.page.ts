@@ -34,7 +34,7 @@ export class ModalNegoPage implements OnInit {
       message: 'Cargando datos...',
     });
     await loading.present();
-    this._orden.detalle_order(this.activatedRoute.snapshot.paramMap.get('id')).subscribe((data => {
+    this._orden.detalle_order(this.activatedRoute.snapshot.paramMap.get('orden')).subscribe((data => {
       this.detalle = data;
       this.estado = true;
       this.loadingCtrl.dismiss();
@@ -51,7 +51,10 @@ export class ModalNegoPage implements OnInit {
     const modal = await this.modalController.create({
       component: OrdenPagoPage,
       componentProps: {
-        total: this.total
+        orderId: this.activatedRoute.snapshot.paramMap.get('orden'),
+        offerHistoryId: this.activatedRoute.snapshot.paramMap.get('oferta'),
+        total: this.total,
+        aditionalServices: this.costos
       }
     });
     return await modal.present();
@@ -87,7 +90,7 @@ export class ModalNegoPage implements OnInit {
   }
 
   cerrar() {
-    this.router.navigate(['/detail', this.activatedRoute.snapshot.paramMap.get('id')]);
+    this.router.navigate(['/detail', this.activatedRoute.snapshot.paramMap.get('orden')]);
   }
 
   async add_services(id: any, servicio: string) {
@@ -106,7 +109,7 @@ export class ModalNegoPage implements OnInit {
               'price': detail.data.price,
               'servicio': servicio,
               'cuadra': detail.data.cuadra,
-              'monto': detail.data.monto.toFixed(2),
+              'monto': parseFloat(detail.data.monto.toFixed(2)),
             };
 
             // tslint:disable-next-line: no-shadowed-variable

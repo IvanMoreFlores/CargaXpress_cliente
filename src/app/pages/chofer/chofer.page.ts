@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuController, LoadingController, AlertController, } from '@ionic/angular';
 import { RegisterService } from './../../services/register/register.service';
 import { ToastController } from '@ionic/angular';
+import { NotificacionService } from '../../services/notificacion/notificacion.service';
 
 @Component({
   selector: 'app-chofer',
@@ -21,13 +22,15 @@ export class ChoferPage implements OnInit {
   items: any;
   data: any = [];
   page: number;
+  contador: number;
 
   constructor(private router: Router,
     private menu: MenuController,
     public _register: RegisterService,
     public loadingController: LoadingController,
     public alertController: AlertController,
-    public toastController: ToastController) { }
+    public toastController: ToastController,
+    public _noti: NotificacionService) { }
 
   ngOnInit() {
     this._register.listar_driver(localStorage.getItem('id')).subscribe((data => {
@@ -46,6 +49,16 @@ export class ChoferPage implements OnInit {
     }), error => {
       this.respuestaFail(error.json());
     });
+  }
+
+  ionViewDidEnter() {
+    this._noti.listar_notificaciones().subscribe((data) => {
+      this.contador = data.nrCount;
+    });
+  }
+
+  click_notificacion() {
+    this.router.navigateByUrl('/trans-noti');
   }
 
   openFirst() {

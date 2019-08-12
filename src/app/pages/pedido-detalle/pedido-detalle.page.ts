@@ -66,12 +66,12 @@ export class PedidoDetallePage implements OnInit {
     this.navCtrl.pop();
   }
 
-  async var_mas(id: any) {
+  async var_mas(id: any, canNegotiate: any) {
     this.service.offer_id(id).subscribe((async data => {
       console.log(data);
       const modal = await this.modalController.create({
         component: VerMasPage,
-        componentProps: { id: data._id, id_oferta: id }
+        componentProps: { id: data._id, id_oferta: id, canNegotiate: canNegotiate }
       });
       return await modal.present();
     }), error => {
@@ -79,12 +79,12 @@ export class PedidoDetallePage implements OnInit {
     });
   }
 
-  async pedido_historial(id: any) {
+  async pedido_historial(id: any, canNegotiate: any, status: any) {
     this.service.offer_id(id).subscribe((async data => {
       console.log(data);
       const modal = await this.modalController.create({
         component: PedidoHistorialPage,
-        componentProps: { id: data._id, id_oferta: id }
+        componentProps: { id: data._id, id_oferta: id, canNegotiate: canNegotiate, status: status }
       });
       return await modal.present();
     }), error => {

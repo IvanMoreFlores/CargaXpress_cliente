@@ -14,7 +14,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item lines *ngFor="let item of autocompleteItems" (click)="regresar(item.description)">
+    <ion-item lines *ngFor="let item of autocompleteItems" (click)="regresar(item.description,item)">
       {{ item.description }}
     </ion-item>
   </ion-list>

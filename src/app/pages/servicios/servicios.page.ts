@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ServicioService } from '../../services/servicio/servicio.service';
+import { NotificacionService } from '../../services/notificacion/notificacion.service';
 
 @Component({
   selector: 'app-servicios',
@@ -17,11 +18,14 @@ export class ServiciosPage implements OnInit {
   cero_datos: Boolean = false;
   servicios: any;
   page: number;
+  contador: number;
+
   constructor(private router: Router,
     private menu: MenuController,
     public alertController: AlertController,
     public servicio: ServicioService,
-    public toastController: ToastController) {
+    public toastController: ToastController,
+    public _noti: NotificacionService) {
     this.listarServices();
   }
 
@@ -33,6 +37,16 @@ export class ServiciosPage implements OnInit {
     }), error => {
       this.respuestaFail(error.json());
     });
+  }
+
+  ionViewDidEnter() {
+    this._noti.listar_notificaciones().subscribe((data) => {
+      this.contador = data.nrCount;
+    });
+  }
+
+  click_notificacion() {
+    this.router.navigateByUrl('/trans-noti');
   }
 
   click_detalle(id: any) {

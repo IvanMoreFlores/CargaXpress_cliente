@@ -16,6 +16,7 @@ export class DriverService {
   get_Driver(id: any) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_get_driver + id, {
       headers: headers,
       method: 'GET'
@@ -29,6 +30,7 @@ export class DriverService {
   update_Driver(id: any, datos: any) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.put(this.api_update_driver + id, datos, {
       headers: headers,
       method: 'PUT'

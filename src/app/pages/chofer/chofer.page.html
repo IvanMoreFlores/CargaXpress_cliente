@@ -5,6 +5,10 @@
         src="assets/img/logo02.png" width="20%">
     </div>
     <ion-buttons slot="end">
+        <ion-button color="light" (click)="click_notificacion()">
+            <ion-icon slot="icon-only" name="notifications"></ion-icon>
+            <ion-badge color="danger" *ngIf="contador > 0">{{ contador }}</ion-badge>
+          </ion-button>
       <ion-button (click)="openFirst()" color="light">
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
@@ -138,8 +142,8 @@
     </ion-fab-button>
   </ion-fab>
   <ion-infinite-scroll threshold="160px" (ionInfinite)="siguiente($event)">
-      <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando pedidos..">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando choferes..">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

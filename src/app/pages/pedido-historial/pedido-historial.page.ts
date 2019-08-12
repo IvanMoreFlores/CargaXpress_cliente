@@ -15,6 +15,8 @@ export class PedidoHistorialPage implements OnInit {
   offers: any = [];
   ultimo: any = {};
   id_owner = localStorage.getItem('id');
+  canNegotiate = this.navParams.get('canNegotiate');
+  status: any = this.navParams.get('status');
   constructor(public modalController: ModalController,
     private navParams: NavParams,
     public _noti: NotificacionService,
@@ -96,7 +98,7 @@ export class PedidoHistorialPage implements OnInit {
     this._order.nueva_contra(data, id).subscribe((dato => {
       loading.dismiss();
       console.log(dato);
-      this.successAlert(data.msg, 'Registrado');
+      this.successAlert(dato.msg, 'Registrado');
     }), error => {
       loading.dismiss();
       console.log(error);
@@ -115,7 +117,7 @@ export class PedidoHistorialPage implements OnInit {
         {
           text: 'OK',
           handler: () => {
-            this.navCtrl.pop();
+            this.modalController.dismiss();
           }
         }
       ]

@@ -5,6 +5,9 @@ import { MenuController, AlertController } from '@ionic/angular';
 import { HomeService } from '../../services/home/home.service';
 import { OrderService } from './../../services/order/order.service';
 import { ToastController } from '@ionic/angular';
+import * as moment from 'moment';
+import { Socket } from 'ngx-socket-io';
+import { NotificacionService } from '../../services/notificacion/notificacion.service';
 // Modal
 
 @Component({
@@ -25,6 +28,7 @@ export class HomeChoferPage implements OnInit {
   sin_datos: Boolean = true;
   con_datos: Boolean = false;
   cero_datos: Boolean = false;
+  contador: number;
 
   constructor(private router: Router,
     public modalController: ModalController,
@@ -32,17 +36,40 @@ export class HomeChoferPage implements OnInit {
     private _home: HomeService,
     private _orden: OrderService,
     public alertController: AlertController,
-    public toastController: ToastController) {
+    public toastController: ToastController,
+    public _noti: NotificacionService,
+    private socket: Socket) {
     this.listarOrder();
   }
 
   ngOnInit() {
+    this.socket.connect();
     this._home.listar_categoria().subscribe((data => {
       this.categorias = data.categories;
       console.log(this.categorias);
     }), error => {
       this.respuestaFail(error.json());
     });
+
+    this.socket.fromEvent('NEW_ORDER').subscribe(NEW_ORDER => {
+      console.log('Entro al socket');
+      console.log(NEW_ORDER);
+      this.ordenes.push(NEW_ORDER);
+    });
+  }
+
+  devolver_fecha(fecha: any) {
+    return (moment(fecha).format('DD-MM-YYYY'));
+  }
+
+  ionViewDidEnter() {
+    this._noti.listar_notificaciones().subscribe((data) => {
+      this.contador = data.nrCount;
+    });
+  }
+
+  click_notificacion() {
+    this.router.navigateByUrl('/trans-noti');
   }
 
   public changeEnvironment(event): void {
@@ -118,8 +145,9 @@ export class HomeChoferPage implements OnInit {
   }
 
   doRefresh(event: any) {
-    this.sin_datos = !this.sin_datos;
-    this.con_datos = !this.con_datos;
+    this.sin_datos = true;
+    this.con_datos = false;
+    this.cero_datos = false;
     setTimeout(() => {
       this.listarOrder();
       event.target.complete();

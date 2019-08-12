@@ -1,0 +1,114 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon slot="icon-only" (click)="myDismiss()" name="arrow-back"></ion-icon>
+    </ion-buttons>
+    <ion-item>
+        <ion-label position="stacked">Ingresa el nombre del chofer</ion-label>
+        <ion-input (ionInput)="getItems($event)"
+          placeholder="Escribe el nombre del chofer">
+        </ion-input>
+      </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="refresh" slot="fixed" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div padding *ngIf="cero_datos">
+    <img src="assets/img/warning.png" style="width: 30% !important;display:block;margin:auto">
+    <h1 text-center>Sin datos</h1>
+  </div>
+
+  <div *ngIf="con_datos">
+    <ion-card class="ion-activatable" *ngFor="let chofer of choferes" style="padding: 7px;" (click)="regresar(chofer)">
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="2" style="display: flex;justify-content: center;align-items: center;">
+            <img style="display: flex;justify-content: center;align-items: center;" [src]="chofer.picture">
+          </ion-col>
+          <ion-col padding size="10" style="display: flex;justify-content: flex-start;align-items: center;">
+            <ion-grid no-padding>
+              <ion-row>
+                <ion-col size="12" style="margin: 0px;">
+                  <ion-card-title style='text-transform:uppercase'>{{ chofer.name }} {{ chofer.lastName }}
+                  </ion-card-title>
+                </ion-col>
+                <ion-col size="12" style="margin: 0px;">
+                  <ion-card-subtitle><a style="color:#30205d">Email: </a>{{ chofer.email }}</ion-card-subtitle>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col size="5" style="display: flex;justify-content: start;align-items: center;">
+            <ion-card-subtitle>DNI: <a style="color: #30205d">{{ chofer.documentCode }}</a></ion-card-subtitle>
+          </ion-col>
+          <ion-col size="7" style="display: flex;justify-content: flex-start;align-items: center;">
+            <ion-card-subtitle>Categoria de brevete: <a style="color: #30205d">{{ chofer.breveteCategory }}</a>
+            </ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col size="5" style="display: flex;justify-content: start;align-items: center;">
+            <ion-card-subtitle>Cel: <a style="color: #30205d">{{ chofer.cellphone }}</a></ion-card-subtitle>
+          </ion-col>
+          <ion-col size="7" style="display: flex;justify-content: flex-start;align-items: center;">
+            <ion-card-subtitle>N° de brevete: <a style="color: #30205d">{{ chofer.breveteCode }}</a></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+  <div *ngIf="sin_datos">
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card class="skeleton" style="padding: 15px">
+      <ion-grid style="height: 100%">
+        <ion-row>
+          <ion-col>
+            <ion-card-title></ion-card-title>
+          </ion-col>
+          <ion-col style="display: flex;justify-content: flex-end;align-items: center;">
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+  <ion-infinite-scroll threshold="160px" (ionInfinite)="siguiente($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando choferes..">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

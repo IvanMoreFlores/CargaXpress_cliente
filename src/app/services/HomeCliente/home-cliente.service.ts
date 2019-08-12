@@ -16,6 +16,7 @@ export class HomeClienteService {
   listar_categoria() {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_categoria, {
       headers: headers,
       method: 'GET'

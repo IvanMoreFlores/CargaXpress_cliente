@@ -16,6 +16,9 @@ export class ServicioService {
   api_offer_id: string = this.ip + 'users/';
   api_ofertar: string = this.ip + 'orders/';
   api_historial: string = this.ip + 'orders/';
+  api_elements: string = this.ip + 'services/';
+  api_asignar: string = this.ip + 'services/';
+  api_trackings: string = this.ip + 'orders/';
   constructor(public http: Http) { }
 
   listar_servicio() {
@@ -111,6 +114,49 @@ export class ServicioService {
     return this.http.post(this.api_ofertar + id + '/offers', data, {
       headers: headers,
       method: 'POST'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
+
+  listar_elements(id: any) {
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_elements + id + '/elements?assigned=0', {
+      headers: headers,
+      method: 'GET'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
+
+  asignar(data: any, id: any) {
+    console.log(data);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.post(this.api_asignar + id + '/assign', data, {
+      headers: headers,
+      method: 'POST'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
+
+  listar_trackings(id: any) {
+    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.get(this.api_trackings + id + '/trackings', {
+      headers: headers,
+      method: 'GET'
     }).pipe(map(
       (res: Response) => {
         return res.json();

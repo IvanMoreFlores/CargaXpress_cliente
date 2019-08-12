@@ -11,6 +11,7 @@ import { HomeService } from './../../services/home/home.service';
 import { OrderService } from '../../services/order/order.service';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 declare var google: any;
+
 @Component({
   selector: 'app-modal-pedido',
   templateUrl: './modal-pedido.page.html',
@@ -55,7 +56,7 @@ export class ModalPedidoPage implements OnInit {
     'deliveryMaxDate': new Date().toISOString(),
     'deliveryMaxHour': this.hora.getHours() + ':' + this.hora.getMinutes(),
     'aditionalRequirements': null,
-    'elements': [{ 'answers': [] }],
+    'elements': [],
     'receptionAnswers': [],
     'destinationAnswers': []
   };
@@ -69,6 +70,7 @@ export class ModalPedidoPage implements OnInit {
   btn_atras: any = 1;
   isShown = false;
   type: any;
+  elementos: any = [];
 
   constructor(private router: Router,
     public platform: Platform,
@@ -144,28 +146,32 @@ export class ModalPedidoPage implements OnInit {
       });
 
     modal.onDidDismiss().then((detail: any) => {
+      console.log(detail);
       if (detail.data.id === 0) {
       } else if (detail.data.id === 1) {
         this.decodificar_dire(detail.data.description, detail.data.id);
         this.datos_orden.initPlace = detail.data.description;
-
+        this.trazar_ruta();
       } else if (detail.data.id === 2) {
         this.decodificar_dire(detail.data.description, detail.data.id);
         this.datos_orden.endPlace = detail.data.description;
+        this.trazar_ruta();
       }
     });
     await modal.present();
   }
 
   async trazar_ruta() {
-    console.log(this.datos_orden.initLocation.length);
-    if (this.datos_orden.initLocation.length > 0 && this.datos_orden.endLocation.length > 0) {
+    console.log('trazar_ruta');
+    console.log(this.datos_orden.initPlace);
+    console.log(this.datos_orden.endPlace);
+    if (this.datos_orden.initPlace !== null && this.datos_orden.endPlace !== null) {
       const loading = await this.loadingController.create({
         message: 'Espere...',
       });
       await loading.present();
-      const star = new google.maps.LatLng(this.datos_orden.initLocation[0], this.datos_orden.initLocation[1]);
-      const end = new google.maps.LatLng(this.datos_orden.endLocation[0], this.datos_orden.endLocation[1]);
+      const star = this.datos_orden.initPlace;
+      const end = this.datos_orden.endPlace;
       this.directionsService.route({
         origin: star,
         destination: end,
@@ -182,7 +188,7 @@ export class ModalPedidoPage implements OnInit {
         }
       });
     } else {
-      console.log('error');
+      console.log('error: initPlace === null || endPlace === null');
     }
   }
 
@@ -279,19 +285,15 @@ export class ModalPedidoPage implements OnInit {
   }
 
   decodificar_dire(description: any, id: any) {
-    setTimeout(() => {
-      this.nativeGeocoder.forwardGeocode(description)
-        .then((result: NativeGeocoderResult[]) => {
-          if (id === 1) {
-            this.datos_orden.initLocation = [result[0].latitude, result[0].longitude];
-            this.trazar_ruta();
-          } else {
-            this.datos_orden.endLocation = [result[0].latitude, result[0].longitude];
-            this.trazar_ruta();
-          }
-        })
-        .catch((error: any) => console.log(error));
-    }, 500);
+    this.nativeGeocoder.forwardGeocode(description)
+      .then((result: NativeGeocoderResult[]) => {
+        if (id === 1) {
+          this.datos_orden.initLocation = [result[0].latitude, result[0].longitude];
+        } else {
+          this.datos_orden.endLocation = [result[0].latitude, result[0].longitude];
+        }
+      })
+      .catch((error: any) => console.log(error));
   }
 
   click_cuatro(id: any) {
@@ -318,11 +320,13 @@ export class ModalPedidoPage implements OnInit {
         if (element.questionCategory === 0) {
           this.datos_orden.receptionAnswers.push(element);
         } else if (element.questionCategory === 1) {
-          this.datos_orden.elements[0].answers.push(element);
+          this.datos_orden.elements.push({ 'answers': [element] });
+          this.elementos = { 'answers': [element] };
         } else if (element.questionCategory === 2) {
           this.datos_orden.destinationAnswers.push(element);
         }
       });
+      console.log(this.datos_orden);
     }));
   }
 
@@ -429,9 +433,11 @@ export class ModalPedidoPage implements OnInit {
   }
 
   agregar_elemento() {
-    this.datos_orden.elements[0].answers.push(this.datos_orden.elements[0].answers[0]);
-    console.log(this.datos_orden.elements[0].answers);
-    console.log(this.datos_orden.elements[0].answers[0]);
+    console.log(this.elementos);
+    console.log(this.datos_orden.elements);
+    this.datos_orden.elements.push(Object.assign({}, this.elementos));
+
+    // this.datos_orden.elements.push(Object.create(this.elementos, this.elementos));
   }
 }
 

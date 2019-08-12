@@ -88,4 +88,8 @@
       </ion-grid>
     </ion-card>
   </div>
+  <ion-infinite-scroll threshold="160px" (ionInfinite)="siguiente($event)">
+      <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando notificaciones..">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

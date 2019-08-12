@@ -22,6 +22,7 @@ export class OrderService {
   api_aceptar_contra: string = this.ip + 'orders/';
   api_traer_empresas: string = this.ip + 'aditionalservices/';
   api_traer_servicio: string = this.ip + 'aditionalservices/';
+  api_pagar_orden: string = this.ip + 'orders/';
 
   constructor(public http: Http) { }
 
@@ -203,6 +204,20 @@ export class OrderService {
     return this.http.get(this.api_listar_orden + '&page=' + page, {
       headers: headers,
       method: 'GET'
+    }).pipe(map(
+      (res: Response) => {
+        return res.json();
+      }
+    ));
+  }
+
+  pagar_orden(data: any, id: any, oid: any) {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.post(this.api_pagar_orden + id + '/offers/' + oid + '/pseudopay', data, {
+      headers: headers,
+      method: 'POST'
     }).pipe(map(
       (res: Response) => {
         return res.json();

@@ -79,13 +79,16 @@
 
   <div padding *ngIf="button_servicio">
     <ion-button expand="full" fill="solid" color="favorite" (click)="click_pedido()">Ir al servicio</ion-button>
-    <ion-button expand="full" fill="solid" color="favorite" (click)="var_mas(pedido?._id)">Historial</ion-button>
+    <ion-button expand="full" fill="solid" color="favorite"
+      (click)="pedido_historial(pedido?._id,pedido?.canNegotiate,pedido?.status)">
+      Historial</ion-button>
   </div>
 
   <div padding *ngIf="button_pedido">
     <ion-button *ngIf="button_ofertar" expand="full" fill="solid" color="favorite"
       (click)="presentAlertPrompt(pedido?.deliveryMaxDate,pedido?._id)">Ofertar</ion-button>
-    <ion-button *ngIf="button_historial" expand="full" fill="solid" color="favorite" (click)="pedido_historial(pedido?._id)">
+    <ion-button *ngIf="button_historial" expand="full" fill="solid" color="favorite"
+      (click)="pedido_historial(pedido?._id,pedido?.canNegotiate,pedido?.status)">
       Historial</ion-button>
   </div>
 </ion-content>

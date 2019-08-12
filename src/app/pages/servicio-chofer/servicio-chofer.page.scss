@@ -1,0 +1,74 @@
+ion-content {
+  //   --ion-background-color: #ececec;
+  ion-input {
+    --background: white;
+    padding: 5px !important;
+    margin-top: 10px !important;
+    border: 2px solid #30205d !important;
+  }
+  ion-card {
+    --background: white;
+    border-left: 5px solid #30205d !important;
+  }
+  hr {
+    // border: 2px solid red !important;
+    height: 1px !important;
+    width: 100% !important;
+    background: gray !important;
+    display: block !important;
+    font-size: 2em !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  img {
+    width: auto !important;
+    height: auto !important;
+    // display:block;
+    // margin:auto;
+  }
+}
+
+// ion-toolbar.ion-color
+//   .sc-ion-searchbar-ios-h
+//   .searchbar-input.sc-ion-searchbar-ios {
+//   background: white !important;
+//   color: currentColor !important;
+// }
+
+.skeleton {
+  animation: loading 1.7s infinite linear;
+  background: #e6e6e6;
+  background-image: -webkit-linear-gradient(
+    to right,
+    #e6e6e6 0%,
+    #ffffff 20%,
+    #e6e6e6 40%,
+    #e6e6e6 100%
+  );
+  background-image: linear-gradient(
+    to right,
+    #e6e6e6 0%,
+    #ffffff 20%,
+    #e6e6e6 40%,
+    #e6e6e6 100%
+  );
+  background-repeat: no-repeat;
+  height: 160px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: -100px;
+  }
+
+  100% {
+    background-position: 200px;
+  }
+}
+
+ion-item {
+  --highlight-color-valid: transparent;
+  --highlight-color-invalid: transparent;
+  --highlight-color-focused: transparent;
+  --border-color: transparent;
+}

@@ -35,6 +35,16 @@ export class ServicioDetallePage implements OnInit {
     });
   }
 
+  click_seguimiento(id: any) {
+    this.router.navigate(['/servicio-seguimiento', id]);
+    // this.router.navigate(['/pedido-detalle', id]);
+  }
+
+  click_asignar(id: any) {
+    this.router.navigate(['/servicio-asignar', id]);
+    // this.router.navigate(['/pedido-detalle', id]);
+  }
+
   click_pedido(id: any) {
     this.router.navigate(['/pedido-detalle', id, 1]);
     // this.router.navigate(['/pedido-detalle', id]);

@@ -66,7 +66,8 @@ export class BuscadorLugarPage implements OnInit {
     await this.modalController.dismiss({ description: null, id: 0 });
   }
 
-  async regresar(description) {
+  async regresar(description, item) {
+    console.log(item);
     await this.modalController.dismiss({ description: description, id: this.navParams.get('id') });
   }
 

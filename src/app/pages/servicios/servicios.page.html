@@ -5,6 +5,10 @@
         src="assets/img/logo02.png" width="20%">
     </div>
     <ion-buttons slot="end">
+      <ion-button color="light" (click)="click_notificacion()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge color="danger" *ngIf="contador > 0">{{ contador }}</ion-badge>
+      </ion-button>
       <ion-button (click)="openFirst()" color="light">
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>

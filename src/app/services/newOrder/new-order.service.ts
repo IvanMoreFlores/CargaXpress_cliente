@@ -16,6 +16,7 @@ export class NewOrderService {
   listar_subcategorias(id) {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_subcategorias + id + '/subcategories', {
       headers: headers,
       method: 'GET'

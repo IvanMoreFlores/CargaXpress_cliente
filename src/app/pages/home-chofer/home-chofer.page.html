@@ -5,6 +5,10 @@
         src="assets/img/logo02.png" width="20%">
     </div>
     <ion-buttons slot="end">
+      <ion-button color="light" (click)="click_notificacion()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge color="danger" *ngIf="contador > 0">{{ contador }}</ion-badge>
+      </ion-button>
       <ion-button (click)="openFirst()" color="light">
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
@@ -63,10 +67,18 @@
         </ion-row>
         <ion-row style="height: 100%; flex-direction: row">
           <ion-col size="12">
-            <div>{{ orden.initPlace }}</div>
+            <div><b style="color: #30205d">Inicio: </b>{{ orden.initPlace }}</div>
           </ion-col>
           <ion-col size="12">
-            <div>{{ orden.endPlace }}</div>
+            <div><b style="color: #30205d">Destino: </b>{{ orden.endPlace }}</div>
+          </ion-col>
+        </ion-row>
+        <ion-row style="height: 100%; flex-direction: row">
+          <ion-col size="8">
+            <div><b style="color: #30205d">Fecha max. de entrega</b></div>
+          </ion-col>
+          <ion-col size="4">
+            <div>{{ devolver_fecha(orden.deliveryMaxDate) }}</div>
           </ion-col>
         </ion-row>
       </ion-grid>

@@ -17,6 +17,7 @@ export class HomeService {
   listar_categoria() {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_categoria, {
       headers: headers,
       method: 'GET'
@@ -30,6 +31,7 @@ export class HomeService {
   listar_subcategorias(id) {
     const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
     return this.http.get(this.api_listar_subcategorias + id + '/subcategories?hasquestions=1', {
       headers: headers,
       method: 'GET'

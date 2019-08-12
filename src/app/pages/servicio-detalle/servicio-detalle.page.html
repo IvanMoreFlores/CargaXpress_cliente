@@ -84,9 +84,11 @@
     </ion-item>
   </div>
   <div padding>
-    <ion-button expand="full" fill="solid" color="favorite">Asignar</ion-button>
-    <ion-button expand="full" fill="solid" color="favorite">Seguimiento</ion-button>
-    <ion-button expand="full" fill="solid" color="favorite" (click)="click_pedido(servicio?.order?._id)">Ir al pedido</ion-button>
+    <ion-button expand="full" fill="solid" color="favorite" (click)="click_asignar(servicio?._id)">Asignar</ion-button>
+    <ion-button expand="full" fill="solid" color="favorite" (click)="click_seguimiento(servicio?._id)">Seguimiento
+    </ion-button>
+    <ion-button expand="full" fill="solid" color="favorite" (click)="click_pedido(servicio?.order?._id)">Ir al pedido
+    </ion-button>
   </div>
 
 

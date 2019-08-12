@@ -13,6 +13,7 @@ export class VerMasPage implements OnInit {
   offers: any = [];
   ultimo: any = {};
   id_owner = localStorage.getItem('id');
+  canNegotiate = this.navParams.get('canNegotiate');
   constructor(public modalController: ModalController,
     private navParams: NavParams,
     public _noti: NotificacionService) { }

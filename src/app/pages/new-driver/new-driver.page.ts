@@ -34,7 +34,7 @@ export class NewDriverPage implements OnInit {
   };
   filePath: any = null;
   demo: any;
-  ip = 'https://carga-api.us-east.mybluemix.net/api/v1/';
+  ip = 'https://cargaxpress-api-dev.mybluemix.net/api/v1/';
   api_new_driver: string = this.ip + 'users';
   api_update_driver: string = this.ip + 'users/';
   titulo: String = 'Nuevo chofer';
@@ -212,8 +212,11 @@ export class NewDriverPage implements OnInit {
       message: 'Actualizando información...',
     });
     await loading.present();
-
+    console.log('Estamos en actulizar');
+    console.log(this.filePath);
+    console.log('Estamos en actulizar');
     if (this.filePath) {
+      console.log('Estamos en filePath');
       const fileTransfer: FileTransferObject = this.transfer.create();
       const options: FileUploadOptions = {
         fileKey: 'picture',
@@ -238,6 +241,7 @@ export class NewDriverPage implements OnInit {
           this.errorAlert(msg.msg);
         });
     } else {
+      console.log('Estamos sin filePath');
       this._driver.update_Driver(this.activatedRoute.snapshot.paramMap.get('id'), this.NewDriver).subscribe((data) => {
         loading.onDidDismiss();
         this.successAlert(data.msg, 'Actualizado');
