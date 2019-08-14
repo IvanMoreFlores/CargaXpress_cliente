@@ -15,6 +15,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './components/menu/menu.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 // Modal
 import { BuscadorLugarPage } from './pages/buscador-lugar/buscador-lugar.page';
@@ -57,6 +59,8 @@ const config: SocketIoConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
