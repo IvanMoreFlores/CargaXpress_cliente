@@ -25,8 +25,7 @@ export class NotificacionPage implements OnInit {
     public alertController: AlertController,
     public modalController: ModalController,
     public toastController: ToastController) {
-    this.menu.swipeEnable(true, 'custom');
-    this.menu.enable(false, 'custom');
+    this.menu.swipeGesture(false, 'custom');
   }
 
   ngOnInit() {

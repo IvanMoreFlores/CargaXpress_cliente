@@ -30,6 +30,7 @@ export class ServiciosPage implements OnInit {
   }
 
   ngOnInit() {
+    this.menu.swipeGesture(false, 'custom');
     this.servicio.listar_servicio().subscribe((data => {
       this.servicios = data.services;
       this.page = data.page;

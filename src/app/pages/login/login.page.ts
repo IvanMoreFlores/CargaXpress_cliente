@@ -34,6 +34,7 @@ export class LoginPage {
     public platform: Platform,
     public fb: FormBuilder,
     private events: Events) {
+      this.menu.swipeGesture(false, 'custom');
     this.formularioUsuario = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]

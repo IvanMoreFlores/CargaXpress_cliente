@@ -14,8 +14,8 @@ import { ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./pedidos.page.scss'],
 })
 export class PedidosPage implements OnInit {
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
+  @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonRouterOutlet, { static: false }) routerOutlet: IonRouterOutlet;
   customBackActionSubscription: Subscription;
   sin_datos: Boolean;
   con_datos: Boolean;
@@ -29,8 +29,7 @@ export class PedidosPage implements OnInit {
     public _order: OrderService,
     public alertController: AlertController,
     public toastController: ToastController) {
-    this.menu.swipeEnable(true, 'custom');
-    this.menu.enable(false, 'custom');
+      this.menu.swipeGesture(false, 'custom');
   }
 
 

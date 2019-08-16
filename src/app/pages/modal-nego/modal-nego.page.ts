@@ -25,7 +25,7 @@ export class ModalNegoPage implements OnInit {
     public loadingCtrl: LoadingController,
     public modalController: ModalController,
     private menu: MenuController) {
-    this.menu.swipeEnable(true, 'custom');
+      this.menu.swipeGesture(false, 'custom');
     this.menu.enable(false, 'custom');
   }
 

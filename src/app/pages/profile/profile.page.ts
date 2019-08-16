@@ -22,8 +22,7 @@ export class ProfilePage implements OnInit {
     public loadingController: LoadingController,
     public alertController: AlertController,
     private router: Router) {
-    this.menu.swipeEnable(true, 'custom');
-    this.menu.enable(false, 'custom');
+      this.menu.swipeGesture(false, 'custom');
     // this.menu.open('custom');
   }
 

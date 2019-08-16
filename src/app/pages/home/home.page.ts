@@ -19,13 +19,13 @@ export class HomePage implements OnInit {
   salir: Boolean = false;
   page: number;
 
-  @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
+  @ViewChild(IonRouterOutlet, { static: false }) routerOutlet: IonRouterOutlet;
   constructor(private router: Router,
     public modalController: ModalController,
     private menu: MenuController,
     public _home: HomeService,
     public platform: Platform) {
-    this.menu.enable(false, 'custom');
+    this.menu.swipeGesture(false, 'custom');
   }
 
 
@@ -44,7 +44,6 @@ export class HomePage implements OnInit {
   }
 
   openFirst() {
-    this.menu.enable(true, 'custom');
     this.menu.open('custom');
   }
 

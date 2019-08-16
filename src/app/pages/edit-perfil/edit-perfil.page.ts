@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MenuController, LoadingController, AlertController, } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../../services/profile/profile.service';
-import { ComponentFactoryResolver } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-edit-perfil',

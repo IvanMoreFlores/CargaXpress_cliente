@@ -63,7 +63,7 @@ export class RegisterPage implements OnInit {
     } else {
       this.div_client = !this.div_client;
     }
-    this.menu.enable(false, 'custom');
+    this.menu.swipeGesture(false, 'custom');
   }
 
   ngOnInit() {

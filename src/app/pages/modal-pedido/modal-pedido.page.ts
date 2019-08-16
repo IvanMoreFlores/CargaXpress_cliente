@@ -18,8 +18,8 @@ declare var google: any;
   styleUrls: ['./modal-pedido.page.scss'],
 })
 export class ModalPedidoPage implements OnInit {
-  @ViewChild('map') mapElement: ElementRef;
-  @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
+  @ViewChild('map', { static: false }) mapElement: ElementRef;
+  @ViewChild(IonRouterOutlet, { static: false }) routerOutlet: IonRouterOutlet;
   customBackActionSubscription: Subscription;
   hora = new Date();
   map: any;
@@ -84,9 +84,7 @@ export class ModalPedidoPage implements OnInit {
     public _order: OrderService,
     private menu: MenuController,
     private keyboard: Keyboard) {
-    this.menu.get().then((menu: HTMLIonMenuElement) => {
-      menu.swipeGesture = false;
-    });
+    this.menu.swipeGesture(false, 'custom');
   }
 
   ngOnInit() {

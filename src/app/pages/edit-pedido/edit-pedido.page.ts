@@ -16,7 +16,7 @@ declare var google: any;
 })
 export class EditPedidoPage implements OnInit {
 
-  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('map', { static: false }) mapElement: ElementRef;
   datos_orden: any = [];
   map: any;
   autocompleteItems: any;

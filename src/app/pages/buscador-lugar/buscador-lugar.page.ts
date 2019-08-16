@@ -10,7 +10,7 @@ declare var google: any;
 })
 export class BuscadorLugarPage implements OnInit {
 
-  @ViewChild('input') inputElement: IonInput;
+  @ViewChild('input', { static: false }) inputElement: IonInput;
 
   address: string;
   autocompleteItems: any;

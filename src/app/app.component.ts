@@ -23,7 +23,6 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString('#30205d');
       this.statusBar.styleLightContent();
       this.hideSplashScreen();
-      this.menu.swipeEnable(true, 'custom');
     });
   }
 

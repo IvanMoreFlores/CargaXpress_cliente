@@ -16,7 +16,7 @@ declare var google: any;
   styleUrls: ['./servicio-seguimiento.page.scss'],
 })
 export class ServicioSeguimientoPage implements OnInit {
-  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('map', { static: false }) mapElement: ElementRef;
   public category: String = 'Informacion';
   public categories: Array<string> = ['Informacion', 'SubServicios', 'Chofer', 'Chat'];
   shouldBounce = true;

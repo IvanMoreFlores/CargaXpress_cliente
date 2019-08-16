@@ -11,7 +11,7 @@ import { ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./listar-pedido.page.scss'],
 })
 export class ListarPedidoPage implements OnInit {
-  @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
+  @ViewChild(IonRouterOutlet, { static: false }) routerOutlet: IonRouterOutlet;
 
   customBackActionSubscription: Subscription;
   constructor(private router: Router,
@@ -21,6 +21,7 @@ export class ListarPedidoPage implements OnInit {
 
 
   ngOnInit() {
+    this.menu.swipeGesture(false, 'custom');
   }
 
   detail() {

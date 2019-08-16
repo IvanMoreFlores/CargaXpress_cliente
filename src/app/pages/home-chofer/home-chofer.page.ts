@@ -43,6 +43,7 @@ export class HomeChoferPage implements OnInit {
   }
 
   ngOnInit() {
+    this.menu.swipeGesture(false, 'custom');
     this.socket.connect();
     this._home.listar_categoria().subscribe((data => {
       this.categorias = data.categories;

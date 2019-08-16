@@ -28,7 +28,7 @@ export class ProfileTranspPage implements OnInit {
     public alertController: AlertController,
     public _noti: NotificacionService) {
     this.listar_info();
-    this.menu.enable(false, 'custom');
+    this.menu.swipeGesture(false, 'custom');
   }
 
   ngOnInit() {
