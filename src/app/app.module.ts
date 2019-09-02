@@ -31,6 +31,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 const config: SocketIoConfig = {
   url: 'https://cargaxpress-socket-dev.mybluemix.net', options: {
     path: '/carga-socket',
+    autoConnect: false,
     transports: ['websocket', 'polling']
   }
 };

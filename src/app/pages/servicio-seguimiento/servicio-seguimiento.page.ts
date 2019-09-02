@@ -7,6 +7,9 @@ import { DrawerState } from '../../modules/ion-bottom-drawer/drawer-state';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
+import { SocketService } from '../../services/socket/socket.service';
+import { Socket } from 'ngx-socket-io';
+import { ChatService } from '../../services/chat/chat.service';
 import * as moment from 'moment';
 declare var google: any;
 
@@ -33,17 +36,29 @@ export class ServicioSeguimientoPage implements OnInit {
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
   conductor: any;
+  //
+  mensaje: String = '';
+  list_chat: any;
+  list_mensaje: any;
+  mensaje_totales: any;
+  id_owner;
+  id_tracking;
   constructor(private router: Router,
     public service: ServicioService,
     private activatedRoute: ActivatedRoute,
     public loadingController: LoadingController,
     public alertController: AlertController,
     private geolocation: Geolocation,
-    private nativeGeocoder: NativeGeocoder) {
+    private nativeGeocoder: NativeGeocoder,
+    private socket: Socket,
+    public socketS: SocketService,
+    public chat: ChatService) {
+    this.id_owner = localStorage.getItem('id');
     console.log(this.activatedRoute.snapshot.paramMap.get('id'));
   }
 
   async ngOnInit() {
+    await this.socketS.IniciarTokenSinLogin();
     const loading = await this.loadingController.create({
       message: 'Espere por favor...'
     });
@@ -56,6 +71,22 @@ export class ServicioSeguimientoPage implements OnInit {
     }), error => {
       loading.dismiss();
       this.respuestaFail(error.json());
+    });
+    await this.chatSocket();
+  }
+
+  chatSocket() {
+    this.socket.on('NEW_MESSAGE', (data) => {
+      if (data) {
+        // return Promise reject(err);
+        console.log('data chatSocket : ' + data);
+        console.log(data);
+        this.list_mensaje.push(data.message);
+        // this.list_mensaje.push(data.messages)
+      } else {
+        console.log('Mal chatSocket');
+        // return Promise resolve();
+      }
     });
   }
 
@@ -100,6 +131,8 @@ export class ServicioSeguimientoPage implements OnInit {
       console.log('Error getting location', error);
     });
   }
+
+
 
   async trazar_ruta() {
     const loading = await this.loadingController.create({
@@ -156,9 +189,42 @@ export class ServicioSeguimientoPage implements OnInit {
     }
   }
 
-  agregar_chofer(chofer) {
+  agregar_chofer(chofer, IdTracking) {
+    this.id_tracking = IdTracking;
+    this.listarChat(IdTracking);
     this.conductor = chofer;
+    this.socketS.conectarTrackigSocket(IdTracking);
     console.log(chofer);
+  }
+
+  enviarMensaje() {
+    this.enviarChatSocket(this.id_tracking, this.mensaje);
+  }
+
+  enviarChatSocket(id, message) {
+    this.socket.emit('NEW_MESSAGE', { trackingId: id, data: { message } }, (err, data) => {
+      if (err) {
+        // return Promise reject(err);
+        console.log('error enviarChatSocket : ' + err);
+      } else {
+        this.mensaje = '';
+        console.log('Bien enviarChatSocket');
+        console.log(data);
+        this.list_mensaje.push(data.message);
+        // return Promise resolve();
+      }
+    });
+  }
+
+  listarChat(IdTracking) {
+    this.chat.get_chat(IdTracking).subscribe((data => {
+      console.log(data);
+      this.list_mensaje = data.messages;
+    }));
+  }
+
+  devolver_fecha(fecha: any) {
+    return (moment(fecha).format('DD-MM-YYYY, h:mm:ss a'));
   }
 
   enableDashScroll() {
